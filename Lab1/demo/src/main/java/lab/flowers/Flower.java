@@ -5,4 +5,5 @@ public abstract class Flower {
     private Float stalk_length;
     private Float price;
     private Float fresh_factor; //0 -> not fresh | 1 -> very fresh
+
 }
