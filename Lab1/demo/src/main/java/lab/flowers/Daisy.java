@@ -1,5 +1,9 @@
 package lab.flowers;
 
 public class Daisy extends Flower{
-    private Float flower_diameter;
+    private String flower_diameter;
+
+    public void set_flower_diameter(String D){
+        this.flower_diameter = D;
+    }
 }
