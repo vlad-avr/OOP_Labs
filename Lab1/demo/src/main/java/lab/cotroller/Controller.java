@@ -20,7 +20,7 @@ public class Controller {
             try{
                 String input = get_input();
                 switch(input){
-                    case "d_flower_add" : add_flower();;
+                    case "d_flower_add" : add_flower();break;
                     case "d_flower_remove" : /*Remove flower*/;
                     case "d_bunch_add" : /*Add bouquet*/;
                     case "d_bunch_remove" : /*Remove bouquet*/;
@@ -31,9 +31,9 @@ public class Controller {
                     case "b_cost" : /*Cost of bouquet */;
                     case "b_sort" : /*Sort flowers in bouquet */;
                     case "f_find" : /*Find flowers */;
-                    case "help" : print_help();
+                    case "help" : print_help(); break;
                     case "exit" : return;
-                    default : System.out.println("\nInvalid input command!\n");
+                    default : System.out.println("\nInvalid input command!\n"); break;
                 }
             }catch(Exception exception){
                 exception.printStackTrace();
@@ -113,6 +113,7 @@ public class Controller {
             input = get_input();
             if(input == "+"){
                 //Add to existing bouquet
+                break;
             }
             else if(input == "-"){
                 break;
@@ -172,8 +173,11 @@ public class Controller {
 
     private String get_input(){
         Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        scan.close();
+        String input;
+        do{
+            input = scan.nextLine();
+        }while (input == null || input.isEmpty());
+        //dsdscan.close();
         return input;
     }
 

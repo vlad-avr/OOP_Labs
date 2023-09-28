@@ -1,6 +1,19 @@
 package lab.flowers;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import lombok.Data;
+
+@Data
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Flower {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     private Float stalk_length;
     private Float price;
