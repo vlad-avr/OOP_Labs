@@ -3,13 +3,15 @@ package lab.cotroller;
 import java.util.Scanner;
 import lab.flowers.Flower;
 import lab.flowers.Tulip;
+import lab.db_manager.DataBaseManager;
+import lab.db_manager.DataBaseManager.FlowerSaver;
 import lab.flowers.Daisy;
 import lab.flowers.Rose;
 
 public class Controller {
-    
-
+    private DataBaseManager db_manager = new DataBaseManager();
     public void start(){
+        db_manager.setup_database();
         main_loop();
     }
 
@@ -24,7 +26,7 @@ public class Controller {
                     case "d_flower_remove" : /*Remove flower*/;
                     case "d_bunch_add" : /*Add bouquet*/;
                     case "d_bunch_remove" : /*Remove bouquet*/;
-                    case "show_flowers" : /*Show flowers */;
+                    case "show_flowers" : print_flowers(); break;
                     case "show_bunches" : /*Show bouquets */;
                     case "b_add" : /*Add flower to bouquet */;
                     case "b_remove" : /*Remove flower from bouquet */;
@@ -41,13 +43,17 @@ public class Controller {
         }
     }
 
+    private void print_flowers(){
+        db_manager.print_all_flowers();
+    }
+
     private void add_flower(){
         System.out.println("\n What type of flower you want to add (tulip / rose / daisy):\n");
         String input = get_input();
         switch(input){
-            case "tulip" : add_tulip();
-            case "rose" : add_rose();
-            case "daisy" : add_daisy();
+            case "tulip" : add_tulip(); break;
+            case "rose" : add_rose(); break;
+            case "daisy" : add_daisy(); break;
             default : System.out.println("We don't have this kind of flowers in stock!\n");
         }
     }
@@ -99,6 +105,7 @@ public class Controller {
                 System.out.println("\nPrice must be a numeric value in range [0.0 , 1.0] (example: 0.4)\n");
             }
         }
+        flower.set_fresh(val);
     }
 
     private void add_tulip(){
@@ -111,64 +118,67 @@ public class Controller {
         String input;
         while(true){
             input = get_input();
-            if(input == "+"){
+            if(input.equals("+")){
                 //Add to existing bouquet
                 break;
             }
-            else if(input == "-"){
+            else if(input.equals("-")){
                 break;
             }
             else{
                 System.out.println("\nEnter '+' if you want to add this flower to existing bouquet or '-' if you don`t!\n");
             }
         }
-        //Save flower to DB
+        FlowerSaver<Tulip> saver = db_manager.new FlowerSaver<Tulip>();
+        saver.add_flower(tulip);
     }
 
     private void add_daisy(){
         Flower flower = new Daisy();
         gen_flower(flower);
-        Daisy tulip = (Daisy)flower;
+        Daisy daisy = (Daisy)flower;
         System.out.println("\nFlower diameter (big / small / medium etc.):\n");
-        tulip.set_flower_diameter(get_input());
+        daisy.set_flower_diameter(get_input());
         System.out.println("\nAdd to existing bouquet? (+ / -)\n");
         String input;
         while(true){
             input = get_input();
-            if(input == "+"){
+            if(input.equals("+")){
                 //Add to existing bouquet
             }
-            else if(input == "-"){
+            else if(input.equals("-")){
                 break;
             }
             else{
                 System.out.println("\nEnter '+' if you want to add this flower to existing bouquet or '-' if you don`t!\n");
             }
         }
-        //Save flower to DB
+        FlowerSaver<Daisy> saver = db_manager.new FlowerSaver<Daisy>();
+        saver.add_flower(daisy);
     }
 
     private void add_rose(){
         Flower flower = new Rose();
         gen_flower(flower);
-        Rose tulip = (Rose)flower;
+        Rose rose = (Rose)flower;
         System.out.println("\nSpikes Properties (large / small / absent etc.):\n");
-        tulip.set_spike_prop(get_input());
+        rose.set_spike_prop(get_input());
         System.out.println("\nAdd to existing bouquet? (+ / -)\n");
         String input;
         while(true){
             input = get_input();
-            if(input == "+"){
+            if(input.equals("+")){
                 //Add to existing bouquet
             }
-            else if(input == "-"){
+            else if(input.equals("-")){
                 break;
             }
             else{
                 System.out.println("\nEnter '+' if you want to add this flower to existing bouquet or '-' if you don`t!\n");
             }
         }
-        //Save flower to DB
+        FlowerSaver<Rose> saver = db_manager.new FlowerSaver<Rose>();
+        saver.add_flower(rose);
     }
 
     private String get_input(){

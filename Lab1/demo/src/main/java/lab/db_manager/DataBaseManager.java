@@ -14,15 +14,36 @@ import lab.flowers.Flower;
 import lab.flowers.Rose;
 import lab.flowers.Tulip;
 
-public abstract class DataBaseManager {
+public class DataBaseManager {
     private final String db_url = "jdbc:sqlite:lab.db";
-    private final String flowers_table = "flowers";
-    private final String bouquets_table = "bouquets";
+    // private final String flowers_table = "flowers";
+    // private final String bouquets_table = "bouquets";
 
     public void setup_database(){
         create_database();
         create_flowers_table();
         create_bouquets_table();
+        make_entry_data();
+    }
+
+    private void make_entry_data(){
+        Tulip tulip1 = new Tulip(12.0f, 20.0f, 0.6f, -1, "red");
+        Tulip tulip2 = new Tulip(12.0f, 40.0f, 1f, -1, "violet");
+        Tulip tulip3 = new Tulip(14.0f, 10.0f, 0.2f, -1, "blue");
+        Daisy daisy1 = new Daisy(10.0f, 25.0f, 0.4f, -1, "small");
+        Rose rose1 = new Rose(9.0f, 35.0f, 0.5f, -1, "absent");
+        Daisy daisy2 = new Daisy(12.0f, 40.0f, 1f, -1, "big");
+        Rose rose2 = new Rose(14.0f, 10.0f, 0.2f, -1, "sharp");
+        FlowerSaver<Tulip> st = new FlowerSaver<>();
+        st.add_flower(tulip1);
+        st.add_flower(tulip2);
+        st.add_flower(tulip3);
+        FlowerSaver<Daisy> dt = new FlowerSaver<>();
+        dt.add_flower(daisy1);
+        dt.add_flower(daisy2);
+        FlowerSaver<Rose> rt = new FlowerSaver<>();
+        rt.add_flower(rose1);
+        rt.add_flower(rose2);
     }
 
     private Connection connect(){
@@ -54,10 +75,10 @@ public abstract class DataBaseManager {
                     + "     price real NOT NULL, \n"
                     + "     fresh_factor real NOT NULL, \n"
                     + "     unique_param text NOT NULL, \n"
-                    + "     bouquet_id integer NOT NULL";
+                    + "     bouquet_id integer NOT NULL"
+                    + ");";
 
-        try(Connection con = DriverManager.getConnection(db_url);
-         Statement st = con.createStatement();){
+        try(Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()){
             st.execute(sql);
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -67,10 +88,10 @@ public abstract class DataBaseManager {
     private void create_bouquets_table(){
         String sql = "CREATE TABLE IF NOT EXISTS bouquets (\n"
                     + "     id integer PRIMARY KEY, \n"
-                    + "     name text NOT NULL";
+                    + "     name text NOT NULL"
+                    + ");";
 
-        try(Connection con = DriverManager.getConnection(db_url);
-         Statement st = con.createStatement();){
+        try(Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()){
             st.execute(sql);
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -94,13 +115,14 @@ public abstract class DataBaseManager {
             ResultSet res = statement.executeQuery();
             while(res.next()){
                 String type = res.getString("type");
+                System.out.print(type);
                 System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type + "\n Stalk length : " + res.getFloat("stalk_length") + "\n Price : "
                                     + res.getFloat("price") + " $ \n Freshness : " + res.getFloat("fresh_factor"));
-                if(type == "tulip"){
+                if(type.equals("tulip")){
                     System.out.println(" Color : " + res.getString("unique_param"));
-                }else if(type == "rose"){
+                }else if(type.equals("rose")){
                     System.out.println(" Spikes : " + res.getString("unique_param"));
-                }else if(type == "daisy"){
+                }else if(type.equals("daisy")){
                     System.out.println(" Flower diameter : " + res.getString("unique_param"));
                 }else{
                     System.out.println(" Unknown property : " + res.getString("unique_param"));

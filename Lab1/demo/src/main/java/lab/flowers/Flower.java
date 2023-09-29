@@ -10,6 +10,15 @@ public abstract class Flower {
 
     private Integer bouquet_ID = -1;
 
+    public Flower(){};
+
+    public Flower(float stalk_length, float price, float fresh_factor, int bouquet_ID){
+        this.stalk_length = stalk_length;
+        this.price = price;
+        this.fresh_factor = fresh_factor;
+        this.bouquet_ID = bouquet_ID;
+    }
+
     public void set_stalk_len(float stalk_length){
         this.stalk_length = stalk_length;
     }
