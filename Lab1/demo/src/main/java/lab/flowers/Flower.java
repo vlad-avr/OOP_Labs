@@ -8,7 +8,7 @@ public abstract class Flower {
     private Float price;
     private Float fresh_factor; //0 -> not fresh | 1 -> very fresh
 
-    private Boolean is_in_bouquet = false;
+    private Integer bouquet_ID = -1;
 
     public void set_stalk_len(float stalk_length){
         this.stalk_length = stalk_length;
@@ -22,7 +22,26 @@ public abstract class Flower {
         this.fresh_factor = fresh_factor;
     }
 
-    public void set_in_bouquet(boolean is_in_bouquet){
-        this.is_in_bouquet = is_in_bouquet;
+    public void set_in_bouquet(int bouquet_ID){
+        this.bouquet_ID = bouquet_ID;
     }
+
+    public float get_stalk_len(){
+        return stalk_length;
+    }
+
+    public float get_price(){
+        return price;
+    }
+
+    public float get_fresh(){
+        return fresh_factor;
+    }
+
+    public int get_bouquet_id(){
+        return bouquet_ID;
+    }
+
+    public abstract String get_unique_prop();
+
 }

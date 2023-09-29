@@ -7,4 +7,9 @@ public class Rose extends Flower{
     public void set_spike_prop(String prop){
         this.spike_prop = prop;
     }
+
+    @Override
+    public String get_unique_prop(){
+        return spike_prop;
+    }
 }

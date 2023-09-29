@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class App 
 {
@@ -25,9 +26,26 @@ public class App
         }
     }
 
+    public static void createNewTable(){
+        String url = "jdbc:sqlite:test.db";
+        String sql = "CREATE TABLE IF NOT EXISTS example (\n" 
+                    + "     id integer PRIMARY KEY, \n"
+                    + "     name text NOT NULL, \n"
+                    + "     capacity real\n"
+                    + ");";
+
+        try(Connection con = DriverManager.getConnection(url);
+         Statement st = con.createStatement();){
+            st.execute(sql);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main( String[] args )
     {
-        createNewDatabase("test.db");
+        //createNewDatabase("test.db");
+        createNewTable();
         // System.out.println( "Hello World!" );
         // Controller controller = new Controller();
         // controller.start();
