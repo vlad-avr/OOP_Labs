@@ -5,6 +5,7 @@ import lab.flowers.Flower;
 import lab.flowers.Tulip;
 import lab.db_manager.DataBaseManager;
 import lab.db_manager.DataBaseManager.FlowerSaver;
+import lab.flowers.Bouquet;
 import lab.flowers.Daisy;
 import lab.flowers.Rose;
 
@@ -27,7 +28,7 @@ public class Controller {
                     case "d_bunch_add" : /*Add bouquet*/;
                     case "d_bunch_remove" : /*Remove bouquet*/;
                     case "show_flowers" : print_flowers(); break;
-                    case "show_bunches" : /*Show bouquets */;
+                    case "show_bunches" : print_bouquets(); break;
                     case "b_add" : /*Add flower to bouquet */;
                     case "b_remove" : /*Remove flower from bouquet */;
                     case "b_cost" : /*Cost of bouquet */;
@@ -45,6 +46,19 @@ public class Controller {
 
     private void print_flowers(){
         db_manager.print_all_flowers();
+    }
+
+    private void print_bouquets(){
+        db_manager.print_all_bouquets();
+    }
+
+    private void add_bouquet(){
+        String input;
+        System.out.println("\nName of bouquet :\n");
+        input = get_input();
+        Bouquet bouquet = new Bouquet();
+        bouquet.set_name(input);
+        db_manager.add_bouquet(bouquet);
     }
 
     private void add_flower(){
