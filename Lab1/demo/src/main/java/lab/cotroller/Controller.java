@@ -3,6 +3,8 @@ package lab.cotroller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.LogManager;
+
 import lab.flowers.Flower;
 import lab.flowers.Tulip;
 import lab.db_manager.DataBaseManager;
@@ -86,7 +88,8 @@ public class Controller {
                         sort_flowers_by_freshness();
                         break;
                     case "f_find":
-                        /* Find flowers */;
+                        find_flowers_by_length();
+                        break;
                     case "help":
                         print_help();
                         break;
@@ -103,9 +106,9 @@ public class Controller {
         }
     }
 
-    private void sort_flowers_by_freshness(){
+    private void sort_flowers_by_freshness() {
         String input;
-        System.out.println("\n Enter ID of the bunch which cost you want to know:\n");
+        System.out.println("\n Enter ID of the bunch tha you want to sort:\n");
         input = get_input();
         Long id = 0L;
         Bouquet bouquet = null;
@@ -121,9 +124,61 @@ public class Controller {
             System.out.println("\n Invalid ID format: " + e.getMessage());
             return;
         }
-        if (bouquet != null){
+        if (bouquet != null) {
             bouquet.sort();
             bouquet.print();
+        }
+    }
+
+    private void find_flowers_by_length() {
+        String input;
+        System.out.println("\n Enter ID of bouquet you want to search in:\n");
+        input = get_input();
+        Long ID = -1L;
+        try {
+            ID = Long.parseLong(input);
+            Bouquet bouquet = db_manager.get_bouquet(ID, false);
+            if (bouquet == null) {
+                NumberFormatException exception = new NumberFormatException("Bouquet with this ID does not exist!");
+                throw exception;
+            }
+        } catch (NumberFormatException exception) {
+            System.out.println("\n Invalid ID format : " + exception.getMessage());
+        }
+        float min;
+        float max;
+        System.out.println("\n Enter minimum length of stalk :\n");
+        while (true) {
+            input = get_input();
+            try {
+                min = Float.parseFloat(input);
+                if (min < 0) {
+                    NumberFormatException exception = new NumberFormatException();
+                    throw exception;
+                }
+                break;
+            } catch (NumberFormatException exception) {
+                System.out
+                        .println("\nMinimum stalk length must be a numeric value greater than 0 (example: 10 or 0.5)");
+            }
+        }
+        System.out.println("\n Enter maximum length of stalk :\n");
+        while (true) {
+            input = get_input();
+            try {
+                max = Float.parseFloat(input);
+                if (max < 0) {
+                    NumberFormatException exception = new NumberFormatException();
+                    throw exception;
+                }
+                break;
+            } catch (NumberFormatException exception) {
+                System.out
+                        .println("\nMaximum stalk length must be a numeric value greater than 0 (example: 10 or 0.5)");
+            }
+        }
+        if (ID != -1L) {
+            db_manager.find_flowers_by_length(ID, min, max);
         }
     }
 

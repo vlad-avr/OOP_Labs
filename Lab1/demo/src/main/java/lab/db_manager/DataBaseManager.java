@@ -26,7 +26,7 @@ public class DataBaseManager {
         make_entry_data();
     }
 
-    public void destroy_database(){
+    public void destroy_database() {
         String sql1 = "DROP TABLE IF EXISTS flowers";
         String sql2 = "DROP TABLE IF EXISTS bouquets";
         try (Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()) {
@@ -188,6 +188,37 @@ public class DataBaseManager {
         }
     }
 
+    public void find_flowers_by_length(Long ID, float min_length, float max_length) {
+        String str = "SELECT *\nFROM flowers WHERE bouquet_id = " + String.valueOf(ID) + " AND stalk_length >= "
+                + String.valueOf(min_length) + " AND stalk_length <= " + String.valueOf(max_length);
+        try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
+            ResultSet res = statement.executeQuery();
+            while (res.next()) {
+                String type = res.getString("type");
+                System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type + "\n Stalk length : "
+                        + res.getFloat("stalk_length") + "\n Price : "
+                        + res.getFloat("price") + " $ \n Freshness : " + res.getFloat("fresh_factor"));
+                if (type.equals("tulip")) {
+                    System.out.println(" Color : " + res.getString("unique_param"));
+                } else if (type.equals("rose")) {
+                    System.out.println(" Spikes : " + res.getString("unique_param"));
+                } else if (type.equals("daisy")) {
+                    System.out.println(" Flower diameter : " + res.getString("unique_param"));
+                } else {
+                    System.out.println(" Unknown property : " + res.getString("unique_param"));
+                }
+                int b_id = res.getInt("bouquet_id");
+                if (b_id == -1) {
+                    System.out.println(" Not in bouquet");
+                } else {
+                    System.out.println(" In bouquet with id " + b_id);
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
     public void add_flower_to_bouquet(Long ID, Long new_bouquet_ID) {
         String str = "UPDATE flowers SET bouquet_id = " + String.valueOf(new_bouquet_ID) + " WHERE id = "
                 + String.valueOf(ID);
@@ -197,8 +228,7 @@ public class DataBaseManager {
                 if (bouquet != null) {
                     statement.executeUpdate();
                 }
-            }
-            else{
+            } else {
                 statement.executeUpdate();
             }
         } catch (SQLException exception) {
@@ -280,12 +310,12 @@ public class DataBaseManager {
         }
     }
 
-    public void update_bouquet(Long ID, Bouquet bouquet){
+    public void update_bouquet(Long ID, Bouquet bouquet) {
         String str = "UPDATE bouquets SET name = ? WHERE id = " + String.valueOf(ID);
-        try(Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)){
+        try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
             statement.setString(1, bouquet.get_name());
             statement.executeUpdate();
-        }catch(SQLException exception){
+        } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
     }
