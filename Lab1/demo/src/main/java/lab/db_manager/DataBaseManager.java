@@ -15,8 +15,6 @@ import lab.flowers.Tulip;
 
 public class DataBaseManager {
     private final String db_url = "jdbc:sqlite:lab.db";
-    // private final String flowers_table = "flowers";
-    // private final String bouquets_table = "bouquets";
 
     public void setup_database() {
         destroy_database();

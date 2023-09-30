@@ -46,6 +46,15 @@ public class Bouquet {
         return cost;
     }
 
+    public Flower get_flower(int i){
+        if(i < flowers.size()){
+            return flowers.get(i);
+        }
+        else{
+            return null;
+        }
+    }
+
     public void sort() {
         Collections.sort(flowers, new Comparator<Flower>() {
             @Override
