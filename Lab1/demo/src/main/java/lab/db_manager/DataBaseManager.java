@@ -19,6 +19,7 @@ public class DataBaseManager {
     // private final String bouquets_table = "bouquets";
 
     public void setup_database() {
+        destroy_database();
         create_database();
         create_flowers_table();
         create_bouquets_table();
@@ -30,6 +31,10 @@ public class DataBaseManager {
         String sql2 = "DROP TABLE IF EXISTS bouquets";
         try (Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()) {
             st.execute(sql1);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        try (Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()) {
             st.execute(sql2);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -271,6 +276,16 @@ public class DataBaseManager {
                 }
             }
         } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    public void update_bouquet(Long ID, Bouquet bouquet){
+        String str = "UPDATE bouquets SET name = ? WHERE id = " + String.valueOf(ID);
+        try(Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)){
+            statement.setString(1, bouquet.get_name());
+            statement.executeUpdate();
+        }catch(SQLException exception){
             System.out.println(exception.getMessage());
         }
     }

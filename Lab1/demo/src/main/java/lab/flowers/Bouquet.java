@@ -1,10 +1,11 @@
 package lab.flowers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Bouquet {
-    private List<Flower> flowers;
+    private List<Flower> flowers = new ArrayList<>();
     private String name;
     private Long ID;
 
@@ -33,5 +34,13 @@ public class Bouquet {
 
     public void add_flower(Flower flower){
         flowers.add(flower);
+    }
+
+    public float calculate_cost(){
+        float cost = 0.0f;
+        for(int i = 0; i < flowers.size(); i++){
+            cost += flowers.get(i).get_price();
+        }
+        return cost;
     }
 }

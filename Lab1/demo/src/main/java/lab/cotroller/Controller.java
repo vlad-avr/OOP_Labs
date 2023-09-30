@@ -1,5 +1,7 @@
 package lab.cotroller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import lab.flowers.Flower;
 import lab.flowers.Tulip;
@@ -34,7 +36,7 @@ public class Controller {
                         update_flower();
                         break;
                     case "d_bunch_update":
-                        update_flower();
+                        update_bunch();
                         break;
                     case "d_bunch_add":
                         add_bouquet();
@@ -78,7 +80,8 @@ public class Controller {
                         }
                         break;
                     case "b_cost":
-                        /* Cost of bouquet */;
+                        calculate_cost_of_bouquet();
+                        break;
                     case "b_sort":
                         /* Sort flowers in bouquet */;
                     case "f_find":
@@ -97,6 +100,28 @@ public class Controller {
                 exception.printStackTrace();
             }
         }
+    }
+
+    private void calculate_cost_of_bouquet() {
+        String input;
+        System.out.println("\n Enter ID of the bunch which cost you want to know:\n");
+        input = get_input();
+        Long id = 0L;
+        Bouquet bouquet = null;
+        try {
+            id = Long.parseLong(input);
+            if (id < 0) {
+                NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                throw exception;
+            }
+            db_manager.print_all_bouquets(id);
+            bouquet = db_manager.get_bouquet(id, true);
+        } catch (NumberFormatException e) {
+            System.out.println("\n Invalid ID format: " + e.getMessage());
+            return;
+        }
+        if (bouquet != null)
+            System.out.println("\n Cost of " + bouquet.get_name() + " : " + bouquet.calculate_cost() + " $");
     }
 
     private void delete_tables() {
@@ -167,6 +192,47 @@ public class Controller {
 
     private void print_bouquets() {
         db_manager.print_all_bouquets(-1L);
+    }
+
+    private void update_bunch() {
+        String input;
+        System.out.println("\n Enter ID of the bunch you want to update:\n");
+        input = get_input();
+        Long id = 0L;
+        try {
+            id = Long.parseLong(input);
+            if (id < 0) {
+                NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                throw exception;
+            }
+            db_manager.print_all_bouquets(id);
+        } catch (NumberFormatException e) {
+            System.out.println("\n Invalid ID format: " + e.getMessage());
+            return;
+        }
+        Bouquet bouquet = db_manager.get_bouquet(id, false);
+        System.out.println(
+                "\n What property you would like to change (name / ):\n");
+        while (true) {
+            input = get_input();
+            switch (input) {
+                case "name":
+                    System.out.println("\n Enter new name:\n");
+                    input = get_input();
+                    bouquet.set_name(input);
+                    break;
+                default:
+                    System.out.println("\nUnknown property!\n");
+            }
+            System.out.println("\n Anything else you want to change (+ / -)?\n");
+            input = get_input();
+            if (input.equals("+")) {
+                continue;
+            } else {
+                break;
+            }
+        }
+        db_manager.update_bouquet(id, bouquet);
     }
 
     private void update_flower() {
@@ -518,6 +584,6 @@ public class Controller {
 
     private void print_help() {
         System.out.println(
-                "\n List of commands:\n d_flower_add -> add flower to database\n d_flower_remove -> remove flower from database\n d_bunch_add -> add bouquet to database\n d_bunch_remove -> remove bouquet from database\n show_flowers -> show all flowers in database\n show_bunches -> show all bouquets in database\n b_add -> add flower to bouquet\n b_remove -> remove flower from database\n b_cost -> calculate cost of bouquet\n b_sort -> sort flowers in bouquet\n f_find -> find flowers in given stalk length span\n help -> print help\n exit -> exit program");
+                "\n List of commands:\n d_flower_add -> add flower to database\n d_flower_remove -> remove flower from database\n d_flower_update -> update flower data\n d_bunch_update -> update bouquet data\n d_bunch_add -> add bouquet to database\n d_bunch_remove -> remove bouquet from database\n show_flowers -> show all flowers in database\n show_bunches -> show all bouquets in database\n b_add -> add flower to bouquet\n b_remove -> remove flower from database\n b_cost -> calculate cost of bouquet\n b_sort -> sort flowers in bouquet\n f_find -> find flowers in given stalk length span\n help -> print help\n exit -> exit program");
     }
 }
