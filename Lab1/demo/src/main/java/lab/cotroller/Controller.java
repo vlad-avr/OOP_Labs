@@ -28,7 +28,8 @@ public class Controller {
                         add_flower();
                         break;
                     case "d_flower_remove":
-                        /* Remove flower */;
+                        delete_flower();
+                        break;
                     case "d_flower_update":
                         update_flower();
                         break;
@@ -39,7 +40,8 @@ public class Controller {
                         add_bouquet();
                         break;
                     case "d_bunch_remove":
-                        /* Remove bouquet */;
+                        delete_bouquet();
+                        break;
                     case "show_flowers":
                         print_flowers();
                         break;
@@ -71,6 +73,64 @@ public class Controller {
         }
     }
 
+    private void delete_bouquet() {
+        Long ID = -1L;
+        System.out.println("\n Enter ID of the bouquet you want to delete: \n");
+        String input;
+        while (true) {
+            input = get_input();
+            try {
+                ID = Long.parseLong(input);
+                if (ID < 0) {
+                    NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                    throw exception;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("\n Invalid ID format: " + e.getMessage());
+                break;
+            }
+        }
+        if (ID != -1L) {
+            System.out.println("\n Do you want to delete flowers from this bouquet as well (+ / -)?\n");
+            while (true) {
+                input = get_input();
+                if (input.equals("+")) {
+                    db_manager.delete_bouquet(ID, true);
+                    break;
+                }else if(input.equals("-")){
+                    db_manager.delete_bouquet(ID, false);
+                    break;
+                }else{
+                    System.out.println("\n Enter + if you want to delete flowers and - if you don`t!\n");
+                }
+            }
+        }
+    }
+
+    private void delete_flower() {
+        Long ID = -1L;
+        System.out.println("\n Enter ID of the flower you want to delete: \n");
+        String input;
+        while (true) {
+            input = get_input();
+            try {
+                ID = Long.parseLong(input);
+                if (ID < 0) {
+                    NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                    throw exception;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("\n Invalid ID format: " + e.getMessage());
+                break;
+            }
+        }
+        if (ID != -1L) {
+            db_manager.delete_flower(ID);
+        }
+    }
+
     private void print_flowers() {
         db_manager.print_all_flowers(-1L);
     }
@@ -95,8 +155,6 @@ public class Controller {
             System.out.println("\n Invalid ID format: " + e.getMessage());
             return;
         }
-
-        // String type = db_manager.get_flower_type(id);
 
         FlowerSaver<Tulip> flower_loader = db_manager.new FlowerSaver<>();
         Tulip new_flower = new Tulip();

@@ -155,7 +155,8 @@ public class DataBaseManager {
             while (b_res.next()) {
                 System.out.println(
                         "\n ID : " + b_res.getString("id") + "\n Name : " + b_res.getString("name") + "\n Flowers:");
-                String f_str = "SELECT id, type, price\nFROM flowers WHERE bouquet_id = " + String.valueOf(b_res.getLong("id"));
+                String f_str = "SELECT id, type, price\nFROM flowers WHERE bouquet_id = "
+                        + String.valueOf(b_res.getLong("id"));
                 try (Connection f_con = connect(); PreparedStatement f_statement = con.prepareStatement(f_str)) {
                     ResultSet f_res = f_statement.executeQuery();
                     while (f_res.next()) {
@@ -233,17 +234,31 @@ public class DataBaseManager {
         return null;
     }
 
-    // public String get_flower_type(int id) {
-    // String str = "SELECT type\nFROM flowers WHERE id = " + String.valueOf(id);
-    // try (Connection con = connect(); PreparedStatement statement =
-    // con.prepareStatement(str)) {
-    // ResultSet res = statement.executeQuery();
-    // return res.getString("type");
-    // } catch (SQLException exception) {
-    // System.out.println(exception.getMessage());
-    // }
-    // return "";
-    // }
+    public void delete_flower(Long ID) {
+        String str = "DELETE FROM flowers WHERE id = " + String.valueOf(ID);
+        try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
+            statement.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    public void delete_bouquet(Long ID, boolean and_flowers) {
+        String str = "DELETE FROM bouquets WHERE id = " + String.valueOf(ID);
+        try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
+            statement.executeUpdate();
+            if (and_flowers) {
+                String f_str = "DELETE FROM flowers WHERE bouquet_id = " + String.valueOf(ID);
+                try (Connection f_con = connect(); PreparedStatement f_statement = f_con.prepareStatement(f_str)) {
+                    f_statement.executeUpdate();
+                } catch (SQLException exception) {
+                    System.out.println(exception.getMessage());
+                }
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 
     public class FlowerSaver<T extends Flower> {
         public void add_flower(T flower) {
