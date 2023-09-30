@@ -1,6 +1,8 @@
 package lab.flowers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -42,5 +44,32 @@ public class Bouquet {
             cost += flowers.get(i).get_price();
         }
         return cost;
+    }
+
+    public void sort(){
+        Collections.sort(flowers, new Comparator<Flower>() {
+            @Override
+            public int compare(Flower f1, Flower f2){
+                if(f1.get_fresh() < f2.get_fresh()){
+                    return -1;
+                }else if(f1.get_fresh() == f2.get_fresh()){
+                    return 0;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
+    }
+
+    public void print(){
+        System.out.println("\n ID : " + ID + "\n Name : " + name + "\n Flowers:");
+        for(int i = 0; i < flowers.size(); i++){
+            String class_name = flowers.get(i).getClass().toString();
+            int last_dot_ind = class_name.lastIndexOf(".") + 1;
+            class_name = class_name.substring(last_dot_ind);
+            System.out.println("\n\t id = " + flowers.get(i).get_id() + " " + class_name.toLowerCase() + " "
+                                + flowers.get(i).get_price() + " $ freshness : " + flowers.get(i).get_fresh());
+        }
     }
 }

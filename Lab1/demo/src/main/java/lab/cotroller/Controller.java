@@ -83,7 +83,8 @@ public class Controller {
                         calculate_cost_of_bouquet();
                         break;
                     case "b_sort":
-                        /* Sort flowers in bouquet */;
+                        sort_flowers_by_freshness();
+                        break;
                     case "f_find":
                         /* Find flowers */;
                     case "help":
@@ -99,6 +100,30 @@ public class Controller {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+        }
+    }
+
+    private void sort_flowers_by_freshness(){
+        String input;
+        System.out.println("\n Enter ID of the bunch which cost you want to know:\n");
+        input = get_input();
+        Long id = 0L;
+        Bouquet bouquet = null;
+        try {
+            id = Long.parseLong(input);
+            if (id < 0) {
+                NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                throw exception;
+            }
+            db_manager.print_all_bouquets(id);
+            bouquet = db_manager.get_bouquet(id, true);
+        } catch (NumberFormatException e) {
+            System.out.println("\n Invalid ID format: " + e.getMessage());
+            return;
+        }
+        if (bouquet != null){
+            bouquet.sort();
+            bouquet.print();
         }
     }
 

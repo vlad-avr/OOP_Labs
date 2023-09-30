@@ -46,11 +46,11 @@ public class DataBaseManager {
         Bouquet bouquet2 = new Bouquet(2L, "bouquet 2");
         Tulip tulip1 = new Tulip(12.0f, 20.0f, 0.6f, 1L, "red");
         Tulip tulip2 = new Tulip(12.0f, 40.0f, 1f, 2L, "violet");
-        Tulip tulip3 = new Tulip(14.0f, 10.0f, 0.2f, -1L, "blue");
-        Daisy daisy1 = new Daisy(10.0f, 25.0f, 0.4f, 2L, "small");
+        Tulip tulip3 = new Tulip(14.0f, 10.0f, 0.2f, 1L, "blue");
+        Daisy daisy1 = new Daisy(10.0f, 25.0f, 0.4f, 1L, "small");
         Rose rose1 = new Rose(9.0f, 35.0f, 0.5f, 1L, "absent");
         Daisy daisy2 = new Daisy(12.0f, 40.0f, 1f, 1L, "big");
-        Rose rose2 = new Rose(14.0f, 10.0f, 0.2f, -1L, "sharp");
+        Rose rose2 = new Rose(14.0f, 10.0f, 0.2f, 1L, "sharp");
         FlowerSaver<Tulip> st = new FlowerSaver<>();
         st.add_flower(tulip1);
         st.add_flower(tulip2);
@@ -170,13 +170,13 @@ public class DataBaseManager {
             while (b_res.next()) {
                 System.out.println(
                         "\n ID : " + b_res.getString("id") + "\n Name : " + b_res.getString("name") + "\n Flowers:");
-                String f_str = "SELECT id, type, price\nFROM flowers WHERE bouquet_id = "
+                String f_str = "SELECT id, type, price, fresh_factor\nFROM flowers WHERE bouquet_id = "
                         + String.valueOf(b_res.getLong("id"));
                 try (Connection f_con = connect(); PreparedStatement f_statement = con.prepareStatement(f_str)) {
                     ResultSet f_res = f_statement.executeQuery();
                     while (f_res.next()) {
                         System.out.println("\n\t id = " + f_res.getInt("id") + " " + f_res.getString("type") + " "
-                                + f_res.getFloat("price") + " $");
+                                + f_res.getFloat("price") + " $ freshness : " + f_res.getFloat("fresh_factor"));
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
