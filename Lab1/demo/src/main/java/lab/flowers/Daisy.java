@@ -7,12 +7,13 @@ public class Daisy extends Flower{
 
     public Daisy(){};
 
-    public Daisy(float stalk_length, float price, float fresh_factor, int bouquet_ID, String fd){
+    public Daisy(float stalk_length, float price, float fresh_factor, Long bouquet_ID, String fd){
         super(stalk_length, price, fresh_factor, bouquet_ID);
         flower_diameter = fd;
     }
 
-    public void set_flower_diameter(String D){
+    @Override
+    public void set_unique_prop(String D){
         this.flower_diameter = D;
     }
 

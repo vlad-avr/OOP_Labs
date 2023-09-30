@@ -6,12 +6,13 @@ public class Tulip extends Flower{
 
     public Tulip(){};
 
-    public Tulip(float stalk_length, float price, float fresh_factor, int bouquet_ID, String col){
+    public Tulip(float stalk_length, float price, float fresh_factor, Long bouquet_ID, String col){
         super(stalk_length, price, fresh_factor, bouquet_ID);
         color = col;
     }
 
-    public void set_color(String color){
+    @Override
+    public void set_unique_prop(String color){
         this.color = color;
     }
 

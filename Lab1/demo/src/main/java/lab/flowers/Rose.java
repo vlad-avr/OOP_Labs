@@ -6,12 +6,13 @@ public class Rose extends Flower{
 
     public Rose(){};
 
-    public Rose(float stalk_length, float price, float fresh_factor, int bouquet_ID, String sp){
+    public Rose(float stalk_length, float price, float fresh_factor, Long bouquet_ID, String sp){
         super(stalk_length, price, fresh_factor, bouquet_ID);
         spike_prop = sp;
     }
 
-    public void set_spike_prop(String prop){
+    @Override
+    public void set_unique_prop(String prop){
         this.spike_prop = prop;
     }
 
