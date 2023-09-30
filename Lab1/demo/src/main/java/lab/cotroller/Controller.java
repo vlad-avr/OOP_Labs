@@ -1,9 +1,6 @@
 package lab.cotroller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.LogManager;
 
 import lab.flowers.Flower;
 import lab.flowers.Tulip;
@@ -22,7 +19,7 @@ public class Controller {
     }
 
     private void main_loop() {
-        System.out.println("Welcome to BoUwUquet Manager!\n");
+        System.out.println("\n\tWelcome to BoUwUquet Manager!\n");
         print_help();
         while (true) {
             try {
