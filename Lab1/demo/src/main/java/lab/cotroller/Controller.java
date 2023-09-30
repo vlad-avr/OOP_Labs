@@ -49,9 +49,34 @@ public class Controller {
                         print_bouquets();
                         break;
                     case "b_add":
-                        /* Add flower to bouquet */;
+                        String id_input;
+                        System.out.println("\n Enter ID of the flower you want to add to bouquet:\n");
+                        id_input = get_input();
+                        try {
+                            Long id = Long.parseLong(id_input);
+                            if (id < 0) {
+                                NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                                throw exception;
+                            }
+                            add_flower_to_bouquet(id);
+                        } catch (NumberFormatException e) {
+                            System.out.println("\n Invalid ID format: " + e.getMessage());
+                        }
+                        break;
                     case "b_remove":
-                        /* Remove flower from bouquet */;
+                        System.out.println("\n Enter ID of the flower you want to remove from bouquet:\n");
+                        id_input = get_input();
+                        try {
+                            Long id = Long.parseLong(id_input);
+                            if (id < 0) {
+                                NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                                throw exception;
+                            }
+                            db_manager.add_flower_to_bouquet(id, -1L);
+                        } catch (NumberFormatException e) {
+                            System.out.println("\n Invalid ID format: " + e.getMessage());
+                        }
+                        break;
                     case "b_cost":
                         /* Cost of bouquet */;
                     case "b_sort":
@@ -98,10 +123,10 @@ public class Controller {
                 if (input.equals("+")) {
                     db_manager.delete_bouquet(ID, true);
                     break;
-                }else if(input.equals("-")){
+                } else if (input.equals("-")) {
                     db_manager.delete_bouquet(ID, false);
                     break;
-                }else{
+                } else {
                     System.out.println("\n Enter + if you want to delete flowers and - if you don`t!\n");
                 }
             }
@@ -333,6 +358,26 @@ public class Controller {
         flower.set_fresh(val);
     }
 
+    private void add_flower_to_bouquet(Long flower_id) {
+        Long ID;
+        String input;
+        System.out.println("\n Enter ID of existing bouquet:\n");
+        while (true) {
+            input = get_input();
+            try {
+                ID = Long.parseLong(input);
+                if (ID < 0) {
+                    NumberFormatException exception = new NumberFormatException("ID is a negative value");
+                    throw exception;
+                }
+                break;
+            } catch (NumberFormatException exception) {
+                System.out.println("\n Invalid ID format: " + exception.getMessage());
+            }
+        }
+        db_manager.add_flower_to_bouquet(flower_id, ID);
+    }
+
     private void add_tulip() {
         Flower flower = new Tulip();
         gen_flower(flower);
@@ -344,7 +389,24 @@ public class Controller {
         while (true) {
             input = get_input();
             if (input.equals("+")) {
-                // Add to existing bouquet
+                Long b_id;
+                System.out.println("\n Enter ID of existing bouquet:\n0");
+                while(true){
+                    input = get_input();
+                    try {
+                        b_id = Long.parseLong(input);
+                        Bouquet bouquet = db_manager.get_bouquet(b_id, false);
+                        if(bouquet != null){
+                            tulip.set_in_bouquet(b_id);
+                        }else{
+                            NumberFormatException exception = new NumberFormatException();
+                            throw exception;
+                        }
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("\n Bouquet with this ID does not exist!\n");
+                    }
+                }
                 break;
             } else if (input.equals("-")) {
                 break;
@@ -368,7 +430,25 @@ public class Controller {
         while (true) {
             input = get_input();
             if (input.equals("+")) {
-                // Add to existing bouquet
+                 Long b_id;
+                System.out.println("\n Enter ID of existing bouquet:\n0");
+                while(true){
+                    input = get_input();
+                    try {
+                        b_id = Long.parseLong(input);
+                        Bouquet bouquet = db_manager.get_bouquet(b_id, false);
+                        if(bouquet != null){
+                            daisy.set_in_bouquet(b_id);
+                        }else{
+                            NumberFormatException exception = new NumberFormatException();
+                            throw exception;
+                        }
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("\n Bouquet with this ID does not exist!\n");
+                    }
+                }
+                break;
             } else if (input.equals("-")) {
                 break;
             } else {
@@ -391,7 +471,25 @@ public class Controller {
         while (true) {
             input = get_input();
             if (input.equals("+")) {
-                // Add to existing bouquet
+                 Long b_id;
+                System.out.println("\n Enter ID of existing bouquet:\n0");
+                while(true){
+                    input = get_input();
+                    try {
+                        b_id = Long.parseLong(input);
+                        Bouquet bouquet = db_manager.get_bouquet(b_id, false);
+                        if(bouquet != null){
+                            rose.set_in_bouquet(b_id);
+                        }else{
+                            NumberFormatException exception = new NumberFormatException();
+                            throw exception;
+                        }
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("\n Bouquet with this ID does not exist!\n");
+                    }
+                }
+                break;
             } else if (input.equals("-")) {
                 break;
             } else {

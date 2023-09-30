@@ -177,9 +177,14 @@ public class DataBaseManager {
         String str = "UPDATE flowers SET bouquet_id = " + String.valueOf(new_bouquet_ID) + " WHERE id = "
                 + String.valueOf(ID);
         try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
-            Bouquet bouquet = get_bouquet(new_bouquet_ID, false);
-            if (bouquet != null) {
-                statement.executeQuery();
+            if (new_bouquet_ID != -1L) {
+                Bouquet bouquet = get_bouquet(new_bouquet_ID, false);
+                if (bouquet != null) {
+                    statement.executeUpdate();
+                }
+            }
+            else{
+                statement.executeUpdate();
             }
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
