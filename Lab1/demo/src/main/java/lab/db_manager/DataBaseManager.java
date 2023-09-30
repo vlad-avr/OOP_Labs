@@ -155,12 +155,12 @@ public class DataBaseManager {
             while (b_res.next()) {
                 System.out.println(
                         "\n ID : " + b_res.getString("id") + "\n Name : " + b_res.getString("name") + "\n Flowers:");
-                String f_str = "SELECT id, type, price\nFROM bouquets";
+                String f_str = "SELECT id, type, price\nFROM flowers WHERE bouquet_id = " + String.valueOf(b_res.getLong("id"));
                 try (Connection f_con = connect(); PreparedStatement f_statement = con.prepareStatement(f_str)) {
                     ResultSet f_res = f_statement.executeQuery();
                     while (f_res.next()) {
-                        System.out.println("\n\t (id = " + f_res.getInt("id") + " " + f_res.getString("type") + " "
-                                + f_res.getFloat("price") + " $\n");
+                        System.out.println("\n\t id = " + f_res.getInt("id") + " " + f_res.getString("type") + " "
+                                + f_res.getFloat("price") + " $");
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
