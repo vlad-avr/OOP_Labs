@@ -87,6 +87,7 @@ public class Controller {
                         print_help();
                         break;
                     case "exit":
+                        delete_tables();
                         return;
                     default:
                         System.out.println("\nInvalid input command!\n");
@@ -96,6 +97,10 @@ public class Controller {
                 exception.printStackTrace();
             }
         }
+    }
+
+    private void delete_tables() {
+        db_manager.destroy_database();
     }
 
     private void delete_bouquet() {
@@ -391,14 +396,14 @@ public class Controller {
             if (input.equals("+")) {
                 Long b_id;
                 System.out.println("\n Enter ID of existing bouquet:\n0");
-                while(true){
+                while (true) {
                     input = get_input();
                     try {
                         b_id = Long.parseLong(input);
                         Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-                        if(bouquet != null){
+                        if (bouquet != null) {
                             tulip.set_in_bouquet(b_id);
-                        }else{
+                        } else {
                             NumberFormatException exception = new NumberFormatException();
                             throw exception;
                         }
@@ -430,16 +435,16 @@ public class Controller {
         while (true) {
             input = get_input();
             if (input.equals("+")) {
-                 Long b_id;
+                Long b_id;
                 System.out.println("\n Enter ID of existing bouquet:\n0");
-                while(true){
+                while (true) {
                     input = get_input();
                     try {
                         b_id = Long.parseLong(input);
                         Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-                        if(bouquet != null){
+                        if (bouquet != null) {
                             daisy.set_in_bouquet(b_id);
-                        }else{
+                        } else {
                             NumberFormatException exception = new NumberFormatException();
                             throw exception;
                         }
@@ -471,16 +476,16 @@ public class Controller {
         while (true) {
             input = get_input();
             if (input.equals("+")) {
-                 Long b_id;
+                Long b_id;
                 System.out.println("\n Enter ID of existing bouquet:\n0");
-                while(true){
+                while (true) {
                     input = get_input();
                     try {
                         b_id = Long.parseLong(input);
                         Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-                        if(bouquet != null){
+                        if (bouquet != null) {
                             rose.set_in_bouquet(b_id);
-                        }else{
+                        } else {
                             NumberFormatException exception = new NumberFormatException();
                             throw exception;
                         }

@@ -25,6 +25,17 @@ public class DataBaseManager {
         make_entry_data();
     }
 
+    public void destroy_database(){
+        String sql1 = "DROP TABLE IF EXISTS flowers";
+        String sql2 = "DROP TABLE IF EXISTS bouquets";
+        try (Connection con = DriverManager.getConnection(db_url); Statement st = con.createStatement()) {
+            st.execute(sql1);
+            st.execute(sql2);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void make_entry_data() {
         Bouquet bouquet1 = new Bouquet(1L, "bouquet 1");
         Bouquet bouquet2 = new Bouquet(2L, "bouquet 2");
@@ -120,7 +131,6 @@ public class DataBaseManager {
             ResultSet res = statement.executeQuery();
             while (res.next()) {
                 String type = res.getString("type");
-                System.out.print(type);
                 System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type + "\n Stalk length : "
                         + res.getFloat("stalk_length") + "\n Price : "
                         + res.getFloat("price") + " $ \n Freshness : " + res.getFloat("fresh_factor"));
