@@ -20,4 +20,11 @@ public class Tulip extends Flower{
     public String get_unique_prop(){
         return color;
     }
+
+    @Override
+    public void print(){
+        System.out.println("\n Flower type : Tulip");
+        super.print();
+        System.out.println("\n Color : " + color);
+    }
 }

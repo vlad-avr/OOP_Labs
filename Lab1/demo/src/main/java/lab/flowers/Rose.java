@@ -20,4 +20,11 @@ public class Rose extends Flower{
     public String get_unique_prop(){
         return spike_prop;
     }
+
+    @Override
+    public void print(){
+        System.out.println("\n Flower type : Rose");
+        super.print();
+        System.out.println("\n Spikes : " + spike_prop);
+    }
 }

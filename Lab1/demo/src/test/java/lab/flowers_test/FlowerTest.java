@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import lab.flowers.Daisy;
-import lab.flowers.Flower;
 import lab.flowers.Rose;
 import lab.flowers.Tulip;
 

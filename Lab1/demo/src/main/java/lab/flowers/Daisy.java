@@ -21,4 +21,11 @@ public class Daisy extends Flower{
     public String get_unique_prop(){
         return flower_diameter;
     }
+
+    @Override
+    public void print(){
+        System.out.println("\n Flower type : Daisy");
+        super.print();
+        System.out.println("Flower Diameter : " + flower_diameter);
+    }
 }
