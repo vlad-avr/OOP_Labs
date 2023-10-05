@@ -18,12 +18,14 @@ import lab.flowers.Tulip;
 public class DataBaseManager {
     private final String db_url = "jdbc:sqlite:lab.db";
 
-    public void setup_database() {
+    public void setup_database(boolean is_test) {
         destroy_database();
         create_database();
         create_flowers_table();
         create_bouquets_table();
-        make_entry_data();
+        if (!is_test) {
+            make_entry_data();
+        }
     }
 
     public void destroy_database() {

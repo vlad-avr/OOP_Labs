@@ -41,13 +41,13 @@ public class BouquetTest {
     }
 
     @Test
-    public void test_sort_function(){
+    public void test_sort_and_sum_functions(){
         String name = "test";
         Long ID = 1L;
         bouquet1 = new Bouquet(ID, name);
-        Tulip tulip = new Tulip(0, 0, 0.5f, ID, name);
-        Daisy daisy = new Daisy(0, 0, 0.8f, ID, name);
-        Rose rose = new Rose(0, 0, 0.3f, ID, name);
+        Tulip tulip = new Tulip(0, 30, 0.5f, ID, name);
+        Daisy daisy = new Daisy(0, 20, 0.8f, ID, name);
+        Rose rose = new Rose(0, 10, 0.3f, ID, name);
         bouquet1.add_flower(rose);
         bouquet1.add_flower(tulip);
         bouquet1.add_flower(daisy);
@@ -55,5 +55,6 @@ public class BouquetTest {
         assertTrue(bouquet1.get_flower(0).get_fresh() == 0.3f);
         assertTrue(bouquet1.get_flower(1).get_fresh() == 0.5f);
         assertTrue(bouquet1.get_flower(2).get_fresh() == 0.8f);
+        assertTrue(bouquet1.calculate_cost() == 60.0f);
     }
 }

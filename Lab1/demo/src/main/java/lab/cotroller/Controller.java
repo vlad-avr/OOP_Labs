@@ -11,11 +11,19 @@ import lab.flowers.Daisy;
 import lab.flowers.Rose;
 
 public class Controller {
-    private DataBaseManager db_manager = new DataBaseManager();
+    private DataBaseManager db_manager;
     private InputManager inputManager = new InputManager();
 
+    public Controller(){
+        db_manager = new DataBaseManager();
+    }
+
+    public Controller(DataBaseManager db_manager){
+        this.db_manager = db_manager;
+    }
+
     public void start() {
-        db_manager.setup_database();
+        db_manager.setup_database(false);
         main_loop();
     }
 
@@ -336,37 +344,6 @@ public class Controller {
         }else{
             tulip.set_in_bouquet(-1L);
         }
-        // while (true) {
-        // input = get_input();
-        // if (input.equals("+")) {
-        // Long b_id;
-        // System.out.println("\n Enter ID of existing bouquet:\n0");
-        // while (true) {
-        // input = get_input();
-        // try {
-        // b_id = Long.parseLong(input);
-        // Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-        // if (bouquet != null) {
-        // tulip.set_in_bouquet(b_id);
-        // } else {
-        // NumberFormatException exception = new NumberFormatException();
-        // throw exception;
-        // }
-        // break;
-        // } catch (NumberFormatException e) {
-        // System.out.println("\n Bouquet with this ID does not exist!\n");
-        // }
-        // }
-        // break;
-        // } else if (input.equals("-")) {
-        // break;
-        // } else {
-        // System.out.println(
-        // "\nEnter '+' if you want to add this flower to existing bouquet or '-' if you
-        // don`t!\n");
-        // }
-        // }
-
         FlowerSaver<Tulip> saver = db_manager.new FlowerSaver<Tulip>();
         saver.add_flower(tulip);
     }
@@ -391,36 +368,6 @@ public class Controller {
         }else{
             daisy.set_in_bouquet(-1L);
         }
-        // String input;
-        // while (true) {
-        //     input = get_input();
-        //     if (input.equals("+")) {
-        //         Long b_id;
-        //         System.out.println("\n Enter ID of existing bouquet:\n0");
-        //         while (true) {
-        //             input = get_input();
-        //             try {
-        //                 b_id = Long.parseLong(input);
-        //                 Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-        //                 if (bouquet != null) {
-        //                     daisy.set_in_bouquet(b_id);
-        //                 } else {
-        //                     NumberFormatException exception = new NumberFormatException();
-        //                     throw exception;
-        //                 }
-        //                 break;
-        //             } catch (NumberFormatException e) {
-        //                 System.out.println("\n Bouquet with this ID does not exist!\n");
-        //             }
-        //         }
-        //         break;
-        //     } else if (input.equals("-")) {
-        //         break;
-        //     } else {
-        //         System.out.println(
-        //                 "\nEnter '+' if you want to add this flower to existing bouquet or '-' if you don`t!\n");
-        //     }
-        // }
         FlowerSaver<Daisy> saver = db_manager.new FlowerSaver<Daisy>();
         saver.add_flower(daisy);
     }
@@ -445,36 +392,6 @@ public class Controller {
         }else{
             rose.set_in_bouquet(-1L);
         }
-        // String input;
-        // while (true) {
-        //     input = get_input();
-        //     if (input.equals("+")) {
-        //         Long b_id;
-        //         System.out.println("\n Enter ID of existing bouquet:\n0");
-        //         while (true) {
-        //             input = get_input();
-        //             try {
-        //                 b_id = Long.parseLong(input);
-        //                 Bouquet bouquet = db_manager.get_bouquet(b_id, false);
-        //                 if (bouquet != null) {
-        //                     rose.set_in_bouquet(b_id);
-        //                 } else {
-        //                     NumberFormatException exception = new NumberFormatException();
-        //                     throw exception;
-        //                 }
-        //                 break;
-        //             } catch (NumberFormatException e) {
-        //                 System.out.println("\n Bouquet with this ID does not exist!\n");
-        //             }
-        //         }
-        //         break;
-        //     } else if (input.equals("-")) {
-        //         break;
-        //     } else {
-        //         System.out.println(
-        //                 "\nEnter '+' if you want to add this flower to existing bouquet or '-' if you don`t!\n");
-        //     }
-        // }
         FlowerSaver<Rose> saver = db_manager.new FlowerSaver<Rose>();
         saver.add_flower(rose);
     }
