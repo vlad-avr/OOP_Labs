@@ -94,8 +94,7 @@ public class Controller {
     }
 
     private void sort_flowers_by_freshness() {
-        System.out.println("\n Enter ID of the bunch tha you want to sort:\n");
-        Long id = inputManager.get_id_input();
+        Long id = inputManager.get_id_input("\n Enter ID of the bunch tha you want to sort:\n");
         sort_flowers_by_freshness_impl(id);
     }
 
@@ -109,14 +108,11 @@ public class Controller {
     }
 
     private void find_flowers_by_length() {
-        System.out.println("\n Enter ID of bouquet you want to search in:\n");
-        Long ID = inputManager.get_id_input();
+        Long ID = inputManager.get_id_input("\n Enter ID of bouquet you want to search in:\n");
         float min;
         float max;
-        System.out.println("\n Enter minimum length of stalk :\n");
-        min = inputManager.get_float_input();
-        System.out.println("\n Enter maximum length of stalk :\n");
-        max = inputManager.get_float_input();
+        min = inputManager.get_float_input("\n Enter minimum length of stalk :\n");
+        max = inputManager.get_float_input("\n Enter maximum length of stalk :\n");
 
         if (ID != -1L) {
             List<Flower> flowers = find_flowers_by_length_impl(ID, min, max);
@@ -131,8 +127,7 @@ public class Controller {
     }
 
     private void calculate_cost_of_bouquet() {
-        System.out.println("\n Enter ID of the bunch which cost you want to know:\n");
-        Long id = inputManager.get_id_input();
+        Long id = inputManager.get_id_input("\n Enter ID of the bunch which cost you want to know:\n");
         Bouquet bouquet = get_bouquet_impl(id, true);
         System.out.println("\n Cost of " + bouquet.get_name() + " : " + bouquet.calculate_cost() + " $");
     }
@@ -150,11 +145,9 @@ public class Controller {
     }
 
     private void delete_bouquet() {
-        System.out.println("\n Enter ID of the bouquet you want to delete: \n");
-        Long ID = inputManager.get_id_input();
+        Long ID = inputManager.get_id_input("\n Enter ID of the bouquet you want to delete: \n");
         if (ID != -1L) {
-            System.out.println("\n Do you want to delete flowers from this bouquet as well (+ / -)?\n");
-            boolean check = inputManager.get_bool_input();
+            boolean check = inputManager.get_bool_input("\n Do you want to delete flowers from this bouquet as well (+ / -)?\n");
             delete_bouquet_impl(ID, check);
         }
     }
@@ -164,8 +157,7 @@ public class Controller {
     }
 
     private void delete_flower() {
-        System.out.println("\n Enter ID of the flower you want to delete: \n");
-        Long ID = inputManager.get_id_input();
+        Long ID = inputManager.get_id_input("\n Enter ID of the flower you want to delete: \n");
         if (ID != -1L) {
             delete_flower_impl(ID);
         }
@@ -184,25 +176,20 @@ public class Controller {
     }
 
     private void update_bunch() {
-        System.out.println("\n Enter ID of the bunch you want to update:\n");
-        Long id = inputManager.get_id_input();
+        Long id = inputManager.get_id_input("\n Enter ID of the bunch you want to update:\n");
         db_manager.print_all_bouquets(id);
         Bouquet bouquet = db_manager.get_bouquet(id, false);
-        System.out.println(
-                "\n What property you would like to change (name / ):\n");
         while (true) {
-            String input = inputManager.get_string_input();
+            String input = inputManager.get_string_input("\n What property you would like to change (name / ):\n");
             switch (input) {
                 case "name":
-                    System.out.println("\n Enter new name:\n");
-                    input = inputManager.get_string_input();
+                    input = inputManager.get_string_input("\n Enter new name:\n");
                     bouquet.set_name(input);
                     break;
                 default:
                     System.out.println("\nUnknown property!\n");
             }
-            System.out.println("\n Anything else you want to change (+ / -)?\n");
-            boolean eboolean = inputManager.get_bool_input();
+            boolean eboolean = inputManager.get_bool_input("\n Anything else you want to change (+ / -)?\n");
             if (eboolean) {
                 continue;
             } else {
@@ -217,42 +204,34 @@ public class Controller {
     }
 
     private void update_flower() {
-        System.out.println("\n Enter ID of the flower you want to update:\n");
-        Long id = inputManager.get_id_input();
+        Long id = inputManager.get_id_input("\n Enter ID of the flower you want to update:\n");
         db_manager.print_all_flowers(id);
 
         FlowerSaver<Tulip> flower_loader = db_manager.new FlowerSaver<>();
         Tulip new_flower = new Tulip();
         new_flower = flower_loader.load_flower(id, new_flower);
         if (new_flower != null) {
-            System.out.println(
-                    "\n What property you would like to change (stalk_length / price / freshness / unique_property / bouquet_id):\n");
             while (true) {
-                String input = inputManager.get_string_input();
+                String input = inputManager.get_string_input("\n What property you would like to change (stalk_length / price / freshness / unique_property / bouquet_id):\n");
                 switch (input) {
                     case "stalk_length":
-                        System.out.println("\n Enter value:\n");
-                        float new_val = inputManager.get_float_input();
+                        float new_val = inputManager.get_float_input("\n Enter value:\n");
                         new_flower.set_stalk_len(new_val);
                         break;
                     case "price":
-                        System.out.println("\n Enter value:\n");
-                        new_val = inputManager.get_float_input();
+                        new_val = inputManager.get_float_input("\n Enter value:\n");
                         new_flower.set_price(new_val);
                         break;
                     case "freshness":
-                        System.out.println("\n Enter value:\n");
-                        new_val = inputManager.get_float_input();
+                        new_val = inputManager.get_float_input("\n Enter value:\n", 0.0f, 1.0f);
                         new_flower.set_fresh(new_val);
                         break;
                     case "unique_property":
-                        System.out.println("\n Enter value:\n");
-                        input = inputManager.get_string_input();
+                        input = inputManager.get_string_input("\n Enter value:\n");
                         new_flower.set_unique_prop(input);
                         break;
                     case "bouquet_id":
-                        System.out.println("\n Enter value:\n");
-                        Long new_id = inputManager.get_id_input();
+                        Long new_id = inputManager.get_id_input("\n Enter existing bouquet ID:\n");
                         if (new_id == -1L) {
                             new_flower.set_in_bouquet(new_id);
                             break;
@@ -266,8 +245,7 @@ public class Controller {
                         System.out.println("\n Unknown property \n");
                         break;
                 }
-                System.out.println("\nAnything else you want to change (+ / -):\n");
-                boolean eboolean = inputManager.get_bool_input();
+                boolean eboolean = inputManager.get_bool_input("\nAnything else you want to change (+ / -):\n");
                 if (eboolean) {
                     continue;
                 } else {
@@ -275,16 +253,14 @@ public class Controller {
                 }
             }
             flower_loader.update_flower(id, new_flower);
-        }
-        else{
+        } else {
             System.out.println("\n Flower with this ID does not exist!");
         }
     }
 
     private void add_bouquet() {
         String input;
-        System.out.println("\nName of bouquet :\n");
-        input = inputManager.get_string_input();
+        input = inputManager.get_string_input("\nName of bouquet :\n");
         add_bouquet_impl(input);
     }
 
@@ -295,8 +271,8 @@ public class Controller {
     }
 
     private void add_flower() {
-        System.out.println("\n What type of flower you want to add (tulip / rose / daisy):\n");
-        String input = inputManager.get_string_input();
+        String input = inputManager
+                .get_string_input("\n What type of flower you want to add (tulip / rose / daisy):\n");
         switch (input) {
             case "tulip":
                 add_tulip();
@@ -319,8 +295,7 @@ public class Controller {
     }
 
     private void add_flower_to_bouquet(Long flower_id) {
-        System.out.println("\n Enter ID of existing bouquet:\n");
-        Long ID = inputManager.get_id_input();
+        Long ID = inputManager.get_id_input("\n Enter ID of existing bouquet:\n");
         add_flower_to_bouquet_impl(flower_id, ID);
     }
 
@@ -332,14 +307,12 @@ public class Controller {
         Flower flower = new Tulip();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: "));
+                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
         Tulip tulip = (Tulip) flower;
-        System.out.println("\nColor:\n");
-        tulip.set_unique_prop(inputManager.get_string_input());
-        System.out.println("\nAdd to existing bouquet? (+ / -)\n");
-        boolean eboolean = inputManager.get_bool_input();
+        tulip.set_unique_prop(inputManager.get_string_input("\nColor:\n"));
+        boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");
         if (eboolean) {
-            Long b_id = inputManager.get_id_input();
+            Long b_id = inputManager.get_id_input("\n Enter ID of existing bouquet: \n");
             Bouquet bouquet = get_bouquet_impl(b_id, false);
             if (bouquet != null) {
                 tulip.set_in_bouquet(b_id);
@@ -357,12 +330,10 @@ public class Controller {
         Flower flower = new Daisy();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: "));
+                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
         Daisy daisy = (Daisy) flower;
-        System.out.println("\nFlower diameter (big / small / medium etc.):\n");
-        daisy.set_unique_prop(inputManager.get_string_input());
-        System.out.println("\nAdd to existing bouquet? (+ / -)\n");
-        boolean eboolean = inputManager.get_bool_input();
+        daisy.set_unique_prop(inputManager.get_string_input("\nFlower diameter (big / small / medium etc.):\n"));
+        boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");
         if (eboolean) {
             Long b_id = inputManager.get_id_input();
             Bouquet bouquet = get_bouquet_impl(b_id, false);
@@ -382,12 +353,10 @@ public class Controller {
         Flower flower = new Rose();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: "));
+                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
         Rose rose = (Rose) flower;
-        System.out.println("\nSpikes Properties (large / small / absent etc.):\n");
-        rose.set_unique_prop(inputManager.get_string_input());
-        System.out.println("\nAdd to existing bouquet? (+ / -)\n");
-        boolean eboolean = inputManager.get_bool_input();
+        rose.set_unique_prop(inputManager.get_string_input("\nSpikes Properties (large / small / absent etc.):\n"));
+        boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");
         if (eboolean) {
             Long b_id = inputManager.get_id_input();
             Bouquet bouquet = get_bouquet_impl(b_id, false);

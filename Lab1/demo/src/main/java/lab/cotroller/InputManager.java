@@ -37,17 +37,22 @@ public class InputManager {
 
     public float get_float_input(String prompt) {
         System.out.println(prompt);
-        return get_float_input();
+        return get_float_input(0.0f, Float.MAX_VALUE);
     }
 
-    public float get_float_input() {
+    public float get_float_input(String ptompt, float lower_bound, float upper_bound){
+        System.out.println(ptompt);
+        return get_float_input(lower_bound, upper_bound);
+    }
+
+    public float get_float_input(float lower_bound, float upper_bound) {
         float res = -1.0f;
         while (true) {
             String input = get_line();
             try {
                 res = Float.parseFloat(input);
-                if (res < 0) {
-                    NumberFormatException exception = new NumberFormatException("\n Must be a positive number");
+                if (res < lower_bound || res > upper_bound) {
+                    NumberFormatException exception = new NumberFormatException("\n Number must be in range of [" + lower_bound + " , " + upper_bound + "]");
                     throw exception;
                 }
                 return res;

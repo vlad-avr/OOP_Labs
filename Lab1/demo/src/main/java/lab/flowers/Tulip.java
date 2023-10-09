@@ -28,7 +28,7 @@ public class Tulip extends Flower{
 
     @Override
     public String toString(){
-        return "\n ID : " + this.ID + "\n Flower type : Daisy \n Stalk length : "
+        return "\n ID : " + this.ID + "\n Flower type : Tulip \n Stalk length : "
         + this.stalk_length + "\n Price : "
         + this.price + " $ \n Freshness : " + this.fresh_factor + " \n Color : " + this.color;
     }
