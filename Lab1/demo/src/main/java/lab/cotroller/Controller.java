@@ -14,11 +14,11 @@ public class Controller {
     private DataBaseManager db_manager;
     private InputManager inputManager = new InputManager();
 
-    public Controller(){
+    public Controller() {
         db_manager = new DataBaseManager();
     }
 
-    public Controller(DataBaseManager db_manager){
+    public Controller(DataBaseManager db_manager) {
         this.db_manager = db_manager;
     }
 
@@ -212,7 +212,7 @@ public class Controller {
         update_bunch_impl(id, bouquet);
     }
 
-    private void update_bunch_impl(Long id, Bouquet new_bouquet){
+    private void update_bunch_impl(Long id, Bouquet new_bouquet) {
         db_manager.update_bouquet(id, new_bouquet);
     }
 
@@ -223,58 +223,62 @@ public class Controller {
 
         FlowerSaver<Tulip> flower_loader = db_manager.new FlowerSaver<>();
         Tulip new_flower = new Tulip();
-        flower_loader.load_flower(id, new_flower);
-
-        System.out.println(
-                "\n What property you would like to change (stalk_length / price / freshness / unique_property / bouquet_id):\n");
-        while (true) {
-            String input = inputManager.get_string_input();
-            switch (input) {
-                case "stalk_length":
-                    System.out.println("\n Enter value:\n");
-                    float new_val = inputManager.get_float_input();
-                    new_flower.set_stalk_len(new_val);
-                    break;
-                case "price":
-                    System.out.println("\n Enter value:\n");
-                    new_val = inputManager.get_float_input();
-                    new_flower.set_price(new_val);
-                    break;
-                case "freshness":
-                    System.out.println("\n Enter value:\n");
-                    new_val = inputManager.get_float_input();
-                    new_flower.set_fresh(new_val);
-                    break;
-                case "unique_property":
-                    System.out.println("\n Enter value:\n");
-                    input = inputManager.get_string_input();
-                    new_flower.set_unique_prop(input);
-                    break;
-                case "bouquet_id":
-                    System.out.println("\n Enter value:\n");
-                    Long new_id = inputManager.get_id_input();
-                    if(new_id == -1L){
-                        new_flower.set_in_bouquet(new_id);
+        new_flower = flower_loader.load_flower(id, new_flower);
+        if (new_flower != null) {
+            System.out.println(
+                    "\n What property you would like to change (stalk_length / price / freshness / unique_property / bouquet_id):\n");
+            while (true) {
+                String input = inputManager.get_string_input();
+                switch (input) {
+                    case "stalk_length":
+                        System.out.println("\n Enter value:\n");
+                        float new_val = inputManager.get_float_input();
+                        new_flower.set_stalk_len(new_val);
                         break;
-                    }
-                    Bouquet bouquet = db_manager.get_bouquet(new_id, false);
-                    if(bouquet != null){
-                        new_flower.set_in_bouquet(new_id);
-                    }
+                    case "price":
+                        System.out.println("\n Enter value:\n");
+                        new_val = inputManager.get_float_input();
+                        new_flower.set_price(new_val);
+                        break;
+                    case "freshness":
+                        System.out.println("\n Enter value:\n");
+                        new_val = inputManager.get_float_input();
+                        new_flower.set_fresh(new_val);
+                        break;
+                    case "unique_property":
+                        System.out.println("\n Enter value:\n");
+                        input = inputManager.get_string_input();
+                        new_flower.set_unique_prop(input);
+                        break;
+                    case "bouquet_id":
+                        System.out.println("\n Enter value:\n");
+                        Long new_id = inputManager.get_id_input();
+                        if (new_id == -1L) {
+                            new_flower.set_in_bouquet(new_id);
+                            break;
+                        }
+                        Bouquet bouquet = db_manager.get_bouquet(new_id, false);
+                        if (bouquet != null) {
+                            new_flower.set_in_bouquet(new_id);
+                        }
+                        break;
+                    default:
+                        System.out.println("\n Unknown property \n");
+                        break;
+                }
+                System.out.println("\nAnything else you want to change (+ / -):\n");
+                boolean eboolean = inputManager.get_bool_input();
+                if (eboolean) {
+                    continue;
+                } else {
                     break;
-                default:
-                    System.out.println("\n Unknown property \n");
-                    break;
+                }
             }
-            System.out.println("\nAnything else you want to change (+ / -):\n");
-            boolean eboolean = inputManager.get_bool_input();
-            if (eboolean) {
-                continue;
-            } else {
-                break;
-            }
+            flower_loader.update_flower(id, new_flower);
         }
-        flower_loader.update_flower(id, new_flower);
+        else{
+            System.out.println("\n Flower with this ID does not exist!");
+        }
     }
 
     private void add_bouquet() {
@@ -326,7 +330,8 @@ public class Controller {
 
     private void add_tulip() {
         Flower flower = new Tulip();
-        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "), inputManager.get_float_input("\nEnter price: "),
+        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
+                inputManager.get_float_input("\nEnter price: "),
                 inputManager.get_float_input("\nEnter freshness: "));
         Tulip tulip = (Tulip) flower;
         System.out.println("\nColor:\n");
@@ -341,7 +346,7 @@ public class Controller {
             } else {
                 tulip.set_in_bouquet(-1L);
             }
-        }else{
+        } else {
             tulip.set_in_bouquet(-1L);
         }
         FlowerSaver<Tulip> saver = db_manager.new FlowerSaver<Tulip>();
@@ -350,7 +355,8 @@ public class Controller {
 
     private void add_daisy() {
         Flower flower = new Daisy();
-        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "), inputManager.get_float_input("\nEnter price: "),
+        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
+                inputManager.get_float_input("\nEnter price: "),
                 inputManager.get_float_input("\nEnter freshness: "));
         Daisy daisy = (Daisy) flower;
         System.out.println("\nFlower diameter (big / small / medium etc.):\n");
@@ -365,7 +371,7 @@ public class Controller {
             } else {
                 daisy.set_in_bouquet(-1L);
             }
-        }else{
+        } else {
             daisy.set_in_bouquet(-1L);
         }
         FlowerSaver<Daisy> saver = db_manager.new FlowerSaver<Daisy>();
@@ -374,7 +380,8 @@ public class Controller {
 
     private void add_rose() {
         Flower flower = new Rose();
-        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "), inputManager.get_float_input("\nEnter price: "),
+        gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
+                inputManager.get_float_input("\nEnter price: "),
                 inputManager.get_float_input("\nEnter freshness: "));
         Rose rose = (Rose) flower;
         System.out.println("\nSpikes Properties (large / small / absent etc.):\n");
@@ -389,7 +396,7 @@ public class Controller {
             } else {
                 rose.set_in_bouquet(-1L);
             }
-        }else{
+        } else {
             rose.set_in_bouquet(-1L);
         }
         FlowerSaver<Rose> saver = db_manager.new FlowerSaver<Rose>();

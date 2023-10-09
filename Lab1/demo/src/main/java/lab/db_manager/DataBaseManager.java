@@ -353,7 +353,8 @@ public class DataBaseManager {
             }
         }
 
-        public void load_flower(Long id, T flower) {
+        public T load_flower(Long id, T flower) {
+            T loaded_flower = flower;
             String str = "SELECT *\nFROM flowers WHERE id = " + String.valueOf(id);
             try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
                 ResultSet res = statement.executeQuery();
@@ -363,10 +364,14 @@ public class DataBaseManager {
                     flower.set_fresh(res.getFloat("fresh_factor"));
                     flower.set_unique_prop(res.getString("unique_param"));
                     flower.set_in_bouquet(res.getLong("bouquet_id"));
+                    return loaded_flower;
+                }else{
+                    return null;
                 }
             } catch (SQLException exception) {
                 System.out.println(exception.getMessage());
             }
+            return null;
         }
 
         public void update_flower(Long id, T flower) {

@@ -106,9 +106,9 @@ public class DataBaseTest {
         db_manager.delete_bouquet(1L, true);
         bouquet = db_manager.get_bouquet(1L, true);
         assertEquals(bouquet, null);
-        daisy_loader.load_flower(2L, daisy);
+        daisy = daisy_loader.load_flower(2L, daisy);
         assertEquals(daisy, null);
-        rose_loader.load_flower(1L, rose);
+        rose = rose_loader.load_flower(1L, rose);
         assertEquals(rose, null);
 
         db_manager.destroy_database();
