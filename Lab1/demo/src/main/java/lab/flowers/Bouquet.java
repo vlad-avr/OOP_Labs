@@ -80,4 +80,9 @@ public class Bouquet {
                     + flowers.get(i).get_price() + " $ freshness : " + flowers.get(i).get_fresh());
         }
     }
+
+    //For testing
+    public int flower_num(){
+        return this.flowers.size();
+    }
 }

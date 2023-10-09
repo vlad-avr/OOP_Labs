@@ -357,11 +357,13 @@ public class DataBaseManager {
             String str = "SELECT *\nFROM flowers WHERE id = " + String.valueOf(id);
             try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
                 ResultSet res = statement.executeQuery();
-                flower.set_stalk_len(res.getFloat("stalk_length"));
-                flower.set_price(res.getFloat("price"));
-                flower.set_fresh(res.getFloat("fresh_factor"));
-                flower.set_unique_prop(res.getString("unique_param"));
-                flower.set_in_bouquet(res.getLong("bouquet_id"));
+                if (res.next()) {
+                    flower.set_stalk_len(res.getFloat("stalk_length"));
+                    flower.set_price(res.getFloat("price"));
+                    flower.set_fresh(res.getFloat("fresh_factor"));
+                    flower.set_unique_prop(res.getString("unique_param"));
+                    flower.set_in_bouquet(res.getLong("bouquet_id"));
+                }
             } catch (SQLException exception) {
                 System.out.println(exception.getMessage());
             }
