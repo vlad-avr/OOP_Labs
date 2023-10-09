@@ -71,14 +71,19 @@ public class Bouquet {
     }
 
     public void print() {
-        System.out.println("\n ID : " + ID + "\n Name : " + name + "\n Flowers:");
+        System.out.println("\n ID : " + ID + "\n Name : " + name + "\n Flowers in bouquet - " + flower_num());
         for (int i = 0; i < flowers.size(); i++) {
-            String class_name = flowers.get(i).getClass().toString();
-            int last_dot_ind = class_name.lastIndexOf(".") + 1;
-            class_name = class_name.substring(last_dot_ind);
-            System.out.println("\n\t id = " + flowers.get(i).get_id() + " " + class_name.toLowerCase() + " "
-                    + flowers.get(i).get_price() + " $ freshness : " + flowers.get(i).get_fresh());
+            flowers.get(i).print();
+            // String class_name = flowers.get(i).getClass().toString();
+            // int last_dot_ind = class_name.lastIndexOf(".") + 1;
+            // class_name = class_name.substring(last_dot_ind);
+            // System.out.println("\n\t id = " + flowers.get(i).get_id() + " " + class_name.toLowerCase() + " "
+            //         + flowers.get(i).get_price() + " $ freshness : " + flowers.get(i).get_fresh());
         }
+    }
+
+    public void set_flowers_list(List<Flower> list){
+        this.flowers = new ArrayList<>(list);
     }
 
     //For testing

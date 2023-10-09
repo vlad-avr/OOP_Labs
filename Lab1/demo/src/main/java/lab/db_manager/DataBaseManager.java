@@ -138,23 +138,43 @@ public class DataBaseManager {
             ResultSet res = statement.executeQuery();
             while (res.next()) {
                 String type = res.getString("type");
-                System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type + "\n Stalk length : "
-                        + res.getFloat("stalk_length") + "\n Price : "
-                        + res.getFloat("price") + " $ \n Freshness : " + res.getFloat("fresh_factor"));
+                // System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type
+                // + "\n Stalk length : "
+                // + res.getFloat("stalk_length") + "\n Price : "
+                // + res.getFloat("price") + " $ \n Freshness : " +
+                // res.getFloat("fresh_factor"));
+                // if (type.equals("tulip")) {
+                // System.out.println(" Color : " + res.getString("unique_param"));
+                // } else if (type.equals("rose")) {
+                // System.out.println(" Spikes : " + res.getString("unique_param"));
+                // } else if (type.equals("daisy")) {
+                // System.out.println(" Flower diameter : " + res.getString("unique_param"));
+                // } else {
+                // System.out.println(" Unknown property : " + res.getString("unique_param"));
+                // }
+                // int b_id = res.getInt("bouquet_id");
+                // if (b_id == -1) {
+                // System.out.println(" Not in bouquet");
+                // } else {
+                // System.out.println(" In bouquet with id " + b_id);
+                // }
                 if (type.equals("tulip")) {
-                    System.out.println(" Color : " + res.getString("unique_param"));
+                    Tulip tulip = new Tulip(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    tulip.set_id(res.getLong("id"));
+                    tulip.print();
                 } else if (type.equals("rose")) {
-                    System.out.println(" Spikes : " + res.getString("unique_param"));
+                    Rose rose = new Rose(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    rose.set_id(res.getLong("id"));
+                    rose.print();
                 } else if (type.equals("daisy")) {
-                    System.out.println(" Flower diameter : " + res.getString("unique_param"));
+                    Daisy daisy = new Daisy(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    daisy.set_id(res.getLong("id"));
+                    daisy.print();
                 } else {
-                    System.out.println(" Unknown property : " + res.getString("unique_param"));
-                }
-                int b_id = res.getInt("bouquet_id");
-                if (b_id == -1) {
-                    System.out.println(" Not in bouquet");
-                } else {
-                    System.out.println(" In bouquet with id " + b_id);
+                    System.out.println("\nUnknown type of flower!\n");
                 }
             }
         } catch (SQLException exception) {
@@ -164,25 +184,42 @@ public class DataBaseManager {
 
     public void print_all_bouquets(Long id) {
         String b_str = "SELECT *\nFROM bouquets";
+        Long i = 1L;
         if (id > 0) {
             b_str += " WHERE id = " + String.valueOf(id);
+            i = id;
         }
         try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(b_str)) {
             ResultSet b_res = statement.executeQuery();
             while (b_res.next()) {
-                System.out.println(
-                        "\n ID : " + b_res.getString("id") + "\n Name : " + b_res.getString("name") + "\n Flowers:");
-                String f_str = "SELECT id, type, price, fresh_factor\nFROM flowers WHERE bouquet_id = "
-                        + String.valueOf(b_res.getLong("id"));
-                try (Connection f_con = connect(); PreparedStatement f_statement = con.prepareStatement(f_str)) {
-                    ResultSet f_res = f_statement.executeQuery();
-                    while (f_res.next()) {
-                        System.out.println("\n\t id = " + f_res.getInt("id") + " " + f_res.getString("type") + " "
-                                + f_res.getFloat("price") + " $ freshness : " + f_res.getFloat("fresh_factor"));
-                    }
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
+                Bouquet bouquet = new Bouquet();
+                // System.out.println(
+                // "\n ID : " + b_res.getString("id") + "\n Name : " + b_res.getString("name") +
+                // "\n Flowers:");
+                bouquet.set_id(b_res.getLong("id"));
+                bouquet.set_name(b_res.getString("name"));
+                List<Flower> f_list = find_flowers_by_length(i, Float.MIN_VALUE, Float.MAX_VALUE);
+               // System.out.println(f_list.size());
+                bouquet.set_flowers_list(f_list);
+                bouquet.print();
+                if(id <= 0){
+                    i++;
                 }
+                // String f_str = "SELECT id, type, price, fresh_factor\nFROM flowers WHERE
+                // bouquet_id = "
+                // + String.valueOf(b_res.getLong("id"));
+                // try (Connection f_con = connect(); PreparedStatement f_statement =
+                // con.prepareStatement(f_str)) {
+                // ResultSet f_res = f_statement.executeQuery();
+                // while (f_res.next()) {
+                // System.out.println("\n\t id = " + f_res.getInt("id") + " " +
+                // f_res.getString("type") + " "
+                // + f_res.getFloat("price") + " $ freshness : " +
+                // f_res.getFloat("fresh_factor"));
+                // }
+                // } catch (SQLException e) {
+                // System.out.println(e.getMessage());
+                // }
                 System.out.println("\n");
             }
         } catch (SQLException exception) {
@@ -198,33 +235,27 @@ public class DataBaseManager {
             ResultSet res = statement.executeQuery();
             while (res.next()) {
                 String type = res.getString("type");
-                // System.out.println("\n ID : " + res.getInt("id") + "\n Flower type : " + type
-                // + "\n Stalk length : "
-                // + res.getFloat("stalk_length") + "\n Price : "
-                // + res.getFloat("price") + " $ \n Freshness : " +
-                // res.getFloat("fresh_factor"));
-
                 if (type.equals("tulip")) {
-                    // System.out.println(" Color : " + res.getString("unique_param"));
-                    flowers.add(new Tulip(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param")));
+                    Tulip new_tulip = new Tulip(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    new_tulip.set_id(res.getLong("id"));
+                    flowers.add(new_tulip);
                 } else if (type.equals("rose")) {
-                    flowers.add(new Rose(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param")));
+                    Rose new_rose = new Rose(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    new_rose.set_id(res.getLong("id"));
+                    flowers.add(new_rose);
                 } else if (type.equals("daisy")) {
-                    flowers.add(new Daisy(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param")));
+                    Daisy new_daisy = new Daisy(res.getFloat("stalk_length"), res.getFloat("price"),
+                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                    new_daisy.set_id(res.getLong("id"));
+                    flowers.add(new_daisy);
                 }
-                // int b_id = res.getInt("bouquet_id");
-                // if (b_id == -1) {
-                // System.out.println(" Not in bouquet");
-                // } else {
-                // System.out.println(" In bouquet with id " + b_id);
-                // }
             }
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
+        System.out.println(flowers.size());
         return flowers;
     }
 
@@ -365,7 +396,7 @@ public class DataBaseManager {
                     flower.set_unique_prop(res.getString("unique_param"));
                     flower.set_in_bouquet(res.getLong("bouquet_id"));
                     return loaded_flower;
-                }else{
+                } else {
                     return null;
                 }
             } catch (SQLException exception) {

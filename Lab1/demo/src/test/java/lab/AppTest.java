@@ -1,7 +1,5 @@
 package lab;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
 import lab.db_test.DataBaseTest;

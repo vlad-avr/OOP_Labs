@@ -2,12 +2,12 @@ package lab.flowers;
 
 public abstract class Flower {
 
-    private Long ID;
-    private Float stalk_length;
-    private Float price;
-    private Float fresh_factor; // 0 -> not fresh | 1 -> very fresh
+    protected Long ID;
+    protected Float stalk_length;
+    protected Float price;
+    protected Float fresh_factor; // 0 -> not fresh | 1 -> very fresh
 
-    private Long bouquet_ID = -1L;
+    protected Long bouquet_ID = -1L;
 
     public Flower() {
     };
@@ -64,9 +64,17 @@ public abstract class Flower {
     public abstract void set_unique_prop(String prop);
 
     public void print() {
-        System.out.println("\n ID : " + ID + "\n Stalk length : "
+        System.out.println("\n ID : " + ID);
+        if(bouquet_ID == -1L){
+            System.out.println(" Not in bouquet");
+        }else{
+            System.out.println(" In bouquet with ID : " + bouquet_ID);
+        }
+        System.out.println(" Stalk length : "
                 + stalk_length + "\n Price : "
                 + price + " $ \n Freshness : " + fresh_factor);
     }
+    
+    public abstract String toString();
 
 }

@@ -23,8 +23,13 @@ public class Rose extends Flower{
 
     @Override
     public void print(){
-        System.out.println("\n Flower type : Rose");
-        super.print();
-        System.out.println("\n Spikes : " + spike_prop);
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public String toString(){
+        return "\n ID : " + this.ID + "\n Flower type : Daisy \n Stalk length : "
+        + this.stalk_length + "\n Price : "
+        + this.price + " $ \n Freshness : " + this.fresh_factor + " \n Spikes : " + this.spike_prop;
     }
 }
