@@ -28,11 +28,11 @@ public class DataBaseTest {
         bouquet.set_name("Bouquet");
         db_manager.add_bouquet(bouquet);
         FlowerSaver<Tulip> tulip_saver = db_manager.new FlowerSaver<>(); 
-        tulip_saver.add_flower(new Tulip(1.0f, 10.0f, 0.5f, 1L, "red"));
+        tulip_saver.add_flower(new Tulip(1.0f, 10.0f, "2023-10-01", 100L, 1L, "red"));
         FlowerSaver<Rose> rose_saver = db_manager.new FlowerSaver<>(); 
-        rose_saver.add_flower(new Rose(2.0f, 20.0f, 0.2f, 1L, "absent"));
+        rose_saver.add_flower(new Rose(2.0f, 20.0f, "2023-10-03", 100L, 1L, "absent"));
         FlowerSaver<Daisy> daisy_saver = db_manager.new FlowerSaver<>(); 
-        daisy_saver.add_flower(new Daisy(3.0f, 30.0f, 1.0f, 1L, "big"));
+        daisy_saver.add_flower(new Daisy(3.0f, 30.0f, "2023-10-05", 100L, 1L, "big"));
         
         FlowerSaver<Tulip> tulip_loader = db_manager.new FlowerSaver<>();
         Tulip tulip = new Tulip();
@@ -46,25 +46,25 @@ public class DataBaseTest {
         float eps = 0.000001f;
         //Testing db loading 
         assertTrue(tulip.get_bouquet_id() == 1L);
-        assertEquals(0.5f, tulip.get_fresh(), eps);
+        assertEquals("2023-10-01", tulip.get_date().toString());
         assertEquals(10.0f, tulip.get_price(), eps); 
         assertEquals(1.0f, tulip.get_stalk_len(), eps); 
         assertEquals(tulip.get_unique_prop(),"red");
         assertTrue(rose.get_bouquet_id() == 1L);
-        assertEquals(0.2f, rose.get_fresh(), eps);
+        assertEquals("2023-10-03", rose.get_date().toString());
         assertEquals(20.0f, rose.get_price(), eps);
         assertEquals(2.0f, rose.get_stalk_len(), eps);
         assertEquals(rose.get_unique_prop(),"absent");
         assertTrue(daisy.get_bouquet_id() == 1L);
-        assertEquals(1.0f, daisy.get_fresh(), eps);
+        assertEquals("2023-10-05", daisy.get_date().toString());
         assertEquals(30.0f, daisy.get_price(), eps);
         assertEquals(3.0f, daisy.get_stalk_len(), eps);
         assertEquals(daisy.get_unique_prop(),"big");
         bouquet = db_manager.get_bouquet(1L, true);
         assertEquals(bouquet.get_name(),"Bouquet");
-        assertEquals(0.5f, bouquet.get_flower(0).get_fresh(), eps);
-        assertEquals(0.2f, bouquet.get_flower(1).get_fresh(), eps);
-        assertEquals(1.0f, bouquet.get_flower(2).get_fresh(), eps);
+        assertEquals(1L, bouquet.get_flower(0).get_id(), eps);
+        assertEquals(2L, bouquet.get_flower(1).get_id(), eps);
+        assertEquals(3L, bouquet.get_flower(2).get_id(), eps);
 
         //Testing db adding/updating
         Bouquet bouquet1 = new Bouquet();

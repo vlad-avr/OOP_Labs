@@ -1,5 +1,7 @@
 package lab.cotroller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class InputManager {
@@ -78,6 +80,49 @@ public class InputManager {
                 return false;
             } else {
                 System.out.println("\n Enter + if you want to delete flowers and - if you don`t!\n");
+            }
+        }
+    }
+
+    public String getDateInput(String prompt){
+        System.out.println(prompt);
+        return getDateInput();
+    }
+
+    public String getDateInput(){
+        while(true){
+            String toDate = get_string_input();
+            try {
+                LocalDate date = LocalDate.parse(toDate);
+                if(LocalDate.now().isBefore(date)){
+                    DateTimeParseException e = new DateTimeParseException("Impossible date : entered date goes after current date!", toDate, 0, null);
+                    throw e;
+                }
+                return toDate;
+            } catch (DateTimeParseException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public Long getLongInput(String prompt){
+        System.out.println(prompt);
+        return getLongInput();
+    }
+
+    public Long getLongInput(){
+        Long id = 0L;
+        while (true) {
+            String input = get_line();
+            try {
+                id = Long.parseLong(input);
+                if (id < 0L) {
+                    NumberFormatException exception = new NumberFormatException("This value can`t be a negative value");
+                    throw exception;
+                }
+                return id;
+            } catch (NumberFormatException e) {
+                System.out.println("\n Invalid Long format: " + e.getMessage());
             }
         }
     }

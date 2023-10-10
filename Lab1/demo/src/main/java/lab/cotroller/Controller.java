@@ -1,5 +1,6 @@
 package lab.cotroller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lab.flowers.Flower;
@@ -212,7 +213,7 @@ public class Controller {
         new_flower = flower_loader.load_flower(id, new_flower);
         if (new_flower != null) {
             while (true) {
-                String input = inputManager.get_string_input("\n What property you would like to change (stalk_length / price / freshness / unique_property / bouquet_id):\n");
+                String input = inputManager.get_string_input("\n What property you would like to change (stalk_length / price / date / daysCount / unique_property / bouquet_id):\n");
                 switch (input) {
                     case "stalk_length":
                         float new_val = inputManager.get_float_input("\n Enter value:\n");
@@ -222,9 +223,13 @@ public class Controller {
                         new_val = inputManager.get_float_input("\n Enter value:\n");
                         new_flower.set_price(new_val);
                         break;
-                    case "freshness":
-                        new_val = inputManager.get_float_input("\n Enter value:\n", 0.0f, 1.0f);
-                        new_flower.set_fresh(new_val);
+                    case "date":
+                        input = inputManager.getDateInput("\n Enter date:\n");
+                        new_flower.set_date(LocalDate.parse(input));
+                        break;
+                    case "daysCount":
+                        Long days = inputManager.getLongInput("\n Enter number of days until rotten:\n");
+                        new_flower.setDaysCount(days);
                         break;
                     case "unique_property":
                         input = inputManager.get_string_input("\n Enter value:\n");
@@ -288,10 +293,12 @@ public class Controller {
         }
     }
 
-    private void gen_flower(Flower flower, float stalk_length, float price, float freshness) {
+    private void gen_flower(Flower flower, float stalk_length, float price, String date, Long days) {
         flower.set_stalk_len(stalk_length);
         flower.set_price(price);
-        flower.set_fresh(freshness);
+        // flower.set_fresh(freshness);
+        flower.set_date(LocalDate.parse(date));
+        flower.setDaysCount(days);
     }
 
     private void add_flower_to_bouquet(Long flower_id) {
@@ -307,7 +314,7 @@ public class Controller {
         Flower flower = new Tulip();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
+                inputManager.getDateInput("\nEnter date:\n"), inputManager.getLongInput("\nEnter number of days until rotten:\n"));
         Tulip tulip = (Tulip) flower;
         tulip.set_unique_prop(inputManager.get_string_input("\nColor:\n"));
         boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");
@@ -330,7 +337,7 @@ public class Controller {
         Flower flower = new Daisy();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
+                 inputManager.getDateInput("\nEnter date:\n"), inputManager.getLongInput("\nEnter number of days until rotten:\n"));
         Daisy daisy = (Daisy) flower;
         daisy.set_unique_prop(inputManager.get_string_input("\nFlower diameter (big / small / medium etc.):\n"));
         boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");
@@ -353,7 +360,7 @@ public class Controller {
         Flower flower = new Rose();
         gen_flower(flower, inputManager.get_float_input("\nEnter stalk length: "),
                 inputManager.get_float_input("\nEnter price: "),
-                inputManager.get_float_input("\nEnter freshness: ", 0.0f, 1.0f));
+                 inputManager.getDateInput("\nEnter date:\n"), inputManager.getLongInput("\nEnter number of days until rotten:\n"));
         Rose rose = (Rose) flower;
         rose.set_unique_prop(inputManager.get_string_input("\nSpikes Properties (large / small / absent etc.):\n"));
         boolean eboolean = inputManager.get_bool_input("\nAdd to existing bouquet? (+ / -)\n");

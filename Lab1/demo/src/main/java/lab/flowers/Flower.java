@@ -1,21 +1,27 @@
 package lab.flowers;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public abstract class Flower {
 
     protected Long ID;
     protected Float stalk_length;
     protected Float price;
-    protected Float fresh_factor; // 0 -> not fresh | 1 -> very fresh
-
+    // protected Float fresh_factor; // 0 -> not fresh | 1 -> very fresh
+    protected LocalDate date;
+    protected Long daysCount;
     protected Long bouquet_ID = -1L;
 
     public Flower() {
     };
 
-    public Flower(float stalk_length, float price, float fresh_factor, Long bouquet_ID) {
+    public Flower(float stalk_length, float price, String date, Long daysCount, Long bouquet_ID) {
         this.stalk_length = stalk_length;
         this.price = price;
-        this.fresh_factor = fresh_factor;
+        // this.fresh_factor = fresh_factor;
+        this.date = LocalDate.parse(date);
+        this.daysCount = daysCount;
         this.bouquet_ID = bouquet_ID;
     }
 
@@ -35,8 +41,12 @@ public abstract class Flower {
         this.price = price;
     }
 
-    public void set_fresh(float fresh_factor) {
-        this.fresh_factor = fresh_factor;
+    public void set_date(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setDaysCount(Long daysCount){
+        this.daysCount = daysCount;
     }
 
     public void set_in_bouquet(Long bouquet_ID) {
@@ -51,8 +61,26 @@ public abstract class Flower {
         return price;
     }
 
-    public float get_fresh() {
-        return fresh_factor;
+    // public float get_fresh() {
+    //     return fresh_factor;
+    // }
+
+    public float get_fresh(){
+        LocalDate curDate = LocalDate.now();
+        Long curDays = Math.abs(ChronoUnit.DAYS.between(curDate, date));
+        if(curDays > daysCount){
+            return 0.0f;
+        }else{
+            return 1.0f-((float)curDays/(float)daysCount);
+        }
+    }
+
+    public LocalDate get_date(){
+        return this.date;
+    }
+
+    public Long getDaysCount(){
+        return this.daysCount;
     }
 
     public Long get_bouquet_id() {
@@ -72,7 +100,7 @@ public abstract class Flower {
         }
         System.out.println(" Stalk length : "
                 + stalk_length + "\n Price : "
-                + price + " $ \n Freshness : " + fresh_factor);
+                + price + " $ \n Date : " + date.toString() + "\n Storage longevity : " + daysCount + "\n Freshness : " + get_fresh());
     }
     
     public abstract String toString();

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.time.LocalDate;
 import lab.flowers.Bouquet;
 import lab.flowers.Daisy;
 import lab.flowers.Flower;
@@ -46,13 +46,13 @@ public class DataBaseManager {
     private void make_entry_data() {
         Bouquet bouquet1 = new Bouquet(1L, "bouquet 1");
         Bouquet bouquet2 = new Bouquet(2L, "bouquet 2");
-        Tulip tulip1 = new Tulip(12.0f, 20.0f, 0.6f, 1L, "red");
-        Tulip tulip2 = new Tulip(12.0f, 40.0f, 1f, 2L, "violet");
-        Tulip tulip3 = new Tulip(14.0f, 10.0f, 0.2f, 1L, "blue");
-        Daisy daisy1 = new Daisy(10.0f, 25.0f, 0.4f, 1L, "small");
-        Rose rose1 = new Rose(9.0f, 35.0f, 0.5f, 1L, "absent");
-        Daisy daisy2 = new Daisy(12.0f, 40.0f, 1f, 1L, "big");
-        Rose rose2 = new Rose(14.0f, 10.0f, 0.2f, 1L, "sharp");
+        Tulip tulip1 = new Tulip(12.0f, 20.0f, "2023-10-01", 30L, 1L, "red");
+        Tulip tulip2 = new Tulip(12.0f, 40.0f, "2023-10-02", 10L, 2L, "violet");
+        Tulip tulip3 = new Tulip(14.0f, 10.0f, "2023-10-03", 6L, 1L, "blue");
+        Daisy daisy1 = new Daisy(10.0f, 25.0f, "2023-10-04", 8L, 1L, "small");
+        Rose rose1 = new Rose(9.0f, 35.0f, "2023-10-05", 20L, 1L, "absent");
+        Daisy daisy2 = new Daisy(12.0f, 40.0f, "2023-10-06", 2L, 1L, "big");
+        Rose rose2 = new Rose(14.0f, 10.0f, "2023-10-07", 12L, 1L, "sharp");
         FlowerSaver<Tulip> st = new FlowerSaver<>();
         st.add_flower(tulip1);
         st.add_flower(tulip2);
@@ -94,7 +94,8 @@ public class DataBaseManager {
                 + "     type text NOT NULL, \n"
                 + "     stalk_length real NOT NULL, \n"
                 + "     price real NOT NULL, \n"
-                + "     fresh_factor real NOT NULL, \n"
+                + "     date text NOT NULL, \n"
+                + "     maxDays integer NOT NULL, \n"
                 + "     unique_param text NOT NULL, \n"
                 + "     bouquet_id integer NOT NULL"
                 + ");";
@@ -140,17 +141,17 @@ public class DataBaseManager {
                 String type = res.getString("type");
                 if (type.equals("tulip")) {
                     Tulip tulip = new Tulip(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     tulip.set_id(res.getLong("id"));
                     tulip.print();
                 } else if (type.equals("rose")) {
                     Rose rose = new Rose(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     rose.set_id(res.getLong("id"));
                     rose.print();
                 } else if (type.equals("daisy")) {
                     Daisy daisy = new Daisy(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     daisy.set_id(res.getLong("id"));
                     daisy.print();
                 } else {
@@ -198,17 +199,17 @@ public class DataBaseManager {
                 String type = res.getString("type");
                 if (type.equals("tulip")) {
                     Tulip new_tulip = new Tulip(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     new_tulip.set_id(res.getLong("id"));
                     flowers.add(new_tulip);
                 } else if (type.equals("rose")) {
                     Rose new_rose = new Rose(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     new_rose.set_id(res.getLong("id"));
                     flowers.add(new_rose);
                 } else if (type.equals("daisy")) {
                     Daisy new_daisy = new Daisy(res.getFloat("stalk_length"), res.getFloat("price"),
-                            res.getFloat("fresh_factor"), res.getLong("bouquet_id"), res.getString("unique_param"));
+                            res.getString("date"), res.getLong("maxDays"), res.getLong("bouquet_id"), res.getString("unique_param"));
                     new_daisy.set_id(res.getLong("id"));
                     flowers.add(new_daisy);
                 }
@@ -251,17 +252,17 @@ public class DataBaseManager {
                             Flower flower = null;
                             if (type.equals("tulip")) {
                                 flower = new Tulip(f_res.getFloat("stalk_length"), f_res.getFloat("price"),
-                                        f_res.getFloat("fresh_factor"), f_res.getLong("bouquet_id"),
+                                        f_res.getString("date"), f_res.getLong("maxDays"), f_res.getLong("bouquet_id"),
                                         f_res.getString("unique_param"));
                                 flower.set_id(f_res.getLong("id"));
                             } else if (type.equals("rose")) {
                                 flower = new Rose(f_res.getFloat("stalk_length"), f_res.getFloat("price"),
-                                        f_res.getFloat("fresh_factor"), f_res.getLong("bouquet_id"),
+                                         f_res.getString("date"), f_res.getLong("maxDays"), f_res.getLong("bouquet_id"),
                                         f_res.getString("unique_param"));
                                 flower.set_id(f_res.getLong("id"));
                             } else if (type.equals("daisy")) {
                                 flower = new Daisy(f_res.getFloat("stalk_length"), f_res.getFloat("price"),
-                                        f_res.getFloat("fresh_factor"), f_res.getLong("bouquet_id"),
+                                         f_res.getString("date"), f_res.getLong("maxDays"), f_res.getLong("bouquet_id"),
                                         f_res.getString("unique_param"));
                                 flower.set_id(f_res.getLong("id"));
                             }
@@ -322,7 +323,7 @@ public class DataBaseManager {
 
     public class FlowerSaver<T extends Flower> {
         public void add_flower(T flower) {
-            String save_str = "INSERT INTO flowers (type, stalk_length, price, fresh_factor, unique_param, bouquet_id) VALUES (?, ?, ?, ?, ?, ?)";
+            String save_str = "INSERT INTO flowers (type, stalk_length, price, date, maxDays, unique_param, bouquet_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(save_str)) {
                 if (flower instanceof Tulip) {
                     statement.setString(1, "tulip");
@@ -335,9 +336,10 @@ public class DataBaseManager {
                 }
                 statement.setDouble(2, flower.get_stalk_len());
                 statement.setDouble(3, flower.get_price());
-                statement.setDouble(4, flower.get_fresh());
-                statement.setString(5, flower.get_unique_prop());
-                statement.setLong(6, flower.get_bouquet_id());
+                statement.setString(4, flower.get_date().toString());
+                statement.setLong(5, flower.getDaysCount());
+                statement.setString(6, flower.get_unique_prop());
+                statement.setLong(7, flower.get_bouquet_id());
                 statement.executeUpdate();
             } catch (SQLException exception) {
                 System.out.println(exception.getMessage());
@@ -352,7 +354,8 @@ public class DataBaseManager {
                 if (res.next()) {
                     flower.set_stalk_len(res.getFloat("stalk_length"));
                     flower.set_price(res.getFloat("price"));
-                    flower.set_fresh(res.getFloat("fresh_factor"));
+                    flower.set_date(LocalDate.parse(res.getString("date")));
+                    flower.setDaysCount(res.getLong("maxDays"));
                     flower.set_unique_prop(res.getString("unique_param"));
                     flower.set_in_bouquet(res.getLong("bouquet_id"));
                     return loaded_flower;
@@ -366,14 +369,15 @@ public class DataBaseManager {
         }
 
         public void update_flower(Long id, T flower) {
-            String str = "UPDATE flowers SET stalk_length = ? , price = ? , fresh_factor = ? , unique_param = ? , bouquet_id = ? WHERE id = "
+            String str = "UPDATE flowers SET stalk_length = ? , price = ? , date = ? , maxDays = ? , unique_param = ? , bouquet_id = ? WHERE id = "
                     + String.valueOf(id);
             try (Connection con = connect(); PreparedStatement statement = con.prepareStatement(str)) {
                 statement.setFloat(1, flower.get_stalk_len());
                 statement.setFloat(2, flower.get_price());
-                statement.setFloat(3, flower.get_fresh());
-                statement.setString(4, flower.get_unique_prop());
-                statement.setLong(5, flower.get_bouquet_id());
+                statement.setString(3, flower.get_date().toString());
+                statement.setLong(4, flower.getDaysCount());
+                statement.setString(5, flower.get_unique_prop());
+                statement.setLong(6, flower.get_bouquet_id());
                 statement.executeUpdate();
             } catch (SQLException exception) {
                 System.out.println(exception.getMessage());

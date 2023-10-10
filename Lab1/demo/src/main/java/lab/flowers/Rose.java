@@ -6,8 +6,8 @@ public class Rose extends Flower{
 
     public Rose(){};
 
-    public Rose(float stalk_length, float price, float fresh_factor, Long bouquet_ID, String sp){
-        super(stalk_length, price, fresh_factor, bouquet_ID);
+    public Rose(float stalk_length, float price, String date, Long daysCount, Long bouquet_ID, String sp){
+        super(stalk_length, price, date, daysCount, bouquet_ID);
         spike_prop = sp;
     }
 
@@ -30,6 +30,6 @@ public class Rose extends Flower{
     public String toString(){
         return "\n ID : " + this.ID + "\n Flower type : Rose \n Stalk length : "
         + this.stalk_length + "\n Price : "
-        + this.price + " $ \n Freshness : " + this.fresh_factor + " \n Spikes : " + this.spike_prop;
+        + this.price + " $ \n Date : " + date.toString() + "\n Storage longevity : " + daysCount + "\n Freshness : " + get_fresh() + " \n Spikes : " + this.spike_prop;
     }
 }
