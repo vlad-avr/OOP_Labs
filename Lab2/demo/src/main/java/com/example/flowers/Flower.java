@@ -9,8 +9,8 @@ public class Flower {
 
     public static enum Reproduction {
         leaves,
-        turf_podzol,
-        regular,
+        stalks,
+        seeds,
     }
 
     public String id;
@@ -44,7 +44,7 @@ public class Flower {
     }
 
     public String toString() {
-        return "\nID : " + id + "\nName : " + name + "\nOrigin : " + origin + "\nSoil type + " + soil.toString()
+        return "\nID : " + id + "\nName : " + name + "\nOrigin : " + origin + "\nSoil type : " + soil.toString()
                 + "\nVisual qualities : " + visuals.toString() + "\nGardening tips : " + tips.toString()
                 + "\nReproduces with " + reproduction.toString();
     }
