@@ -11,7 +11,7 @@
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
                                         <xs:enumeration value="podzol" />
-                                        <xs:enumeration value="turf-podzol" />
+                                        <xs:enumeration value="turf_podzol" />
                                         <xs:enumeration value="regular" />
                                     </xs:restriction>
                                 </xs:simpleType>
@@ -29,8 +29,22 @@
                             <xs:element name="tips">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element type="xs:short" name="temperature" />
-                                        <xs:element type="xs:unsignedShort" name="illumination" />
+                                        <xs:element name="temperature" >
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:integer">
+                                                    <xs:minInclusive value="0"/>
+                                                    <xs:maxInclusive value="50"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="illumination">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:integer">
+                                                    <xs:minInclusive value="0"/>
+                                                    <xs:maxInclusive value="24"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
                                         <xs:element type="xs:unsignedShort" name="irrigation" />
                                     </xs:sequence>
                                 </xs:complexType>

@@ -19,7 +19,7 @@
    </flower>
    <flower id="ID-2">
       <name>Rose</name>
-      <soil>turf-podzol</soil>
+      <soil>turf_podzol</soil>
       <origin>England</origin>
       <visuals>
          <stalk_length>150</stalk_length>
@@ -28,7 +28,7 @@
       </visuals>
       <tips>
          <temperature>20</temperature>
-         <illumination>8</illumination>
+         <illumination>7</illumination>
          <irrigation>100</irrigation>
       </tips>
       <reproduction>stalks</reproduction>
