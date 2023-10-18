@@ -21,10 +21,10 @@ public class Flower {
     public Tips tips = new Tips();
     public Reproduction reproduction;
 
-    private class Visuals {
-        public int stalk_length;
+    public class Visuals {
+        public double stalk_length;
         public String color;
-        public int flower_diameter;
+        public double flower_diameter;
 
         public String toString() {
             return "\n\tAverage stalk length (cm) : " + stalk_length + "\n\tColor : " + color
@@ -32,8 +32,8 @@ public class Flower {
         }
     }
 
-    private class Tips {
-        public int temp;
+    public class Tips {
+        public double temp;
         public int light;
         public int water;
 
