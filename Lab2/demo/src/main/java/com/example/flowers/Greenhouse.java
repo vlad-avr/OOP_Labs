@@ -26,4 +26,11 @@ public class Greenhouse {
     public void add(Flower flower){
         flowers.add(flower);
     }
+
+    public void print(){
+        System.out.println("\nFlowers in greenhouse : " + flowers.size());
+        for(Flower flower : flowers){
+            System.out.println(flower.toString());
+        }
+    }
 }
