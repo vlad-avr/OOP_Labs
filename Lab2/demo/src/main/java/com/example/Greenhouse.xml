@@ -1,53 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<greenhouse>
-   <flower id="ID-1" name="Tulip">
-      <soil value="podzol"/>
-      <origin value="Netherlands"/>
-      <visuals>
-         <stalk_length value="30"/>
-         <color value="red"/>
-         <flower_diameter value="10"/>
-      </visuals>
-      <tips>
-         <temperature value="18"/>
-         <illumination value="7"/>
-         <irrigation value="10"/>
-      </tips>
-      <reproduction value="leaves"/>
-   </flower>
-   <flower id="ID-2" name="Rose">
-      <soil value="turf-podzol"/>
-      <origin value="England"/>
-      <visuals>
-         <stalk_length value="150"/>
-         <color value="deep-red"/>
-         <flower_diameter value="15"/>
-      </visuals>
-      <tips>
-         <temperature value="20"/>
-         <illumination value="8"/>
-         <irrigation value="100"/>
-      </tips>
-      <reproduction value="stalks"/>
-   </flower>
-   <flower id="ID-3" name="Daisy">
-      <soil value="regular"/>
-      <origin value="Germany"/>
-      <visuals>
-         <stalk_length value="25"/>
-         <color value="orange"/>
-         <flower_diameter value="12"/>
-      </visuals>
-      <tips>
-         <temperature value="22"/>
-         <illumination value="6"/>
-         <irrigation value="50"/>
-      </tips>
-      <reproduction value="seeds"/>
-   </flower>
-</greenhouse>
-<!-- <?xml version="1.0" encoding="UTF-8"?>
-<greenhouse>
+<greenhouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="Schema.xsd">
    <flower id="ID-1">
       <name>Tulip</name>
       <soil>podzol</soil>
@@ -95,5 +48,53 @@
          <irrigation>50</irrigation>
       </tips>
       <reproduction>seeds</reproduction>
+   </flower>
+</greenhouse>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<greenhouse>
+   <flower id="ID-1" name="Tulip">
+      <soil value="podzol"/>
+      <origin value="Netherlands"/>
+      <visuals>
+         <stalk_length value="30"/>
+         <color value="red"/>
+         <flower_diameter value="10"/>
+      </visuals>
+      <tips>
+         <temperature value="18"/>
+         <illumination value="7"/>
+         <irrigation value="10"/>
+      </tips>
+      <reproduction value="leaves"/>
+   </flower>
+   <flower id="ID-2" name="Rose">
+      <soil value="turf-podzol"/>
+      <origin value="England"/>
+      <visuals>
+         <stalk_length value="150"/>
+         <color value="deep-red"/>
+         <flower_diameter value="15"/>
+      </visuals>
+      <tips>
+         <temperature value="20"/>
+         <illumination value="8"/>
+         <irrigation value="100"/>
+      </tips>
+      <reproduction value="stalks"/>
+   </flower>
+   <flower id="ID-3" name="Daisy">
+      <soil value="regular"/>
+      <origin value="Germany"/>
+      <visuals>
+         <stalk_length value="25"/>
+         <color value="orange"/>
+         <flower_diameter value="12"/>
+      </visuals>
+      <tips>
+         <temperature value="22"/>
+         <illumination value="6"/>
+         <irrigation value="50"/>
+      </tips>
+      <reproduction value="seeds"/>
    </flower>
 </greenhouse> -->
