@@ -12,7 +12,7 @@ class AppTest {
     @Test
     void testApp() {
         final double Eps = 0.00001;
-        XMLParser parser = new XMLParser("demo\\Test.xml");
+        XMLParser parser = new XMLParser("D:\\Java\\OOP_Labs\\Lab2\\demo\\Test.xml");
         Greenhouse greenhouse = parser.parse();
         greenhouse.print();
         assertEquals(greenhouse.length(), 2);
