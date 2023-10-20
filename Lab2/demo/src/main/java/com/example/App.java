@@ -19,6 +19,5 @@ public final class App {
         XMLParser parser = new XMLParser("demo\\Greenhouse.xml");
         Greenhouse greenhouse = parser.parse();
         greenhouse.print();
-
     }
 }

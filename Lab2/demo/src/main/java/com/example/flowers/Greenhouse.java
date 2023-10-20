@@ -33,4 +33,9 @@ public class Greenhouse {
             System.out.println(flower.toString());
         }
     }
+
+    //For testing
+    public int length(){
+        return flowers.size();
+    }
 }
