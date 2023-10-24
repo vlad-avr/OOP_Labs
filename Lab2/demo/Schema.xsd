@@ -5,7 +5,7 @@
             <xs:sequence>
                 <xs:element name="flower" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
-                        <xs:sequence>
+                        <xs:all minOccurs="1" maxOccurs="1">
                             <xs:element type="xs:string" name="name" />
                             <xs:element name="soil">
                                 <xs:simpleType>
@@ -70,7 +70,7 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                        </xs:sequence>
+                        </xs:all>
                         <xs:attribute type="xs:ID" name="id" use="required" />
                     </xs:complexType>
                 </xs:element>

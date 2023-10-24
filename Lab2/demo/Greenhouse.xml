@@ -18,8 +18,8 @@
       <reproduction>leaves</reproduction>
    </flower>
    <flower id="ID-2">
-      <name>Rose</name>
       <soil>turf_podzol</soil>
+      <name>Rose</name>
       <origin>England</origin>
       <visuals>
          <stalk_length>150</stalk_length>
