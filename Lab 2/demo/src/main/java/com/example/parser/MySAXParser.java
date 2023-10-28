@@ -1,10 +1,19 @@
 package com.example.parser;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -15,7 +24,7 @@ import com.example.flowers.Greenhouse;
 
 public class MySAXParser {
 
-    public Greenhouse parse(String filePath) {
+    public Greenhouse parseSAX(String filePath) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             Greenhouse greenhouse = new Greenhouse();
@@ -24,6 +33,73 @@ public class MySAXParser {
             parser.parse(filePath, handler);
             return handler.getGreenhouse();
         } catch (ParserConfigurationException | SAXException | IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Greenhouse parseSTAX(String xmlPath) {
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        try {
+            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(xmlPath));
+            Greenhouse greenhouse = new Greenhouse();
+            while (reader.hasNext()) {
+                XMLEvent nextEvent = reader.nextEvent();
+                if (nextEvent.isStartElement()) {
+                    StartElement startElement = nextEvent.asStartElement();
+                    switch (startElement.getName().getLocalPart()) {
+                        case "flower":
+                            greenhouse.add(new Flower());
+                            Attribute id = startElement.getAttributeByName(new QName("id"));
+                            greenhouse.last().id = id.getValue();
+                            break;
+                        case "name":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().name = nextEvent.asCharacters().getData();
+                            break;
+                        case "origin":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().origin = nextEvent.asCharacters().getData();
+                            break;
+                        case "soil":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().soil = Flower.Soil.valueOf(nextEvent.asCharacters().getData());
+                            break;
+                        case "reproduction":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().reproduction = Flower.Reproduction.valueOf(nextEvent.asCharacters().getData());
+                            break;
+                        case "stalk_length":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().visuals.stalk_length = Double.parseDouble(nextEvent.asCharacters().getData());
+                            break;
+                        case "color":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().visuals.color = nextEvent.asCharacters().getData();
+                            break;
+                        case "flower_diameter":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().visuals.flower_diameter = Double.parseDouble(nextEvent.asCharacters().getData());
+                            break;
+                        case "temperature":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().tips.temp = Double.parseDouble(nextEvent.asCharacters().getData());
+                            break;
+                        case "illumination":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().tips.light = Integer.parseInt(nextEvent.asCharacters().getData());
+                            break;
+                        case "irrigation":
+                            nextEvent = reader.nextEvent();
+                            greenhouse.last().tips.water = Integer.parseInt(nextEvent.asCharacters().getData());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            return greenhouse;
+        } catch (FileNotFoundException | XMLStreamException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -38,7 +114,7 @@ public class MySAXParser {
             this.greenhouse = greenhouse;
         }
 
-        public Greenhouse getGreenhouse(){
+        public Greenhouse getGreenhouse() {
             return greenhouse;
         }
 
