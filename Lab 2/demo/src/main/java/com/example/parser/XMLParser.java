@@ -1,10 +1,15 @@
 package com.example.parser;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,7 +27,7 @@ public class XMLParser {
         this.xmlPath = xmlPath;
     }
 
-    //Dom Parser
+    // Dom Parser
     public Greenhouse parseDOM() {
         Document doc = getDocument();
         if (doc != null) {
@@ -80,8 +85,18 @@ public class XMLParser {
     }
 
     // SAX parser
-    public Greenhouse parseSAX(){
+    public Greenhouse parseSAX() {
         MySAXParser parser = new MySAXParser();
         return parser.parse(xmlPath);
+    }
+
+    // STAX parser
+    public Greenhouse parseSTAX() {
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        try {
+            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(xmlPath));
+        } catch (FileNotFoundException | XMLStreamException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
