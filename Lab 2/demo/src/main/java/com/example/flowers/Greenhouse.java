@@ -6,7 +6,7 @@ import java.util.List;
 public class Greenhouse {
     private List<Flower> flowers = new ArrayList<>();
 
-    public Flower get(int i){
+    public Flower get(int i) {
         try {
             return flowers.get(i);
         } catch (IndexOutOfBoundsException e) {
@@ -15,7 +15,11 @@ public class Greenhouse {
         }
     }
 
-    public void set(int i, Flower flower){
+    public Flower last() {
+        return flowers.get(flowers.size() - 1);
+    }
+
+    public void set(int i, Flower flower) {
         try {
             flowers.set(i, flower);
         } catch (IndexOutOfBoundsException e) {
@@ -23,19 +27,19 @@ public class Greenhouse {
         }
     }
 
-    public void add(Flower flower){
+    public void add(Flower flower) {
         flowers.add(flower);
     }
 
-    public void print(){
+    public void print() {
         System.out.println("\nFlowers in greenhouse : " + flowers.size());
-        for(Flower flower : flowers){
+        for (Flower flower : flowers) {
             System.out.println(flower.toString());
         }
     }
 
-    //For testing
-    public int length(){
+    // For testing
+    public int length() {
         return flowers.size();
     }
 }
