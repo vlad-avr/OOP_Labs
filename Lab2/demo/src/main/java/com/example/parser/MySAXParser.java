@@ -50,6 +50,28 @@ public class MySAXParser {
             this.type = value;
         }
 
+        public Object getType() {
+            return type;
+        }
+
+        public void setChildren(List<SchemaElement> children2) {
+        }
+
+        public void setAttributes(Object attributes2) {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Map<String, String> getAttributes() {
+            return attributes;
+        }
+
+        public List<SchemaElement> getChildren() {
+            return children;
+        }
+
     }
 
     class SchemaComplexType {
@@ -71,6 +93,14 @@ public class MySAXParser {
 
         public void setChildren(List<SchemaElement> currentSequence) {
             this.children = currentSequence;
+        }
+
+        public List<SchemaElement> getChildren() {
+            return children;
+        }
+
+        public Object getAttributes() {
+            return attributes;
         }
 
     }
@@ -159,7 +189,7 @@ public class MySAXParser {
                 element.setType(simpleTypes.get(element.getType()));
             }
         }
-    
+
         private void printTree(SchemaElement element, String indent) {
             System.out.println(indent + element.getName() + " : " + element.getType());
             Map<String, String> attributes = element.getAttributes();
