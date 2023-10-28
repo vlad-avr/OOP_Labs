@@ -17,8 +17,9 @@ public final class App {
      */
     public static void main(String[] args) {
         XMLParser parser = new XMLParser("D:\\Java\\OOP_Labs\\Lab 2\\demo\\Greenhouse.xml");
-        Greenhouse greenhouse = parser.parseDOM();
-        greenhouse.print();
-        parser.parseSAX();
+        Greenhouse DOMhouse = parser.parseDOM();
+        DOMhouse.print();
+        Greenhouse SAXhouse = parser.parseSAX();
+        SAXhouse.print();
     }
 }
