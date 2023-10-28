@@ -16,7 +16,7 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        XMLParser parser = new XMLParser("demo\\Greenhouse.xml");
+        XMLParser parser = new XMLParser("D:\\Java\\OOP_Labs\\Lab 2 fuck java\\demo\\Greenhouse.xml");
         Greenhouse greenhouse = parser.parseDOM();
         greenhouse.print();
     }
