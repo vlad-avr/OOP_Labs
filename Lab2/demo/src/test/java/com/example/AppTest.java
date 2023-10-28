@@ -13,7 +13,7 @@ class AppTest {
     void testApp() {
         final double Eps = 0.00001;
         XMLParser parser = new XMLParser("D:\\Java\\OOP_Labs\\Lab2\\demo\\Test.xml");
-        Greenhouse greenhouse = parser.parse();
+        Greenhouse greenhouse = parser.parseDOM();
         greenhouse.print();
         assertEquals(greenhouse.length(), 2);
         Flower flower = greenhouse.get(0);

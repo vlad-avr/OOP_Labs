@@ -22,7 +22,8 @@ public class XMLParser {
         this.xmlPath = xmlPath;
     }
 
-    public Greenhouse parse() {
+    //Dom Parser
+    public Greenhouse parseDOM() {
         Document doc = getDocument();
         if (doc != null) {
             Greenhouse greenhouse = new Greenhouse();
@@ -39,7 +40,7 @@ public class XMLParser {
         }
     }
 
-    public Flower parseSingleFlower(Node node) {
+    private Flower parseSingleFlower(Node node) {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Flower flower = new Flower();
             Element elem = (Element) node;
@@ -76,5 +77,11 @@ public class XMLParser {
             return null;
         }
 
+    }
+
+    // SAX parser
+    public Greenhouse parseSAX(){
+        MySAXParser parser = new MySAXParser();
+        return parser.parse(xmlPath);
     }
 }
