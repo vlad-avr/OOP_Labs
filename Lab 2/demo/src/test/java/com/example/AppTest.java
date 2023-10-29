@@ -21,8 +21,9 @@ class AppTest {
         greenhouses.add(parser.parseSAX());
         greenhouses.add(parser.parseSTAX());
         for (Greenhouse greenhouse : greenhouses) {
+            greenhouse.sort();
             assertEquals(greenhouse.length(), 2);
-            Flower flower = greenhouse.get(0);
+            Flower flower = greenhouse.get(1);
             assertEquals(flower.id, "ID-1");
             assertEquals(flower.name, "Tulip");
             assertEquals(flower.soil, Flower.Soil.podzol);
@@ -34,7 +35,7 @@ class AppTest {
             assertEquals(flower.tips.light, 7);
             assertEquals(flower.tips.water, 10, Eps);
             assertEquals(flower.reproduction, Flower.Reproduction.leaves);
-            flower = greenhouse.get(1);
+            flower = greenhouse.get(0);
             assertEquals(flower.id, "ID-2");
             assertEquals(flower.name, "Rose");
             assertEquals(flower.soil, Flower.Soil.turf_podzol);
