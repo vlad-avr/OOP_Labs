@@ -1,6 +1,8 @@
 package com.example.flowers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Greenhouse {
@@ -36,6 +38,32 @@ public class Greenhouse {
         for (Flower flower : flowers) {
             System.out.println(flower.toString());
         }
+    }
+
+    //Sorts list by flower names in alphabetical order
+    public void sort() {
+        Collections.sort(flowers, new Comparator<Flower>() {
+            @Override
+            public int compare(Flower lhs, Flower rhs) {
+                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                if (lhs.name.length() > rhs.name.length()) {
+                    return 1;
+                } else if (lhs.name.length() < rhs.name.length()) {
+                    return -1;
+                } else {
+                    for (int i = 0; i < lhs.name.length(); i++) {
+                        if (lhs.name.charAt(i) > rhs.name.charAt(i)) {
+                            return 1;
+                        } else if (lhs.name.charAt(i) < rhs.name.charAt(i)) {
+                            return -1;
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+                return 0;
+            }
+        });
     }
 
     // For testing

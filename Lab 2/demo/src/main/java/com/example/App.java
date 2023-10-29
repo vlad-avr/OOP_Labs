@@ -11,12 +11,15 @@ public final class App {
         XMLParser parser = new XMLParser("D:\\Java\\OOP_Labs\\Lab 2\\demo\\Greenhouse.xml");
         Greenhouse DOMhouse = parser.parseDOM();
         System.out.println("\n DOM PARSER : \n");
+        DOMhouse.sort();
         DOMhouse.print();
         Greenhouse SAXhouse = parser.parseSAX();
         System.out.println("\n SAX PARSER : \n");
+        SAXhouse.sort();
         SAXhouse.print();
         Greenhouse STAXhouse = parser.parseSTAX();
         System.out.println("\n STAX PARSER : \n");
+        STAXhouse.sort();
         STAXhouse.print();
     }
 }
