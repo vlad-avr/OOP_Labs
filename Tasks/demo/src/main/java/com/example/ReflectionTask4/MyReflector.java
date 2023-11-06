@@ -1,4 +1,4 @@
-package com.example.Reflection_task4;
+package com.example.ReflectionTask4;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

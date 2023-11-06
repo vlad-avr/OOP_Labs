@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.Reflection_task4.MyReflector;
+import com.example.ReflectionTask4.MyReflector;
 
 public final class App {
     private App() {
