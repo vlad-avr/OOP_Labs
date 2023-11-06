@@ -7,6 +7,6 @@ public final class App {
     }
     public static void main(String[] args) {
         MyReflector reflector = new MyReflector();
-        reflector.reflectClass(MyReflector.class);
+        reflector.reflectClass(String.class);
     }
 }
