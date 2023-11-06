@@ -2,17 +2,16 @@ package com.example;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.example.QueueTestTask5.QueueTest;
 
-/**
- * Unit test for simple App.
- */
+
 class AppTest {
-    /**
-     * Rigorous Test.
-     */
+    QueueTest qtest = new QueueTest();
+
     @Test
-    void testApp() {
-        assertEquals(1, 1);
+    public void testAll(){
+        qtest.testString();
+        qtest.testDouble();
+        qtest.testInt();
     }
 }
