@@ -1,14 +1,15 @@
 package com.example.ThreadPool;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class MyThreadPool {
     private final WorkerThread[] workers;
-    private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Runnable> taskQueue;
 
     public MyThreadPool(int poolSize) {
         this.workers = new WorkerThread[poolSize];
+        taskQueue = new LinkedBlockingDeque<>();
         for (int i = 0; i < poolSize; i++) {
             workers[i] = new WorkerThread();
             workers[i].start();
@@ -19,24 +20,28 @@ public class MyThreadPool {
         try {
             taskQueue.put(task);
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            System.out.println(e.getMessage());
         }
     }
 
     public void shutdown() {
+        while (!taskQueue.isEmpty()) {
+            continue;
+        }
         for (WorkerThread worker : workers) {
-            worker.interrupt();
+            worker.done = true;
         }
     }
 
     private class WorkerThread extends Thread {
+        public boolean done = false;
         public void run() {
-            while (!isInterrupted()) {
+            while (!done) {
                 try {
                     Runnable task = taskQueue.take();
                     task.run();
                 } catch (InterruptedException e) {
-                    interrupt();
+                    System.out.println(e.getMessage());
                 }
             }
         }
