@@ -4,10 +4,10 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class LockFreeSkipList<T> {
     private static final class Node<T> {
-        private final T keyObject;
-        private final long key;
-        private final AtomicMarkableReference<Node<T>>[] nexts;
-        private final int height;
+        final T keyObject;
+        final long key;
+        final AtomicMarkableReference<Node<T>>[] nexts;
+        final int height;
         
         public Node(T keyObject, int height) {
             this(keyObject, keyObject.hashCode(), height);
@@ -25,27 +25,23 @@ public class LockFreeSkipList<T> {
                 this.nexts[i] = new AtomicMarkableReference<>(null, false);
             this.height = height;
         }
-
-        public T getObject(){
-            return this.keyObject;
-        }
     }
 
     
 
     private final int levels;
-    private final Node<T> head;
-    private final Node<T> tail;
+    private final Node<T> first;
+    private final Node<T> last;
     
     public LockFreeSkipList(int levels) {
         if (levels < 1)
             throw new IllegalArgumentException("Skip list must have at least 1 level");
 
         this.levels = levels;
-        head = new Node<>(Long.MIN_VALUE, levels);
-        tail = new Node<>(Long.MAX_VALUE, levels);
+        first = new Node<>(Long.MIN_VALUE, levels);
+        last = new Node<>(Long.MAX_VALUE, levels);
         for (int i = 0; i < levels; i++) {
-            head.nexts[i].set(tail, false);
+            first.nexts[i].set(last, false);
         }
     }
     
@@ -61,7 +57,7 @@ public class LockFreeSkipList<T> {
         int key = element.hashCode();
 
         boolean found = false;
-        Node<T> previous = head;
+        Node<T> previous = first;
         boolean[] currentMarked = new boolean[1];
 
         //Search for place to insert, starting from top level
@@ -171,5 +167,24 @@ public class LockFreeSkipList<T> {
             }
             return true;
         }
+    }
+
+    public void print(){
+        System.out.println("\n SKIP LIST : \n");
+        for(int i = 0; i < levels; i++){
+            AtomicMarkableReference<Node<T>> next = first.nexts[i];
+            System.out.println(" Level " + i + "\n");
+            while (next != null) {
+                System.out.println(next.getReference().keyObject);
+                next = next.getReference().nexts[i];
+            }
+        }
+    }
+
+    public boolean isEmpty(){
+        if(first == null){
+            return true;
+        }
+        return false;
     }
 }
