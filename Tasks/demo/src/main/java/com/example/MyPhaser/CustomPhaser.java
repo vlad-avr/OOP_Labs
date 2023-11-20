@@ -1,24 +1,24 @@
 package com.example.MyPhaser;
 
 public class CustomPhaser {
-    private int parties;
-    private int arrived;
+    private final int parties;
+    private int arrived = 0;
 
     public CustomPhaser(int parties) {
         this.parties = parties;
-        this.arrived = 0;
     }
 
     public synchronized void arriveAndAwait() throws InterruptedException {
         arrived++;
-
         if (arrived < parties) {
-            while (arrived < parties) {
-                wait();
-            }
+            wait();
         } else {
             notifyAll();
             arrived = 0;
         }
+    }
+
+    public int getParties(){
+        return this.parties;
     }
 }
