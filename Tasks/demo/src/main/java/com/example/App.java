@@ -19,38 +19,6 @@ public final class App {
         // System.out.println("\n REFLECT WORKING : \n");
         // MyReflector reflector = new MyReflector();
         // reflector.reflectClass(Thread.class);
-        // System.out.println("\n CYCLIC BARRIER WORKING : \n");
-        // CyclicBarrier myBarrier = new CyclicBarrier(6, () -> {
-        // System.out.println("\nBarrier has been reached by all threads!\n");
-        // });
-        SecureRandom rnd = new SecureRandom();
-        // for (int j = 0; j < 3; j++) {
-        // System.out.println("\n Barrier reset - starting all over again \n");
-        // for (int i = 0; i < myBarrier.getParties() - 1; i++) {
-        // Thread thr = new Thread(() -> {
-        // try {
-        // int t = rnd.nextInt(5000) + 1000;
-        // System.out.println("\nThread " + Thread.currentThread().getName() + " will do
-        // something for "
-        // + t + " milliseconds");
-        // Thread.sleep(t);
-        // System.out.println("\nThread " + Thread.currentThread().getName() + " has
-        // finished its work");
-        // myBarrier.await();
-        // System.out.println("\nThread " + Thread.currentThread().getName() + " has
-        // breached the containment");
-        // } catch (InterruptedException | BrokenBarrierException e) {
-        // System.out.println(e.getMessage());
-        // }
-        // });
-        // thr.start();
-        // }
-        // try {
-        // myBarrier.await();
-        // } catch (BrokenBarrierException | InterruptedException e) {
-        // System.out.println(e.getMessage());
-        // }
-        // }
         // System.out.println("\n THREAD POOL WORKING : \n");
         // MyThreadPool myPool = new MyThreadPool(4);
         // for(int i = 0; i < 10; i++){
@@ -85,33 +53,6 @@ public final class App {
         // });
         // thr.start();
         // }
-        MyReentrantLock rLock = new MyReentrantLock();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add("String " + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            Thread thr = new Thread(() -> {
-                for (int j = 0; j < 10; j++) {
-                    rLock.lock();
-                    System.out.println(Thread.currentThread().getName() + " has locked list to add a string");
-                    list.add(Thread.currentThread().getName() + " S " + j);
-                    if (rnd.nextBoolean()) {
-                        rLock.lock();
-                        System.out.println(
-                                Thread.currentThread().getName() + " has locked list again to delete first string");
-                        list.remove(0);
-                        rLock.unlock();
-                    }
-                    System.out.println("\nList:");
-                    for(int k = 0; k < list.size(); k++){
-                        System.out.println(list.get(k));
-                    }
-                    System.out.println(Thread.currentThread().getName() + " has unlocked list");
-                    rLock.unlock();
-                }
-            });
-            thr.start();
-        }
+        
     }
 }
