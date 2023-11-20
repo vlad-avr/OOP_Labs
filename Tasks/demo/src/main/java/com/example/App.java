@@ -16,9 +16,6 @@ public final class App {
     }
 
     public static void main(String[] args) {
-        // System.out.println("\n REFLECT WORKING : \n");
-        // MyReflector reflector = new MyReflector();
-        // reflector.reflectClass(Thread.class);
         // System.out.println("\n THREAD POOL WORKING : \n");
         // MyThreadPool myPool = new MyThreadPool(4);
         // for(int i = 0; i < 10; i++){
