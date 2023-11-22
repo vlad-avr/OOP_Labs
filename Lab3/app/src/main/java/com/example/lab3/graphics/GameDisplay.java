@@ -24,12 +24,12 @@ public class GameDisplay {
         displayCenterX = widthPixels/2.0;
         displayCenterY = heightPixels/2.0;
 
-        update();
+        update(0 ,0);
     }
 
-    public void update() {
-        //gameCenterX = centerObject.getPositionX();
-        //gameCenterY = centerObject.getPositionY();
+    public void update(int posX, int posY) {
+        gameCenterX = posX;
+        gameCenterY = posY;
 
         gameToDisplayCoordinatesOffsetX = displayCenterX - gameCenterX;
         gameToDisplayCoordinatesOffsetY = displayCenterY - gameCenterY;

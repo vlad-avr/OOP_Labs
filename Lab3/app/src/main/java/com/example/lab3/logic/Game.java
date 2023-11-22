@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -20,6 +21,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     private GameDisplay gameDisplay;
     private MapHolder mapHolder;
+
+    private int displayX = 0;
+    private int displayY = 0;
 
     public Game(Context context) {
         super(context);
@@ -38,6 +42,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         setFocusable(true);
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                displayX = (int)event.getX();
+                displayY = (int)event.getY();
+                return true;
+            default:
+                return true;
+        }
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -63,6 +79,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update(){
-        gameDisplay.update();
+        gameDisplay.update(displayX, displayY);
     }
 }
