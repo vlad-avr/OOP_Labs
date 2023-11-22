@@ -47,48 +47,45 @@ public class MapHolder {
     }
     public void generateMapPlan(){
         initMap();
-        Walker walker = new Walker(this, 20, GROUND, rnd);
-        int randX = START_X;
-        int randY = START_Y;
-        walker.walk(START_X, START_Y);
+        Walker walker = new Walker(this, 50, GROUND, rnd);
+        int randX = WIDTH/2;
+        int randY = HEIGHT/2;
+        walker.walk(randX, randY);
         while(!filledEnough(filledMap, TILE_NUM)){
             randX = rnd.nextInt(WIDTH);
             randY = rnd.nextInt(HEIGHT);
-            while(isEmpty(randX, randY)){
-                randX = rnd.nextInt(WIDTH);
-                randY = rnd.nextInt(HEIGHT);
-            }
+
             walker.walk(randX, randY);
         }
         int mapTilesFilled = curTilesFilled;
         curTilesFilled = 0;
         walker.setFiller(ROCK);
-        walker.setMaxSteps(5);
+        walker.setMaxSteps(50);
         while (!filledEnough(filledRock, mapTilesFilled)){
             randX = rnd.nextInt(WIDTH);
             randY = rnd.nextInt(HEIGHT);
-            while(isEmpty(randX, randY)){
+            /*while(isEmpty(randX, randY)){
                 randX = rnd.nextInt(WIDTH);
                 randY = rnd.nextInt(HEIGHT);
-            }
+            }*/
             walker.walk(randX, randY);
         }
         curTilesFilled = 0;
         walker.setFiller(SAND);
-        walker.setMaxSteps(10);
+        walker.setMaxSteps(50);
         while (!filledEnough(filledSand, mapTilesFilled)){
             randX = rnd.nextInt(WIDTH);
             randY = rnd.nextInt(HEIGHT);
-            while(isEmpty(randX, randY)){
+            /*while(isEmpty(randX, randY)){
                 randX = rnd.nextInt(WIDTH);
                 randY = rnd.nextInt(HEIGHT);
-            }
+            }*/
             walker.walk(randX, randY);
         }
         mapTilesFilled = curTilesFilled;
         curTilesFilled = 0;
         walker.setFiller(WATER);
-        walker.setMaxSteps(5);
+        walker.setMaxSteps(20);
         while (!filledEnough(filledWater, mapTilesFilled)){
             randX = rnd.nextInt(WIDTH);
             randY = rnd.nextInt(HEIGHT);
@@ -176,8 +173,10 @@ public class MapHolder {
         return mapPlan[i][j];
     }
     public void fillTile(int i, int j, int filler){
+        if(mapPlan[i][j] != filler) {
+            curTilesFilled++;
+        }
         mapPlan[i][j] = filler;
-        curTilesFilled++;
     }
 
 

@@ -27,8 +27,13 @@ public class Walker {
         int stepCount = 0;
         int i = startX;
         int j = startY;
+        int prevDir = -1;
         while (stepCount < maxSteps) {
             int dir = rnd.nextInt(4);
+            while (dir == prevDir){
+                dir = rnd.nextInt(4);
+            }
+            prevDir = dir;
             switch (dir){
                 case 0:
                     i++;
@@ -39,8 +44,9 @@ public class Walker {
                 case 3:
                     j--;
             }
-            if(i < mapHolder.WIDTH && j < mapHolder.HEIGHT && i >= 0 && j >= 0){
+            if(i < mapHolder.WIDTH-1 && j < mapHolder.HEIGHT-1 && i > 0 && j > 0){
                 mapHolder.fillTile(i, j, filler);
+                stepCount++;
             }else{
                 break;
             }
