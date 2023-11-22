@@ -6,6 +6,8 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.security.SecureRandom;
+
 public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainLoop loop;
