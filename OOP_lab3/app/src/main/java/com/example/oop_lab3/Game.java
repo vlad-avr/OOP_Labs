@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,7 +12,7 @@ import android.view.SurfaceView;
 import com.example.oop_lab3.gameobject.Circle;
 import com.example.oop_lab3.gameobject.Enemy;
 import com.example.oop_lab3.gameobject.Player;
-import com.example.oop_lab3.gameobject.Spell;
+import com.example.oop_lab3.gameobject.Bullet;
 import com.example.oop_lab3.gamepanel.GameOver;
 import com.example.oop_lab3.gamepanel.Joystick;
 import com.example.oop_lab3.gamepanel.Performance;
@@ -37,8 +36,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private GameLoop gameLoop;
     private List<Enemy> enemyList = new ArrayList<Enemy>();
-    private List<Spell> spellList = new ArrayList<Spell>();
-    private int numberOfSpellsToCast = 0;
+    private List<Bullet> playerBulletList = new ArrayList<Bullet>();
+    private int numberOfBullets = 0;
     private GameOver gameOver;
     private Performance performance;
     private GameDisplay gameDisplay;
@@ -82,14 +81,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (joystick.getIsPressed()) {
                     // Joystick was pressed before this event -> cast spell
-                    numberOfSpellsToCast ++;
+                    numberOfBullets++;
                 } else if (joystick.isPressed((double) event.getX(), (double) event.getY())) {
                     // Joystick is pressed in this event -> setIsPressed(true) and store pointer id
                     joystickPointerId = event.getPointerId(event.getActionIndex());
                     joystick.setIsPressed(true);
                 } else {
                     // Joystick was not previously, and is not pressed in this event -> cast spell
-                    numberOfSpellsToCast ++;
+                    numberOfBullets++;
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -147,7 +146,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             enemy.draw(canvas, gameDisplay);
         }
 
-        for (Spell spell : spellList) {
+        for (Bullet spell : playerBulletList) {
             spell.draw(canvas, gameDisplay);
         }
 
@@ -182,12 +181,11 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         // Update states of all spells
-        while (numberOfSpellsToCast > 0) {
-            spellList.add(new Spell(getContext(), player));
-            numberOfSpellsToCast --;
+        if(numberOfBullets > 0) {
+            player.shoot(playerBulletList, enemyList, numberOfBullets, getContext());
         }
-        for (Spell spell : spellList) {
-            spell.update();
+        for (Bullet bullet : playerBulletList) {
+            bullet.update();
         }
 
         // Iterate through enemyList and Check for collision between each enemy and the player and
@@ -202,7 +200,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 continue;
             }
 
-            Iterator<Spell> iteratorSpell = spellList.iterator();
+            Iterator<Bullet> iteratorSpell = playerBulletList.iterator();
             while (iteratorSpell.hasNext()) {
                 Circle spell = iteratorSpell.next();
                 // Remove enemy if it collides with a spell

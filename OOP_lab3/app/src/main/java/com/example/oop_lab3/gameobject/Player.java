@@ -14,6 +14,9 @@ import com.example.oop_lab3.Utils;
 import com.example.oop_lab3.graphics.Animator;
 import com.example.oop_lab3.graphics.Sprite;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Player is the main character of the game, which the user can control with a touch joystick.
  * The player class is an extension of a Circle, which is an extension of a GameObject
@@ -27,6 +30,7 @@ public class Player extends Circle {
     private int healthPoints = MAX_HEALTH_POINTS;
     private Animator animator;
     private PlayerState playerState;
+    private double range = 100.0;
 
     public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Animator animator) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius);
@@ -36,6 +40,28 @@ public class Player extends Circle {
         this.playerState = new PlayerState(this);
     }
 
+
+    public void shoot(List<Bullet> bulletList, List<Enemy> enemies, int numberOfBullets, Context context){
+        Iterator<Enemy> iter = enemies.iterator();
+        double minDist = range;
+        Circle closestEnemy = null;
+        while (iter.hasNext()) {
+            Circle enemy = iter.next();
+            double dist = Utils.getDistanceBetweenPoints(positionX, positionY, enemy.positionX, enemy.positionY);
+            if (dist <= minDist) {
+                minDist = dist;
+                closestEnemy = enemy;
+            }
+        }
+        while (numberOfBullets > 0) {
+            if(closestEnemy != null) {
+                bulletList.add(new Bullet(context, positionX, positionY, closestEnemy.positionX/minDist, closestEnemy.positionY/minDist));
+            }else{
+                bulletList.add(new Bullet(context, positionX, positionY, 1, 1));
+            }
+            numberOfBullets--;
+        }
+    }
     public void update() {
 
         // Update velocity based on actuator of joystick
