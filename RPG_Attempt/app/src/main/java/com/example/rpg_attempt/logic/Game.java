@@ -1,7 +1,9 @@
 package com.example.rpg_attempt.logic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -22,9 +24,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public Game(Context context) {
         super(context);
 
-        // Get surface holder and add callback
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+
+        // Initialize display and center it around the player
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels);
+
         mapHolder = new MapHolder(context);
         mapHolder.generateMapPlan();
         loop = new MainLoop(this, surfaceHolder);
@@ -33,7 +40,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
 
     @Override
-    public void surfaceCreated(@NonNull SurfaceHolder holder) {
+    public void surfaceCreated(SurfaceHolder holder) {
         loop.startLoop();
     }
 
