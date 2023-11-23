@@ -25,19 +25,19 @@ public class Player extends GameObject{
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         this.mapHolder = mapHolder;
-        //mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        mapHolder.setTilePassable(mapPosX, mapPosY, false);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
 
     public void update() {
-        if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosX + dirX, mapPosY + dirY)) {
-            //mapHolder.setTilePassable(mapPosX, mapPosY, true);
+        if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosY + dirY, mapPosX + dirX)) {
+            mapHolder.setTilePassable(mapPosX, mapPosY, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
             positionY += dirY * MapHolder.TILE_HEIGHT_PIXELS;
             mapPosX += dirX;
             mapPosY += dirY;
-            //mapHolder.setTilePassable(mapPosX, mapPosY, false);
+            mapHolder.setTilePassable(mapPosX, mapPosY, false);
             dirX = 0;
             dirY = 0;
         }
@@ -53,7 +53,7 @@ public class Player extends GameObject{
         int stepY = mapPosY + dirY;
         Log.d("TAG", "NextX: " + stepX);
         Log.d("TAG", "NextY: " + stepY);
-        if(mapHolder.inBounds(stepX, stepY) && mapHolder.tileIsPassable(stepX, stepY)) {
+        if(mapHolder.inBounds(stepY, stepX) && mapHolder.tileIsPassable(stepY, stepX)) {
             this.dirX = dirX;
             this.dirY = dirY;
         }
