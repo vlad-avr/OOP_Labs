@@ -56,10 +56,10 @@ public class WidgetsPanel extends LinearLayout {
                 playerRef.move(0, -1);
             }
         });
-        addView(bDown);
         addView(bLeft);
-        addView(bRight);
+        addView(bDown);
         addView(bUp);
+        addView(bRight);
 
     }
 }

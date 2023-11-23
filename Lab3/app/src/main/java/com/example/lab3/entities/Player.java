@@ -45,14 +45,8 @@ public class Player extends GameObject{
     }
 
     public void move(int dirX, int dirY){
-        Log.d("TAG", "PrevX: " + mapPosX);
-        Log.d("TAG", "PrevY: " + mapPosY);
-
-
         int stepX = mapPosX + dirX;
         int stepY = mapPosY + dirY;
-        Log.d("TAG", "NextX: " + stepX);
-        Log.d("TAG", "NextY: " + stepY);
         if(mapHolder.inBounds(stepY, stepX) && mapHolder.tileIsPassable(stepY, stepX)) {
             this.dirX = dirX;
             this.dirY = dirY;
