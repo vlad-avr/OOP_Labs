@@ -24,8 +24,8 @@ public class MapHolder {
     private static final int ROCK = 2;
     private static final int SAND = 3;
     private static final int WATER = 4;
-    private static final double groundFillChance = 0.5;
-    private static final double rockFillChance = 0.3;
+    private static final double groundFillChance = 0.3;
+    private static final double rockFillChance = 0.15;
     private static final double sandFillChance = 0.6;
     private final PlantSheet plantSheet;
     private final RockSheet rockSheet;
@@ -219,11 +219,11 @@ public class MapHolder {
             case ROCK:
                 if(roll < 0.3){
                     tile.addRock(rockSheet, RockSheet.ROCKS.SMOL);
-                }else if(roll < 0.8){
+                }else if(roll < 0.85){
                     tile.addRock(rockSheet, RockSheet.ROCKS.BIG);
-                }else if(roll < 0.9){
-                    tile.addRock(rockSheet, RockSheet.ROCKS.GOLD);
                 }else if(roll < 0.95){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.GOLD);
+                }else if(roll < 0.975){
                     tile.addRock(rockSheet, RockSheet.ROCKS.RUBY);
                 }else{
                     tile.addRock(rockSheet, RockSheet.ROCKS.MUSHROOM);
