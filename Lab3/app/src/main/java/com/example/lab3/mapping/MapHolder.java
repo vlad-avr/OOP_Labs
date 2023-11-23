@@ -26,10 +26,10 @@ public class MapHolder {
     private SecureRandom rnd = new SecureRandom();
     private int[][] mapPlan;
     private Tile[][] mapVisual;
-    private final double filledMap = 0.8;
-    private final double filledRock = 0.1;
-    private final double filledSand = 0.3;
-    private final double filledWater = 0.2;
+    private final double wallsToFloorsRatio = 0.5;
+    private final double waterToRockRatio = 0.6;
+    /*private final double filledSand = 0.3;
+    private final double filledWater = 0.2;*/
     private int curTilesFilled = 0;
     private TileSheet tileSheet;
     private Bitmap mapBitmap;
@@ -41,13 +41,50 @@ public class MapHolder {
         mapPlan = new int[WIDTH][HEIGHT];
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++){
-                mapPlan[i][j] = 0;
+                if(rnd.nextFloat() < wallsToFloorsRatio) {
+                    mapPlan[i][j] = GROUND;
+                }else {
+                    mapPlan[i][j] = WALL;
+                }
+            }
+        }
+    }
+
+    private void cellularAutomata(int iterations){
+        for(int iter = 0; iter < iterations; iter++){
+            int[][] mapCopy = new int[WIDTH][];
+            for(int row = 0; row < WIDTH; row++){
+                mapCopy[row] = mapPlan[row].clone();
+            }
+            for(int i = 0; i < WIDTH; i++){
+                for(int j = 0; j < HEIGHT; j++){
+                    int wallCount = 0;
+                    for(int k = i-1; k < i+1; k++){
+                        for(int l = j-1; l < j+1;l++){
+                            if(k >= WIDTH || l >= HEIGHT || k < 0 || l < 0){
+                                wallCount++;
+                            }else{
+                                if(k != i && l != j) {
+                                    if (mapPlan[k][l] == WALL) {
+                                        wallCount++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(wallCount > 4){
+                        mapPlan[i][j] = WALL;
+                    }else{
+                        mapPlan[i][j] = GROUND;
+                    }
+                }
             }
         }
     }
     public void generateMapPlan(){
         initMap();
-        Walker walker = new Walker(this, 50, GROUND, rnd);
+        cellularAutomata(5);
+        /*Walker walker = new Walker(this, 50, GROUND, rnd);
         int randX = WIDTH/2;
         int randY = HEIGHT/2;
         walker.walk(randX, randY);
@@ -68,7 +105,7 @@ public class MapHolder {
                 randX = rnd.nextInt(WIDTH);
                 randY = rnd.nextInt(HEIGHT);
             }*/
-            walker.walk(randX, randY);
+           /* walker.walk(randX, randY);
         }
         curTilesFilled = 0;
         walker.setFiller(SAND);
@@ -80,7 +117,7 @@ public class MapHolder {
                 randX = rnd.nextInt(WIDTH);
                 randY = rnd.nextInt(HEIGHT);
             }*/
-            walker.walk(randX, randY);
+           /* walker.walk(randX, randY);
         }
         mapTilesFilled = curTilesFilled;
         curTilesFilled = 0;
@@ -94,7 +131,7 @@ public class MapHolder {
                 randY = rnd.nextInt(HEIGHT);
             }
             walker.walk(randX, randY);
-        }
+        }*/
         drawMapTiles();
     }
 
