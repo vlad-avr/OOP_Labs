@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.util.Log;
 
 import com.example.lab3.graphics.GameDisplay;
+import com.example.lab3.graphics.PlantSheet;
+import com.example.lab3.graphics.RockSheet;
 import com.example.lab3.graphics.TileSheet;
 
 import java.security.SecureRandom;
@@ -22,6 +24,9 @@ public class MapHolder {
     private static final int ROCK = 2;
     private static final int SAND = 3;
     private static final int WATER = 4;
+    private static final double fillChance = 0.5;
+    private final PlantSheet plantSheet;
+    private final RockSheet rockSheet;
     public static final int TILE_WIDTH_PIXELS = 10;
     public static final int TILE_HEIGHT_PIXELS = 10;
     private SecureRandom rnd = new SecureRandom();
@@ -37,6 +42,8 @@ public class MapHolder {
 
     public MapHolder(Context context){
         tileSheet = new TileSheet(context);
+        plantSheet = new PlantSheet(context);
+        rockSheet = new RockSheet(context);
     }
     private void initMap(){
         mapPlan = new int[WIDTH][HEIGHT];
@@ -136,21 +143,27 @@ public class MapHolder {
 
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++){
+                Tile tile;
                 switch (mapPlan[i][j]){
                     case GROUND:
-                        mapVisual[i][j] = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.GROUND);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.GROUND);
+                        mapVisual[i][j] = tile;
                         break;
                     case ROCK:
-                        mapVisual[i][j] = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.ROCK);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.ROCK);
+                        mapVisual[i][j] = tile;
                         break;
                     case SAND:
-                        mapVisual[i][j] = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.SAND);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.SAND);
+                        mapVisual[i][j] = tile;
                         break;
                     case WATER:
-                        mapVisual[i][j] = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WATER);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WATER);
+                        mapVisual[i][j] = tile;
                         break;
                     case WALL:
-                        mapVisual[i][j] = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WALL);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WALL);
+                        mapVisual[i][j] = tile;
                         break;
                 }
             }
@@ -169,6 +182,10 @@ public class MapHolder {
                 mapVisual[iRow][iCol].draw(mapCanvas);
             }
         }
+    }
+
+    private void genTileFiller(Tile tile){
+
     }
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         canvas.drawBitmap(
