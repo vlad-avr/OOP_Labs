@@ -24,11 +24,13 @@ public class MapHolder {
     private static final int ROCK = 2;
     private static final int SAND = 3;
     private static final int WATER = 4;
-    private static final double fillChance = 0.5;
+    private static final double groundFillChance = 0.5;
+    private static final double rockFillChance = 0.3;
+    private static final double sandFillChance = 0.6;
     private final PlantSheet plantSheet;
     private final RockSheet rockSheet;
-    public static final int TILE_WIDTH_PIXELS = 10;
-    public static final int TILE_HEIGHT_PIXELS = 10;
+    public static final int TILE_WIDTH_PIXELS = 64;
+    public static final int TILE_HEIGHT_PIXELS = 64;
     private SecureRandom rnd = new SecureRandom();
     private int[][] mapPlan;
     private Tile[][] mapVisual;
@@ -144,16 +146,26 @@ public class MapHolder {
         for(int i = 0; i < WIDTH; i++){
             for(int j = 0; j < HEIGHT; j++){
                 Tile tile;
+                boolean toFill = false;
                 switch (mapPlan[i][j]){
                     case GROUND:
+                        if(rnd.nextFloat() < groundFillChance){
+                            toFill = true;
+                        }
                         tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.GROUND);
                         mapVisual[i][j] = tile;
                         break;
                     case ROCK:
+                        if(rnd.nextFloat() < rockFillChance){
+                            toFill = true;
+                        }
                         tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.ROCK);
                         mapVisual[i][j] = tile;
                         break;
                     case SAND:
+                        if(rnd.nextFloat() < sandFillChance){
+                            toFill = true;
+                        }
                         tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.SAND);
                         mapVisual[i][j] = tile;
                         break;
@@ -165,6 +177,10 @@ public class MapHolder {
                         tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WALL);
                         mapVisual[i][j] = tile;
                         break;
+
+                }
+                if(toFill){
+                    genTileFiller(mapVisual[i][j]);
                 }
             }
         }
@@ -185,7 +201,46 @@ public class MapHolder {
     }
 
     private void genTileFiller(Tile tile){
-
+        float roll = rnd.nextFloat();
+        switch (tile.getTileType()){
+            case GROUND:
+                if(roll < 0.3){
+                    tile.addPlant(plantSheet, PlantSheet.PLANTS.PINE);
+                }else if(roll < 0.6){
+                    tile.addPlant(plantSheet, PlantSheet.PLANTS.BUSH);
+                }else if(roll < 0.8){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.SMOL);
+                }else if(roll < 0.9){
+                    tile.addPlant(plantSheet, PlantSheet.PLANTS.TREE);
+                }else{
+                    tile.addPlant(plantSheet, PlantSheet.PLANTS.SHROOM);
+                }
+                break;
+            case ROCK:
+                if(roll < 0.3){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.SMOL);
+                }else if(roll < 0.8){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.BIG);
+                }else if(roll < 0.9){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.GOLD);
+                }else if(roll < 0.95){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.RUBY);
+                }else{
+                    tile.addRock(rockSheet, RockSheet.ROCKS.MUSHROOM);
+                }
+                break;
+            case SAND:
+                if(roll < 0.5){
+                    tile.addRock(rockSheet, RockSheet.ROCKS.SMOL);
+                }else{
+                    tile.addPlant(plantSheet, PlantSheet.PLANTS.BRIAR);
+                }
+                break;
+            case WATER:
+                break;
+            default:
+                break;
+        }
     }
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         canvas.drawBitmap(

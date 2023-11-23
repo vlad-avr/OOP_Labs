@@ -22,6 +22,10 @@ public class Tile {
         this.tileType = tileType;
     }
 
+    public TileType getTileType(){
+        return tileType;
+    }
+
     public void addRock(RockSheet rockSheet, RockSheet.ROCKS rockType) {
         if(taken){return;}
         addedSprite = rockSheet.getSprite(rockType);

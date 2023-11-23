@@ -39,4 +39,8 @@ public class PlantSheet extends SpriteSheet{
         }
         return null;
     }
+
+    public Sprite getSprite(int id){
+        return  getSpriteByIndex(0, id);
+    }
 }
