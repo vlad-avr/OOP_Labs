@@ -24,19 +24,19 @@ public class Player extends GameObject{
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         this.mapHolder = mapHolder;
-        mapHolder.setTilePassingSprite(mapPosX, mapPosY, sprite);
+        mapHolder.setTilePassable(mapPosX, mapPosY, false);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
 
     public void update() {
         if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosX + dirX, mapPosY + dirY)) {
-            mapHolder.setTilePassingSprite(mapPosX, mapPosY, null);
+            mapHolder.setTilePassable(mapPosX, mapPosY, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
             positionY += dirY * MapHolder.TILE_HEIGHT_PIXELS;
             mapPosX += dirX;
             mapPosY += dirY;
-            mapHolder.setTilePassingSprite(mapPosX, mapPosY, sprite);
+            mapHolder.setTilePassable(mapPosX, mapPosY, false);
             dirX = 0;
             dirY = 0;
         }

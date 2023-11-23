@@ -10,6 +10,7 @@ import com.example.lab3.graphics.PlantSheet;
 import com.example.lab3.graphics.RockSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.graphics.TileSheet;
+import com.example.lab3.logic.Game;
 
 import java.security.SecureRandom;
 
@@ -17,8 +18,8 @@ public class MapHolder {
     public static final int WIDTH = 150;
     public static final int HEIGHT = 150;
     public static final int TILE_NUM = WIDTH*HEIGHT;
-    public final int START_X = 50;
-    public final int START_Y = 20;
+    public final int START_X = 8;
+    public final int START_Y = 8;
     private static final int WALL = 0;
     private static final int GROUND = 1;
     private static final int ROCK = 2;
@@ -31,7 +32,7 @@ public class MapHolder {
     private final RockSheet rockSheet;
     public static final int TILE_WIDTH_PIXELS = 64;
     public static final int TILE_HEIGHT_PIXELS = 64;
-    private SecureRandom rnd = new SecureRandom();
+    private SecureRandom rnd = Game.rnd;
     private int[][] mapPlan;
     private Tile[][] mapVisual;
     private final double wallsToFloorsRatio = 0.4;
@@ -303,7 +304,7 @@ public class MapHolder {
         mapVisual[i][j].setPassable(passable);
     }
 
-    public void setTilePassingSprite(int i, int j, Sprite sprite){
+ /*   public void setTilePassingSprite(int i, int j, Sprite sprite){
         if(sprite == null) {
             mapVisual[i][j].setPassable(true);
         }else{
@@ -311,6 +312,6 @@ public class MapHolder {
         }
         mapVisual[i][j].setPassingSprite(sprite);
     }
-
+*/
 
 }

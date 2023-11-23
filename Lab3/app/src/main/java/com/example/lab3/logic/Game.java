@@ -18,6 +18,7 @@ import java.security.SecureRandom;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
+    public static final SecureRandom rnd = new SecureRandom();
     private MainLoop loop;
 
     private GameDisplay gameDisplay;
@@ -76,8 +77,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
 
         // Draw Tilemap
-        player.draw(canvas, gameDisplay);
         mapHolder.draw(canvas, gameDisplay);
+        player.draw(canvas, gameDisplay);
     }
 
     public void update(){
