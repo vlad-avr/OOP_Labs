@@ -3,13 +3,17 @@ package com.example.lab3.logic;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.example.lab3.R;
 import com.example.lab3.entities.Player;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.mapping.MapHolder;
@@ -24,16 +28,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private GameDisplay gameDisplay;
     private Player player;
     private MapHolder mapHolder;
-/*
-    private int displayX = 0;
-    private int displayY = 0;*/
+    private final int displayX;
+    private final int displayY;
 
     public Game(Context context) {
         super(context);
-
+        displayX = this.getResources().getDisplayMetrics().widthPixels;
+        displayY = this.getResources().getDisplayMetrics().heightPixels;
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -50,8 +53,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                /*displayX = (int)event.getX();
-                displayY = (int)event.getY();*/
+                int touchX = (int)event.getX();
+                int touchY = (int)event.getY();
                 return true;
             default:
                 return true;
@@ -75,7 +78,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-
         // Draw Tilemap
         mapHolder.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
@@ -83,5 +85,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     public void update(){
         gameDisplay.update();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
