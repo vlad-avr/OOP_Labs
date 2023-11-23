@@ -7,13 +7,15 @@ public class Walker {
     private MapHolder mapHolder;
     private int maxSteps;
     private int filler;
+    private int cond;
     private SecureRandom rnd;
 
-    public Walker(MapHolder mapHolder, int maxSteps, int filler, SecureRandom rnd){
+    public Walker(MapHolder mapHolder, int maxSteps, int filler, int condition, SecureRandom rnd){
         this.filler = filler;
         this.maxSteps = maxSteps;
         this.mapHolder = mapHolder;
         this.rnd = rnd;
+        this.cond = condition;
     }
 
     public void setMaxSteps(int maxSteps){
@@ -27,25 +29,24 @@ public class Walker {
         int stepCount = 0;
         int i = startX;
         int j = startY;
-        int prevDir = -1;
         while (stepCount < maxSteps) {
             int dir = rnd.nextInt(4);
-            while (dir == prevDir){
-                dir = rnd.nextInt(4);
-            }
-            prevDir = dir;
             switch (dir){
                 case 0:
                     i++;
+                    break;
                 case 1:
                     i--;
+                    break;
                 case 2:
                     j++;
+                    break;
                 case 3:
                     j--;
+                    break;
             }
-            if(i < mapHolder.WIDTH-1 && j < mapHolder.HEIGHT-1 && i > 0 && j > 0){
-                mapHolder.fillTile(i, j, filler);
+            if(i < mapHolder.WIDTH && j < mapHolder.HEIGHT && i >= 0 && j >= 0){
+                mapHolder.fillTile(i, j, cond, filler);
                 stepCount++;
             }else{
                 break;

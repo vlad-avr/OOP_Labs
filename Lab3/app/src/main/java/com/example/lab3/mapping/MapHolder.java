@@ -28,7 +28,7 @@ public class MapHolder {
     private int[][] mapPlan;
     private Tile[][] mapVisual;
     private final double wallsToFloorsRatio = 0.4;
-    private final double waterToTilesRatio = 0.2;
+    private final double waterToTilesRatio = 0.1;
     /*private final double filledSand = 0.3;
     private final double filledWater = 0.2;*/
     private int curTilesFilled = 0;
@@ -84,12 +84,41 @@ public class MapHolder {
             }
         }
     }
+
+    private void fillSand(){
+        for(int i = 0; i < WIDTH; i++){
+            for(int j = 0; j < HEIGHT; j++){
+                if(mapPlan[i][j] == WATER){
+                    continue;
+                }
+                int sandNum = 0;
+                for(int k = i-1; k <= i+1; k++){
+                    for(int l = j-1; l <= j+1; l++){
+                        if (k < WIDTH && l < HEIGHT && k >= 0 && l >= 0) {
+                            if (!(k == i && l == j)) {
+                                if (mapPlan[k][l] == WATER) {
+                                    mapPlan[i][j] = SAND;
+                                    l = j+1;
+                                    k = i+1;
+                                }else if(mapPlan[k][l] == SAND){
+                                    sandNum++;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(sandNum > 4){
+                    mapPlan[i][j] = SAND;
+                }
+            }
+        }
+    }
     public void generateMapPlan(){
         initMap();
         cellularAutomata(15);
-        Walker walker = new Walker(this, 50, WATER, rnd);
+        Walker walker = new Walker(this, TILE_NUM/WIDTH, WATER, GROUND, rnd);
         curTilesFilled = 0;
-        while(!filledEnough(curTilesFilled, TILE_NUM)){
+        while(!filledEnough(waterToTilesRatio, TILE_NUM)){
             int randX = WIDTH/2;
             int randY = HEIGHT/2;
             while(getTile(randX, randY) != GROUND){
@@ -98,54 +127,7 @@ public class MapHolder {
             }
             walker.walk(randX, randY);
         }
-        /*Walker walker = new Walker(this, 50, GROUND, rnd);
-        int randX = WIDTH/2;
-        int randY = HEIGHT/2;
-        walker.walk(randX, randY);
-        while(!filledEnough(filledMap, TILE_NUM)){
-            randX = rnd.nextInt(WIDTH);
-            randY = rnd.nextInt(HEIGHT);
-
-            walker.walk(randX, randY);
-        }
-        int mapTilesFilled = curTilesFilled;
-        curTilesFilled = 0;
-        walker.setFiller(ROCK);
-        walker.setMaxSteps(50);
-        while (!filledEnough(filledRock, mapTilesFilled)){
-            randX = rnd.nextInt(WIDTH);
-            randY = rnd.nextInt(HEIGHT);
-            /*while(isEmpty(randX, randY)){
-                randX = rnd.nextInt(WIDTH);
-                randY = rnd.nextInt(HEIGHT);
-            }*/
-           /* walker.walk(randX, randY);
-        }
-        curTilesFilled = 0;
-        walker.setFiller(SAND);
-        walker.setMaxSteps(50);
-        while (!filledEnough(filledSand, mapTilesFilled)){
-            randX = rnd.nextInt(WIDTH);
-            randY = rnd.nextInt(HEIGHT);
-            /*while(isEmpty(randX, randY)){
-                randX = rnd.nextInt(WIDTH);
-                randY = rnd.nextInt(HEIGHT);
-            }*/
-           /* walker.walk(randX, randY);
-        }
-        mapTilesFilled = curTilesFilled;
-        curTilesFilled = 0;
-        walker.setFiller(WATER);
-        walker.setMaxSteps(20);
-        while (!filledEnough(filledWater, mapTilesFilled)){
-            randX = rnd.nextInt(WIDTH);
-            randY = rnd.nextInt(HEIGHT);
-            while(getTile(randX, randY) != SAND){
-                randX = rnd.nextInt(WIDTH);
-                randY = rnd.nextInt(HEIGHT);
-            }
-            walker.walk(randX, randY);
-        }*/
+        fillSand();
         drawMapTiles();
     }
 
