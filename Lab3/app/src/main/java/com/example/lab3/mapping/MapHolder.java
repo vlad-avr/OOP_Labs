@@ -17,8 +17,8 @@ public class MapHolder {
     public static final int WIDTH = 150;
     public static final int HEIGHT = 150;
     public static final int TILE_NUM = WIDTH*HEIGHT;
-    public static final int START_X = 50;
-    public static final int START_Y = 20;
+    public final int START_X = 50;
+    public final int START_Y = 20;
     private static final int WALL = 0;
     private static final int GROUND = 1;
     private static final int ROCK = 2;
@@ -72,7 +72,7 @@ public class MapHolder {
                     int wallCount = 0;
                     for(int k = i-1; k <= i+1; k++){
                         for(int l = j-1; l <= j+1;l++) {
-                            if (k < WIDTH && l < HEIGHT && k >= 0 && l >= 0) {
+                            if (inBounds(k, l)) {
                                 if (!(k == i && l == j)) {
                                     if (mapCopy[k][l] == ROCK) {
                                         wallCount++;
@@ -103,7 +103,7 @@ public class MapHolder {
                 int sandNum = 0;
                 for(int k = i-1; k <= i+1; k++){
                     for(int l = j-1; l <= j+1; l++){
-                        if (k < WIDTH && l < HEIGHT && k >= 0 && l >= 0) {
+                        if (inBounds(k, l)) {
                             if (!(k == i && l == j)) {
                                 if (mapPlan[k][l] == WATER) {
                                     mapPlan[i][j] = SAND;
@@ -272,7 +272,7 @@ public class MapHolder {
         return true;
     }
     public int getTile(int i, int j){
-        if(i < 0 || j < 0 || i >= WIDTH || j >= HEIGHT){
+        if(!inBounds(i,j)){
             return WALL;
         }
         return mapPlan[i][j];
@@ -282,6 +282,18 @@ public class MapHolder {
             curTilesFilled++;
             mapPlan[i][j] = toFill;
         }
+    }
+
+    public boolean inBounds(int i, int j){
+        return (i < WIDTH && j < HEIGHT && i >= 0 && j >= 0);
+    }
+
+    public boolean tileIsPassable(int i, int j){
+        return mapVisual[i][j].isPassable();
+    }
+
+    public void setTilePassable(int i, int j, boolean passable){
+        mapVisual[i][j].setPassable(passable);
     }
 
 

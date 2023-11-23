@@ -52,6 +52,14 @@ public class Tile {
         taken = true;
     }
 
+    public boolean isPassable() {
+        return this.passable;
+    }
+
+    public void setPassable(boolean passable){
+        this.passable = passable;
+    }
+
     public static enum TileType {
         GROUND,
         ROCK,

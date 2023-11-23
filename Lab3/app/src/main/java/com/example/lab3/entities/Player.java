@@ -21,8 +21,8 @@ public class Player extends GameObject{
     private int healthPoints = MAX_HEALTH_POINTS;
     //private PlayerState playerState;
 
-    public Player(Context context, int positionX, int positionY) {
-        super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY);
+    public Player(Context context, MapHolder mapHolder) {
+        super(context, ContextCompat.getColor(context, R.color.player), mapHolder.START_X, mapHolder.START_Y);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
@@ -49,9 +49,7 @@ public class Player extends GameObject{
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        animator.draw(canvas, gameDisplay, this);
-
-        healthBar.draw(canvas, gameDisplay);
+        //healthBar.draw(canvas, gameDisplay);
     }
 
     public int getHealthPoint() {
