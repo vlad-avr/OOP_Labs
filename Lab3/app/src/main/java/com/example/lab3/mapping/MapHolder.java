@@ -173,6 +173,7 @@ public class MapHolder {
                         break;
                     case WATER:
                         tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WATER);
+                        tile.setPassable(false);
                         mapVisual[i][j] = tile;
                         break;
                     case WALL:
@@ -237,8 +238,6 @@ public class MapHolder {
                 }else{
                     tile.addPlant(plantSheet, PlantSheet.PLANTS.BRIAR);
                 }
-                break;
-            case WATER:
                 break;
             default:
                 break;
