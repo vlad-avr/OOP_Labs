@@ -3,16 +3,22 @@ package com.example.lab3.mapping;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import com.example.lab3.graphics.RockSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.graphics.TileSheet;
 
 public class Tile {
     protected final Rect mapLocationRect;
     private final Sprite sprite;
+    private Sprite addedSprite = null;
 
     public Tile(TileSheet spriteSheet, Rect mapLocationRect, Tile.TileType tileType) {
         this.mapLocationRect = mapLocationRect;
         sprite = spriteSheet.getSprite(tileType);
+    }
+
+    public void addRock(RockSheet rockSheet, RockSheet.ROCKS rockType) {
+        addedSprite = rockSheet.getSprite(rockType);
     }
 
     public static enum TileType {
@@ -45,5 +51,8 @@ public class Tile {
 
     public void draw(Canvas canvas) {
         sprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
+        if(addedSprite != null){
+            addedSprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
+        }
     }
 }
