@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.PlantSheet;
@@ -18,8 +19,8 @@ public class MapHolder {
     public static final int WIDTH = 150;
     public static final int HEIGHT = 150;
     public static final int TILE_NUM = WIDTH*HEIGHT;
-    public final int START_X = 8;
-    public final int START_Y = 8;
+    public final int START_X = 0;
+    public final int START_Y = 0;
     private static final int WALL = 0;
     private static final int GROUND = 1;
     private static final int ROCK = 2;

@@ -40,6 +40,7 @@ public class Tile {
             case RUBY:
             case MUSHROOM:
                 passable = false;
+                break;
         }
         taken = true;
     }
@@ -50,9 +51,9 @@ public class Tile {
         switch (plantType){
             case PINE:
             case TREE:
-            case BRIAR:
             case BUSH:
                 passable = false;
+                break;
         }
         taken = true;
     }

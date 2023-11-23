@@ -1,6 +1,7 @@
 package com.example.lab3.ui;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,13 +19,14 @@ public class WidgetsPanel extends LinearLayout {
     public WidgetsPanel(Context context, Player player) {
         super(context);
         this.playerRef = player;
+        this.setGravity(Gravity.CENTER | Gravity.BOTTOM);
         bDown = new Button(context);
         bDown.setWidth(64);
         bDown.setText("Down");
         bDown.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, -1);
+                playerRef.move(0, 1);
             }
         });
         bLeft = new Button(context);
@@ -51,7 +53,7 @@ public class WidgetsPanel extends LinearLayout {
         bUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, 1);
+                playerRef.move(0, -1);
             }
         });
         addView(bDown);
