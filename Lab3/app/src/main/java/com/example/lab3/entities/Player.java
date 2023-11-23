@@ -3,18 +3,16 @@ package com.example.lab3.entities;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import androidx.core.content.ContextCompat;
-
 import com.example.lab3.R;
 import com.example.lab3.graphics.GameDisplay;
+import com.example.lab3.graphics.SingleSheet;
+import com.example.lab3.graphics.Sprite;
 import com.example.lab3.mapping.MapHolder;
-
-import java.util.Iterator;
-import java.util.List;
 
 public class Player extends GameObject{
     private int speed = 1;
-
+    private final MapHolder mapHolder;
+    private final Sprite sprite;
     private int dirX, dirY = 0;
     public static final int MAX_HEALTH_POINTS = 5;
     //private HealthBar healthBar;
@@ -22,17 +20,23 @@ public class Player extends GameObject{
     //private PlayerState playerState;
 
     public Player(Context context, MapHolder mapHolder) {
-        super(context, ContextCompat.getColor(context, R.color.player), mapHolder.START_X, mapHolder.START_Y);
+        super(mapHolder.START_X, mapHolder.START_Y);
+        SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
+        sprite = singleSheet.getSprite();
+        this.mapHolder = mapHolder;
+        mapHolder.setTilePassingSprite(mapPosX, mapPosY, sprite);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
 
     public void update() {
-        if(!(dirY == 0 && dirX == 0)) {
+        if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosX + dirX, mapPosY + dirY)) {
+            mapHolder.setTilePassingSprite(mapPosX, mapPosY, null);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
             positionY += dirY * MapHolder.TILE_HEIGHT_PIXELS;
             mapPosX += dirX;
             mapPosY += dirY;
+            mapHolder.setTilePassingSprite(mapPosX, mapPosY, sprite);
             dirX = 0;
             dirY = 0;
         }
@@ -42,13 +46,14 @@ public class Player extends GameObject{
     public void move(int dirX, int dirY){
         int stepX = mapPosX + dirX;
         int stepY = mapPosY + dirY;
-        if(stepX < MapHolder.WIDTH && stepY < MapHolder.HEIGHT && stepX >= 0 && stepY >= 0) {
+        if(mapHolder.inBounds(stepX, stepY) && mapHolder.tileIsPassable(stepX, stepY)) {
             this.dirX = dirX;
             this.dirY = dirY;
         }
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionX), (int)gameDisplay.gameToDisplayCoordinatesY(positionY));
         //healthBar.draw(canvas, gameDisplay);
     }
 

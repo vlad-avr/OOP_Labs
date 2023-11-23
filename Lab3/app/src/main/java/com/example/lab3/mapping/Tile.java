@@ -12,6 +12,7 @@ public class Tile {
     protected final Rect mapLocationRect;
     private final Sprite sprite;
     private Sprite addedSprite = null;
+    private Sprite passingSprite = null;
     private boolean passable = true;
     private boolean taken = false;
     private final TileType tileType;
@@ -24,6 +25,10 @@ public class Tile {
 
     public TileType getTileType(){
         return tileType;
+    }
+
+    public void setPassingSprite(Sprite sprite){
+        passingSprite = sprite;
     }
 
     public void addRock(RockSheet rockSheet, RockSheet.ROCKS rockType) {
@@ -92,6 +97,9 @@ public class Tile {
         sprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
         if(addedSprite != null){
             addedSprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
+        }
+        if(passingSprite != null){
+            passingSprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
         }
     }
 }

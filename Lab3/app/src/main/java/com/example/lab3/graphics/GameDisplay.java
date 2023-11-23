@@ -2,11 +2,13 @@ package com.example.lab3.graphics;
 
 import android.graphics.Rect;
 
+import com.example.lab3.entities.GameObject;
+
 public class GameDisplay {
     public final Rect DISPLAY_RECT;
     private final int widthPixels;
     private final int heightPixels;
-    //private final GameObject centerObject;
+    private final GameObject centerObject;
     private final double displayCenterX;
     private final double displayCenterY;
     private double gameToDisplayCoordinatesOffsetX;
@@ -14,22 +16,29 @@ public class GameDisplay {
     private double gameCenterX;
     private double gameCenterY;
 
-    public GameDisplay(int widthPixels, int heightPixels/*, GameObject centerObject*/) {
+    public GameDisplay(int widthPixels, int heightPixels, GameObject centerObject) {
         this.widthPixels = widthPixels;
         this.heightPixels = heightPixels;
         DISPLAY_RECT = new Rect(0, 0, widthPixels, heightPixels);
 
-        //this.centerObject = centerObject;
+        this.centerObject = centerObject;
 
         displayCenterX = widthPixels/2.0;
         displayCenterY = heightPixels/2.0;
 
-        update(0 ,0);
+        update();
     }
 
-    public void update(int posX, int posY) {
+    /*public void update(int posX, int posY) {
         gameCenterX = posX;
         gameCenterY = posY;
+
+        gameToDisplayCoordinatesOffsetX = displayCenterX - gameCenterX;
+        gameToDisplayCoordinatesOffsetY = displayCenterY - gameCenterY;
+    }*/
+    public void update(){
+        gameCenterX = centerObject.getPositionX();
+        gameCenterY = centerObject.getPositionY();
 
         gameToDisplayCoordinatesOffsetX = displayCenterX - gameCenterX;
         gameToDisplayCoordinatesOffsetY = displayCenterY - gameCenterY;

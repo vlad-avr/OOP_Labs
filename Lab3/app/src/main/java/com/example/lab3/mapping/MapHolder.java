@@ -4,11 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
 
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.PlantSheet;
 import com.example.lab3.graphics.RockSheet;
+import com.example.lab3.graphics.Sprite;
 import com.example.lab3.graphics.TileSheet;
 
 import java.security.SecureRandom;
@@ -130,7 +130,7 @@ public class MapHolder {
         while(!filledEnough(waterToTilesRatio, TILE_NUM)){
             int randX = WIDTH/2;
             int randY = HEIGHT/2;
-            while(getTile(randX, randY) != GROUND){
+            while(getTileVal(randX, randY) != GROUND){
                 randX = rnd.nextInt(WIDTH);
                 randY = rnd.nextInt(HEIGHT);
             }
@@ -271,11 +271,18 @@ public class MapHolder {
         }
         return true;
     }
-    public int getTile(int i, int j){
+    public int getTileVal(int i, int j){
         if(!inBounds(i,j)){
             return WALL;
         }
         return mapPlan[i][j];
+    }
+
+    public Tile getTile(int i, int j){
+        if(inBounds(i, j)){
+            return mapVisual[i][j];
+        }
+        return null;
     }
     public void fillTile(int i, int j, int condition, int toFill){
         if(mapPlan[i][j] == condition) {
@@ -294,6 +301,15 @@ public class MapHolder {
 
     public void setTilePassable(int i, int j, boolean passable){
         mapVisual[i][j].setPassable(passable);
+    }
+
+    public void setTilePassingSprite(int i, int j, Sprite sprite){
+        if(sprite == null) {
+            mapVisual[i][j].setPassable(true);
+        }else{
+            mapVisual[i][j].setPassable(false);
+        }
+        mapVisual[i][j].setPassingSprite(sprite);
     }
 
 
