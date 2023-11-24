@@ -12,8 +12,9 @@ import com.example.lab3.graphics.TileSheet;
 public class Tile {
     protected final Rect mapLocationRect;
     private final Sprite sprite;
-    private Sprite addedSprite = null;
+    //private Sprite addedSprite = null;
    // private Sprite passingSprite = null;
+    private StaticObject addedObject = null;
     private boolean passable = true;
     private boolean taken = false;
     private final TileType tileType;
@@ -35,28 +36,56 @@ public class Tile {
 */
     public void addRock(RockSheet rockSheet, RockSheet.ROCKS rockType) {
         if(taken){return;}
-        addedSprite = rockSheet.getSprite(rockType);
+        String prompt = "";
         switch (rockType){
+            case SMOL:
+                prompt = "Break small rock";
+                break;
             case BIG:
+                passable = false;
+                prompt = "Break big rock";
+                break;
             case GOLD:
+                passable = false;
+                prompt = "Mine gold";
+                break;
             case RUBY:
+                passable = false;
+                prompt = "Mine ruby";
+                break;
             case MUSHROOM:
                 passable = false;
+                prompt = "Harvest shrooms";
                 break;
         }
+        addedObject = new StaticObject(rockSheet.getSprite(rockType), prompt);
         taken = true;
     }
 
     public void addPlant(PlantSheet plantSheet, PlantSheet.PLANTS plantType) {
         if(taken){return;}
-        addedSprite = plantSheet.getSprite(plantType);
+        String prompt = "";
         switch (plantType){
+            case SHROOM:
+                prompt = "Harvest shroom";
+                break;
+            case BRIAR:
+                prompt = "Cut briar";
+                break;
             case PINE:
+                prompt = "Chop pine";
+                passable = false;
+                break;
             case TREE:
+                prompt = "Chomp tree";
+                passable = false;
+                break;
             case BUSH:
+                prompt = "Harvest bush";
                 passable = false;
                 break;
         }
+        addedObject = new StaticObject(plantSheet.getSprite(plantType), prompt);
         taken = true;
     }
 
@@ -75,34 +104,15 @@ public class Tile {
         WATER,
         WALL
     }
-/*
-    public static Tile getTile(int idxTileType, SpriteSheet spriteSheet, Rect mapLocationRect) {
-
-        switch(TileType.values()[idxTileType]) {
-
-            case WATER_TILE:
-                return new WaterTile(spriteSheet, mapLocationRect);
-            case LAVA_TILE:
-                return new LavaTile(spriteSheet, mapLocationRect);
-            case GROUND_TILE:
-                return new GroundTile(spriteSheet, mapLocationRect);
-            case GRASS_TILE:
-                return new GrassTile(spriteSheet, mapLocationRect);
-            case TREE_TILE:
-                return new TreeTile(spriteSheet, mapLocationRect);
-            default:
-                return null;
-        }
-
-    }*/
 
     public void draw(Canvas canvas) {
         sprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
-        if(addedSprite != null){
-            addedSprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
+        if(addedObject != null){
+            addedObject.getSprite().draw(canvas, mapLocationRect.left, mapLocationRect.top);
         }
-        /*if(passingSprite != null){
-            passingSprite.draw(canvas, mapLocationRect.left, mapLocationRect.top);
-        }*/
+    }
+
+    public StaticObject getObject(){
+        return this.addedObject;
     }
 }
