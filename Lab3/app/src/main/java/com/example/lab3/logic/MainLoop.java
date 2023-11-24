@@ -54,29 +54,27 @@ public class MainLoop extends Thread {
         Canvas canvas = null;
         startTime = System.currentTimeMillis();
         while (isRunning) {
-            if(Game.isToUpdate()) {
-                // Try to update and render game
-                try {
-                    canvas = surfaceHolder.lockCanvas();
-                    synchronized (surfaceHolder) {
-                        game.update();
-                        updateCount++;
+            try {
+                canvas = surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                    game.update();
+                    updateCount++;
 
-                        game.draw(canvas);
-                    }
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (canvas != null) {
-                        try {
-                            surfaceHolder.unlockCanvasAndPost(canvas);
-                            frameCount++;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    game.draw(canvas);
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } finally {
+                if (canvas != null) {
+                    try {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                        frameCount++;
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
+
 
             // Pause game loop to not exceed target UPS
             elapsedTime = System.currentTimeMillis() - startTime;

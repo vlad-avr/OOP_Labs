@@ -82,9 +82,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     public void update(){
         player.update();
-        entitySpawner.update();
+        if(toUpdate) {
+            entitySpawner.update();
+            toUpdate = false;
+        }
         gameDisplay.update();
-        toUpdate = false;
     }
 
     public static boolean isToUpdate(){

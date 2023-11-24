@@ -14,6 +14,8 @@ import com.example.lab3.mapping.MapHolder;
 public class Player extends Entity{
     private int speed = 1;
     private int dirX, dirY = 0;
+
+    private boolean turnTaken = false;
     //private PlayerState playerState;
 
     public Player(Context context, MapHolder mapHolder, int maxHealth) {
@@ -36,6 +38,11 @@ public class Player extends Entity{
             mapHolder.setTilePassable(mapPosY, mapPosX, false);
             dirX = 0;
             dirY = 0;
+            turnTaken = true;
+        }
+        if(turnTaken){
+            Game.sendUpdateRequest();
+            turnTaken = false;
         }
         //playerState.update();
     }
@@ -46,7 +53,6 @@ public class Player extends Entity{
         if(mapHolder.inBounds(stepY, stepX) && mapHolder.tileIsPassable(stepY, stepX)) {
             this.dirX = dirX;
             this.dirY = dirY;
-            Game.sendUpdateRequest();
         }
     }
 
