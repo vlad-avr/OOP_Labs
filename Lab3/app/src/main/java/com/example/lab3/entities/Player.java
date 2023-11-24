@@ -10,21 +10,15 @@ import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.mapping.MapHolder;
 
-public class Player extends GameObject{
+public class Player extends Entity{
     private int speed = 1;
-    private final MapHolder mapHolder;
-    private final Sprite sprite;
     private int dirX, dirY = 0;
-    public static final int MAX_HEALTH_POINTS = 5;
-    //private HealthBar healthBar;
-    private int healthPoints = MAX_HEALTH_POINTS;
     //private PlayerState playerState;
 
-    public Player(Context context, MapHolder mapHolder) {
-        super(mapHolder.START_X, mapHolder.START_Y);
+    public Player(Context context, MapHolder mapHolder, int maxHealth) {
+        super(context, mapHolder, maxHealth, mapHolder.START_X, mapHolder.START_Y);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
-        this.mapHolder = mapHolder;
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
@@ -58,15 +52,6 @@ public class Player extends GameObject{
         //healthBar.draw(canvas, gameDisplay);
     }
 
-    public int getHealthPoint() {
-        return healthPoints;
-    }
-
-    public void setHealthPoint(int healthPoints) {
-        // Only allow positive values
-        if (healthPoints >= 0)
-            this.healthPoints = healthPoints;
-    }
 
     /*public PlayerState getPlayerState() {
         return playerState;

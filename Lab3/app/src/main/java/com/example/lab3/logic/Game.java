@@ -42,7 +42,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mapHolder = new MapHolder(context);
         mapHolder.generateMapPlan();
-        player = new Player(context, mapHolder);
+        player = new Player(context, mapHolder, 10);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
         loop = new MainLoop(this, surfaceHolder);
         setFocusable(true);

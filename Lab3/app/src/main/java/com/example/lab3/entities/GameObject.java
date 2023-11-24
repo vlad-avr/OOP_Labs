@@ -3,11 +3,13 @@ package com.example.lab3.entities;
 import android.graphics.Canvas;
 
 import com.example.lab3.graphics.GameDisplay;
+import com.example.lab3.graphics.Sprite;
 import com.example.lab3.mapping.MapHolder;
 
 public abstract class GameObject {
     protected int positionX, positionY = 0;
     protected int mapPosX, mapPosY = 0;
+    protected Sprite sprite;
 
     public GameObject() { }
 
@@ -20,6 +22,14 @@ public abstract class GameObject {
 
     public double getPositionX() { return positionX; }
     public double getPositionY() { return positionY; }
+
+    public int getMapPosX(){
+        return this.mapPosX;
+    }
+
+    public int getMapPosY(){
+        return this.mapPosY;
+    }
 
     public abstract void draw(Canvas canvas, GameDisplay gameDisplay);
     public abstract void update();
