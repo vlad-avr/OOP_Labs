@@ -91,12 +91,12 @@ public class PathFinding {
             return null;
         }
 
-
+/*
         if (!mapHolder.tileIsPassable(start.first, start.second)
                 || !mapHolder.tileIsPassable(dest.first, dest.second)) {
             Log.d("A*","Source or destination is blocked...");
             return null;
-        }
+        }*/
 
 
         if (start.equals(dest)) {

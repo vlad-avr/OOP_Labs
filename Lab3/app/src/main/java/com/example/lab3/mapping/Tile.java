@@ -18,8 +18,6 @@ public class Tile {
     private boolean taken = false;
     private final TileType tileType;
 
-    //DEBUG
-    private int obj_ind = -1;
 
     public Tile(TileSheet spriteSheet, Rect mapLocationRect, Tile.TileType tileType) {
         this.mapLocationRect = mapLocationRect;
@@ -40,19 +38,9 @@ public class Tile {
         addedSprite = rockSheet.getSprite(rockType);
         switch (rockType){
             case BIG:
-                obj_ind = 0;
-                passable = false;
-                break;
             case GOLD:
-                obj_ind = 1;
-                passable = false;
-                break;
             case RUBY:
-                obj_ind = 2;
-                passable = false;
-                break;
             case MUSHROOM:
-                obj_ind = 3;
                 passable = false;
                 break;
         }
@@ -64,15 +52,8 @@ public class Tile {
         addedSprite = plantSheet.getSprite(plantType);
         switch (plantType){
             case PINE:
-                obj_ind = 10;
-                passable = false;
-                break;
             case TREE:
-                obj_ind = 20;
-                passable = false;
-                break;
             case BUSH:
-                obj_ind = 30;
                 passable = false;
                 break;
         }
@@ -80,9 +61,6 @@ public class Tile {
     }
 
     public boolean isPassable() {
-        if(!this.passable){
-            Log.d("TILE", "tile type : " + this.tileType + " object type " + obj_ind);
-        }
         return this.passable;
     }
 
