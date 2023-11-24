@@ -3,16 +3,12 @@ package com.example.lab3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.lab3.logic.Game;
-import com.example.lab3.ui.WidgetsPanel;
+import com.example.lab3.ui.ActionsPanel;
+import com.example.lab3.ui.ControlsPanel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +19,12 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         FrameLayout game = new FrameLayout(this);
         Game gameView = new Game (this);
-        WidgetsPanel gameWidgets = new WidgetsPanel (this, gameView.getPlayer());
+        ControlsPanel controlsPanel = new ControlsPanel(this, gameView.getPlayer());
+        ActionsPanel actionsPanel = new ActionsPanel(this, gameView);
 
         game.addView(gameView);
-        game.addView(gameWidgets);
+        game.addView(controlsPanel);
+        game.addView(actionsPanel);
 
         setContentView(game);
     }

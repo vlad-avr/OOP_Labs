@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.example.lab3.entities.Player;
 
-public class WidgetsPanel extends LinearLayout {
+public class ControlsPanel extends LinearLayout {
     private Button bUp;
     private Button bDown;
     private Button bRight;
@@ -16,7 +16,7 @@ public class WidgetsPanel extends LinearLayout {
 
     private Player playerRef;
 
-    public WidgetsPanel(Context context, Player player) {
+    public ControlsPanel(Context context, Player player) {
         super(context);
         this.playerRef = player;
         this.setGravity(Gravity.CENTER | Gravity.BOTTOM);
