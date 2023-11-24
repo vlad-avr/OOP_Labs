@@ -3,11 +3,14 @@ package com.example.lab3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.lab3.logic.Game;
 import com.example.lab3.ui.ActionsPanel;
+import com.example.lab3.ui.ActionsUI;
 import com.example.lab3.ui.ControlsPanel;
 
 public class MainActivity extends AppCompatActivity {
