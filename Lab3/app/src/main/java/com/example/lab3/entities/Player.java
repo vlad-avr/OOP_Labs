@@ -30,8 +30,6 @@ public class Player extends Entity{
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
         waitAction.setPrompt("Wait");
-        //this.healthBar = new HealthBar(context, this);
-        //this.playerState = new PlayerState(this);
     }
 
     @Override
@@ -51,7 +49,6 @@ public class Player extends Entity{
             Game.sendUpdateRequest();
             turnTaken = false;
         }
-        //playerState.update();
     }
 
     @Override
@@ -71,7 +68,6 @@ public class Player extends Entity{
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
-        //healthBar.draw(canvas, gameDisplay);
     }
 
     public List<Action> getActions(){
@@ -89,8 +85,4 @@ public class Player extends Entity{
         turnTaken = true;
     }
 
-
-    /*public PlayerState getPlayerState() {
-        return playerState;
-    }*/
 }

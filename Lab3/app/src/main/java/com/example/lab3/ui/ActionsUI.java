@@ -64,31 +64,8 @@ public class ActionsUI extends Dialog{
             });
             buttonLayout.addView(button);
         }
-
-        // Add the button list to the ScrollView
         scrollView.addView(buttonLayout);
-
-        // Add the ScrollView to the main layout
         mainLayout.addView(scrollView);
-
-        // Create the close button
-       /* Button closeButton = new Button(getContext());
-        closeButton.setText("Close");
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        LinearLayout.LayoutParams closeButtonParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        closeButtonParams.gravity = Gravity.END;
-        closeButton.setLayoutParams(closeButtonParams);
-        mainLayout.addView(closeButton);*/
-
-        // Set the content view to the main layout
         setContentView(mainLayout);
     }
 }
