@@ -57,6 +57,8 @@ public class Enemy extends Entity{
         }
         if(GameObject.getDistanceBetweenObjects(player, this) <= range){
             agroed = true;
+        }else{
+            agroed = false;
         }
     }
 

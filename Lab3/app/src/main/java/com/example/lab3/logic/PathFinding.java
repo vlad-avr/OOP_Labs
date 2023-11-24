@@ -73,7 +73,7 @@ public class PathFinding {
             nextNode = cellDetails[row][col].parent;
         } while (!nextNode.equals(start)); // until src
 
-        return path.get(Math.max(path.size() - speed - 2, 1));
+        return path.get(Math.max(path.size() - speed - 2, 0));
     }
     public static Pair aStarSearch(MapHolder mapHolder, Pair start, Pair dest, int speed)
     {
