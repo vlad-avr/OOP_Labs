@@ -40,10 +40,11 @@ public class Enemy extends Entity{
 
     @Override
     public void update() {
-        super.update();
+        super.updateHealth();
         if(agroed){
             if (GameObject.getMapDistBetweenObjects(player, this) <= attackRange) {
                 Log.d("Enemy", "ATTACK ");
+                attack();
             }else {
                 PathFinding.Pair playerPos = new PathFinding.Pair(player.getMapPosX(), player.getMapPosY());
                 PathFinding.Pair stepPos = PathFinding.aStarSearch(mapHolder, new PathFinding.Pair(mapPosX, mapPosY), playerPos, speed);
@@ -62,7 +63,7 @@ public class Enemy extends Entity{
         }
     }
 
-    private void move(int x, int y){
+    protected void move(int x, int y){
         if(!mapHolder.inBounds(x,y) || !mapHolder.tileIsPassable(x, y)){
             return;
         }
@@ -74,7 +75,11 @@ public class Enemy extends Entity{
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
     }
 
-    private PathFinding.Pair getRandMove(){
+    protected void attack(){
+        player.stackDamage(damageDelt);
+    }
+
+    protected PathFinding.Pair getRandMove(){
         if(Game.rnd.nextBoolean()){
             int dir = Game.rnd.nextInt(4);
             switch (dir){

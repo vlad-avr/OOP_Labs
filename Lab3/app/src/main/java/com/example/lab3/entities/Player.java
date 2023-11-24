@@ -27,8 +27,8 @@ public class Player extends Entity{
         //this.playerState = new PlayerState(this);
     }
 
+    @Override
     public void update() {
-        super.update();
         if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosX + dirX, mapPosY + dirY)) {
             mapHolder.setTilePassable(mapPosX, mapPosY, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
@@ -45,6 +45,12 @@ public class Player extends Entity{
             turnTaken = false;
         }
         //playerState.update();
+    }
+
+    @Override
+    public void updateHealth(){
+        super.updateHealth();
+        Log.d("PLAYER", "updateHealth: " + health);
     }
 
     public void move(int dirX, int dirY){

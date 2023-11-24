@@ -41,6 +41,10 @@ public class Entity extends GameObject{
 
     @Override
     public void update() {
+
+    }
+
+    public void updateHealth(){
         takeDamage();
     }
 
