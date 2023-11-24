@@ -140,8 +140,6 @@ public class PathFinding {
             openList.poll();
             closedList[i][j] = true;
 
-            // Generating all the 8 neighbors of the cell
-
             for (int addX = -1; addX <= 1; addX++) {
                 for (int addY = -1; addY <= 1; addY++) {
                     if(Math.abs(addX) == 1 && Math.abs(addY) == 1){

@@ -39,4 +39,8 @@ public abstract class GameObject {
                         Math.pow(obj2.getMapPosY() - obj1.getMapPosY(), 2)
         );
     }
+
+    public static double getMapDistBetweenObjects(GameObject obj1, GameObject obj2){
+        return Math.max(Math.abs(obj1.mapPosX - obj2.mapPosX), Math.abs(obj1.mapPosY - obj2.mapPosY));
+    }
 }
