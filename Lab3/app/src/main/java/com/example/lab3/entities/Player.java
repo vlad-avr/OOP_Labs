@@ -20,7 +20,7 @@ public class Player extends Entity{
         super(context, mapHolder, maxHealth, mapHolder.START_X, mapHolder.START_Y);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
-        mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        mapHolder.setTilePassable(mapPosY, mapPosX, false);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
@@ -28,12 +28,12 @@ public class Player extends Entity{
     public void update() {
         super.update();
         if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosY + dirY, mapPosX + dirX)) {
-            mapHolder.setTilePassable(mapPosX, mapPosY, true);
+            mapHolder.setTilePassable(mapPosY, mapPosX, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
             positionY += dirY * MapHolder.TILE_HEIGHT_PIXELS;
             mapPosX += dirX;
             mapPosY += dirY;
-            mapHolder.setTilePassable(mapPosX, mapPosY, false);
+            mapHolder.setTilePassable(mapPosY, mapPosX, false);
             dirX = 0;
             dirY = 0;
         }

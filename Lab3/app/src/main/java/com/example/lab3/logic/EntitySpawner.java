@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntitySpawner {
-    private final int enemyMaxSpawnRate = 10;
-    private final int enemyMinSpawnRate = 5;
+    private final int enemyMaxSpawnRate = 20;
+    private final int enemyMinSpawnRate = 10;
     private final int enemyNumberCap = 20;
     private final int minSpawnBoundX = 5;
     private final int maxSpawnBoundX = 15;
@@ -54,11 +54,11 @@ public class EntitySpawner {
     }
 
     private void spawnEnemy(){
-        int spawnX = Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
-        int spawnY = Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
-        while (!mapHolder.tileIsPassable(spawnY, spawnX)){
-            spawnX = Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
-            spawnY = Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
+        int spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
+        int spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
+        while (!mapHolder.inBounds(spawnY, spawnX) || !mapHolder.tileIsPassable(spawnY, spawnX)){
+            spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
+            spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
         }
         Enemy enemy = new Enemy(context, mapHolder, 5, spawnX, spawnY, 20);
         enemies.add(enemy);
