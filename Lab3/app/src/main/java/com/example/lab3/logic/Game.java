@@ -30,6 +30,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private MapHolder mapHolder;
     private final int displayX;
     private final int displayY;
+    private static boolean toUpdate = true;
 
     public Game(Context context) {
         super(context);
@@ -49,17 +50,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     }
 
 
-    @Override
+   /* @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                int touchX = (int)event.getX();
-                int touchY = (int)event.getY();
-                return true;
-            default:
-                return true;
-        }
-    }
+
+    }*/
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -86,6 +80,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public void update(){
         gameDisplay.update();
         player.update();
+    }
+
+    public static boolean isToUpdate(){
+        return toUpdate;
+    }
+
+    public static void sendUpdateRequest(){
+        toUpdate = true;
     }
 
     public Player getPlayer() {

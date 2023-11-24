@@ -41,8 +41,28 @@ public class MainLoop extends Thread {
     public void run() {
         Log.d("GameLoop.java", "run()");
         super.run();
+        Canvas canvas = null;
+        while (isRunning){
+            try {
+                canvas = surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                    game.update();
+                    game.draw(canvas);
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } finally {
+                if (canvas != null) {
+                    try {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
-        // Declare time and cycle count variables
+        /*// Declare time and cycle count variables
         int updateCount = 0;
         int frameCount = 0;
 
@@ -105,7 +125,7 @@ public class MainLoop extends Thread {
                 frameCount = 0;
                 startTime = System.currentTimeMillis();
             }
-        }
+        }*/
     }
 
     public void stopLoop() {

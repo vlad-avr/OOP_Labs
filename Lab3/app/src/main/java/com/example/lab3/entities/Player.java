@@ -8,6 +8,7 @@ import com.example.lab3.R;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
+import com.example.lab3.logic.Game;
 import com.example.lab3.mapping.MapHolder;
 
 public class Player extends Entity{
@@ -45,6 +46,7 @@ public class Player extends Entity{
         if(mapHolder.inBounds(stepY, stepX) && mapHolder.tileIsPassable(stepY, stepX)) {
             this.dirX = dirX;
             this.dirY = dirY;
+            Game.sendUpdateRequest();
         }
     }
 
