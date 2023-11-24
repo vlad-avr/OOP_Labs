@@ -5,15 +5,21 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.lab3.R;
+import com.example.lab3.actions.Action;
+import com.example.lab3.actions.WaitAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.logic.Game;
 import com.example.lab3.mapping.MapHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player extends Entity{
     private int speed = 1;
     private int dirX, dirY = 0;
+    private WaitAction waitAction = new WaitAction();
 
     private boolean turnTaken = false;
     //private PlayerState playerState;
@@ -23,6 +29,7 @@ public class Player extends Entity{
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        waitAction.setPrompt("Wait");
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
@@ -65,6 +72,21 @@ public class Player extends Entity{
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
         //healthBar.draw(canvas, gameDisplay);
+    }
+
+    public List<Action> getActions(){
+        List<Action> actions = new ArrayList<>();
+        actions.add(waitAction);
+        return actions;
+    }
+
+    public void act(Action action){
+        action.performAction(this);
+        turnTaken = true;
+    }
+
+    public void passTurn() {
+        turnTaken = true;
     }
 
 

@@ -29,7 +29,7 @@ public class ActionsPanel extends LinearLayout {
         actionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActionsUI actionsUI = new ActionsUI(context);
+                ActionsUI actionsUI = new ActionsUI(context, game);
                 actionsUI.show();
             }
         });
@@ -39,4 +39,5 @@ public class ActionsPanel extends LinearLayout {
         addView(actionButton);
         addView(inventoryButton);
     }
+
 }

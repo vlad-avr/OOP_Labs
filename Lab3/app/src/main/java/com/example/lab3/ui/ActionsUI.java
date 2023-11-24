@@ -11,9 +11,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.example.lab3.actions.Action;
+import com.example.lab3.logic.Game;
+
+import java.util.List;
+
 public class ActionsUI extends Dialog{
-    public ActionsUI(Context context) {
+
+    private Game game;
+
+    public ActionsUI(Context context, Game game) {
         super(context);
+        this.game = game;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
@@ -42,10 +51,17 @@ public class ActionsUI extends Dialog{
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         buttonLayout.setOrientation(LinearLayout.VERTICAL);
 
-        // Create the list of buttons
-        for (int i = 1; i <= 20; i++) {
+        List<Action> actions = game.getPlayer().getActions();
+        for (Action action : actions) {
             Button button = new Button(getContext());
-            button.setText("Button " + i);
+            button.setText(action.getPrompt());
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    game.getPlayer().act(action);
+                    dismiss();
+                }
+            });
             buttonLayout.addView(button);
         }
 
@@ -56,22 +72,21 @@ public class ActionsUI extends Dialog{
         mainLayout.addView(scrollView);
 
         // Create the close button
-        Button closeButton = new Button(getContext());
+       /* Button closeButton = new Button(getContext());
         closeButton.setText("Close");
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss(); // Close the dialog when the close button is clicked
+                dismiss();
             }
         });
 
-        // Add the close button to the top-right corner
         LinearLayout.LayoutParams closeButtonParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         closeButtonParams.gravity = Gravity.END;
         closeButton.setLayoutParams(closeButtonParams);
-        mainLayout.addView(closeButton);
+        mainLayout.addView(closeButton);*/
 
         // Set the content view to the main layout
         setContentView(mainLayout);

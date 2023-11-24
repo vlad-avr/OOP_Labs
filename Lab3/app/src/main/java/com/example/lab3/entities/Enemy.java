@@ -41,6 +41,7 @@ public class Enemy extends Entity{
     @Override
     public void update() {
         super.updateHealth();
+        Log.d("Enemy", "health: " + health);
         if(agroed){
             if (GameObject.getMapDistBetweenObjects(player, this) <= attackRange) {
                 Log.d("Enemy", "ATTACK ");
