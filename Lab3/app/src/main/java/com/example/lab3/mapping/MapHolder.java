@@ -259,12 +259,6 @@ public class MapHolder {
                 (idxRow + 1)*TILE_HEIGHT_PIXELS
         );
     }
-    public boolean isEmpty(int i, int j){
-        if(mapPlan[i][j] == 0){
-            return true;
-        }
-        return false;
-    }
 
     public boolean filledEnough(double fillerBound, int tileNum){
         if((double)curTilesFilled/(double)tileNum <= fillerBound){
@@ -304,14 +298,5 @@ public class MapHolder {
         mapVisual[i][j].setPassable(passable);
     }
 
- /*   public void setTilePassingSprite(int i, int j, Sprite sprite){
-        if(sprite == null) {
-            mapVisual[i][j].setPassable(true);
-        }else{
-            mapVisual[i][j].setPassable(false);
-        }
-        mapVisual[i][j].setPassingSprite(sprite);
-    }
-*/
 
 }

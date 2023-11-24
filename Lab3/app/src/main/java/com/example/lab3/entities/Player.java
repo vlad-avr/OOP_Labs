@@ -12,6 +12,8 @@ import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.logic.Game;
 import com.example.lab3.mapping.MapHolder;
+import com.example.lab3.mapping.StaticObject;
+import com.example.lab3.mapping.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,28 @@ public class Player extends Entity{
 
     public List<Action> getActions(){
         List<Action> actions = new ArrayList<>();
+        List<Action> tempUtilStorage = new ArrayList<>();
         actions.add(waitAction);
+        for(int i = mapPosX - 1; i <= mapPosX+1; i++){
+            for(int j = mapPosY - 1; j <= mapPosY+1; j++){
+                Tile tile = mapHolder.getTile(i, j);
+                if(tile != null){
+                    Enemy enemy = tile.getEnemy();
+                    StaticObject obj = tile.getObject();
+                    if(enemy != null){
+                        enemy.action.setPositionalPrompt("[" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        actions.add(enemy.action);
+                    }
+                    if(obj != null){
+                        obj.getAction().setPositionalPrompt("[" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        tempUtilStorage.add(obj.getAction());
+                    }
+                }
+            }
+        }
+        for(Action action : tempUtilStorage){
+            actions.add(action);
+        }
         return actions;
     }
 

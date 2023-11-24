@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.example.lab3.entities.Enemy;
 import com.example.lab3.graphics.PlantSheet;
 import com.example.lab3.graphics.RockSheet;
 import com.example.lab3.graphics.Sprite;
@@ -15,6 +16,7 @@ public class Tile {
     //private Sprite addedSprite = null;
    // private Sprite passingSprite = null;
     private StaticObject addedObject = null;
+    private Enemy enemy = null;
     private boolean passable = true;
     private boolean taken = false;
     private final TileType tileType;
@@ -114,5 +116,13 @@ public class Tile {
 
     public StaticObject getObject(){
         return this.addedObject;
+    }
+
+    public Enemy getEnemy(){
+        return this.enemy;
+    }
+
+    public void setEnemy(Enemy enemy){
+        this.enemy = enemy;
     }
 }

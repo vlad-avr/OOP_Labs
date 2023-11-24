@@ -6,6 +6,7 @@ public class WaitAction extends Action{
 
     @Override
     public void performAction(Player player) {
+        super.performAction(player);
         player.passTurn();
     }
 }

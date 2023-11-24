@@ -54,7 +54,7 @@ public class ActionsUI extends Dialog{
         List<Action> actions = game.getPlayer().getActions();
         for (Action action : actions) {
             Button button = new Button(getContext());
-            button.setText(action.getPrompt());
+            button.setText(action.getPrompt() + " " + action.getPositionalPrompt());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

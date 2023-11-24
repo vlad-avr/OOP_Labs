@@ -12,6 +12,7 @@ public class EntityAction extends Action{
 
     @Override
     public void performAction(Player player) {
+        super.performAction(player);
         holder.stackDamage(player.dealDamage());
     }
 }

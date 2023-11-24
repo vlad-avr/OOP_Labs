@@ -28,10 +28,12 @@ public class Enemy extends Entity{
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        mapHolder.getTile(mapPosX, mapPosY).setEnemy(this);
         this.range = range;
         this.attackRange = attackRange;
         this.player = player;
         this.action = new EntityAction(this);
+        action.setPrompt("Damage enemy");
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
@@ -69,11 +71,13 @@ public class Enemy extends Entity{
             return;
         }
         mapHolder.setTilePassable(mapPosX, mapPosY, true);
+        mapHolder.getTile(mapPosX, mapPosY).setEnemy(null);
         positionX = x * MapHolder.TILE_WIDTH_PIXELS;
         positionY = y * MapHolder.TILE_HEIGHT_PIXELS;
         mapPosX = x;
         mapPosY = y;
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        mapHolder.getTile(mapPosX, mapPosY).setEnemy(this);
     }
 
     protected void attack(){
