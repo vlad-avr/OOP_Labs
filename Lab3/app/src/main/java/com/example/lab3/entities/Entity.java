@@ -33,6 +33,7 @@ public class Entity extends GameObject{
 
     private void takeDamage(){
         this.health -= Math.min(health, stackedDamage);
+        stackedDamage = 0;
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
