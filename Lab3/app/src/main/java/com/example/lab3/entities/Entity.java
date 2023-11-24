@@ -10,8 +10,9 @@ public class Entity extends GameObject{
 
     protected MapHolder mapHolder;
     protected Context context;
-    private final int maxHealth;
-    private int health;
+    protected final int maxHealth;
+    protected int health;
+    protected int stackedDamage = 0;
 
     public Entity(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY){
         super(posX, posY);
@@ -20,6 +21,18 @@ public class Entity extends GameObject{
         this.context = context;
         this.mapHolder = mapHolder;
     }
+
+    public void stackDamage(int damage){
+        stackedDamage += damage;
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
+
+    private void takeDamage(){
+        this.health -= Math.min(health, stackedDamage);
+    }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
 
@@ -27,6 +40,6 @@ public class Entity extends GameObject{
 
     @Override
     public void update() {
-
+        takeDamage();
     }
 }

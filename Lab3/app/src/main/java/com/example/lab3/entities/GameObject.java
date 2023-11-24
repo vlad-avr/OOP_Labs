@@ -11,7 +11,6 @@ public abstract class GameObject {
     protected int mapPosX, mapPosY = 0;
     protected Sprite sprite;
 
-    public GameObject() { }
 
     public GameObject(int positionX, int positionY) {
         this.mapPosX = positionX;

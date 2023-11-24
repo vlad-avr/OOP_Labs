@@ -25,6 +25,7 @@ public class Player extends Entity{
     }
 
     public void update() {
+        super.update();
         if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosY + dirY, mapPosX + dirX)) {
             mapHolder.setTilePassable(mapPosX, mapPosY, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
