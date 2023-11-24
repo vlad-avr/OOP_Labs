@@ -35,8 +35,8 @@ public abstract class GameObject {
 
     public static double getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
         return Math.sqrt(
-                Math.pow(obj2.getPositionX() - obj1.getPositionX(), 2) +
-                        Math.pow(obj2.getPositionY() - obj1.getPositionY(), 2)
+                Math.pow(obj2.getMapPosX() - obj1.getMapPosX(), 2) +
+                        Math.pow(obj2.getMapPosY() - obj1.getMapPosY(), 2)
         );
     }
 }

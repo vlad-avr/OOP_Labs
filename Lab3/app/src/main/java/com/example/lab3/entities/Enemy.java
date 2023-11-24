@@ -10,11 +10,14 @@ import com.example.lab3.mapping.MapHolder;
 
 public class Enemy extends Entity{
 
-    public Enemy(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY){
+    private double range;
+
+    public Enemy(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY, int range){
         super(context, mapHolder, maxHealth, posX, posY);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
+        this.range = range;
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
