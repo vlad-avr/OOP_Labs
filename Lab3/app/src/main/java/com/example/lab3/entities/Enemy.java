@@ -46,10 +46,10 @@ public class Enemy extends Entity{
 
     private void move(int x, int y){
         mapHolder.setTilePassable(mapPosX, mapPosY, true);
-        positionX += x * MapHolder.TILE_WIDTH_PIXELS;
-        positionY += y * MapHolder.TILE_HEIGHT_PIXELS;
-        mapPosX += x;
-        mapPosY += y;
+        positionX = x * MapHolder.TILE_WIDTH_PIXELS;
+        positionY = y * MapHolder.TILE_HEIGHT_PIXELS;
+        mapPosX = x;
+        mapPosY = y;
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
     }
 }

@@ -58,24 +58,25 @@ public class PathFinding {
         return Math.sqrt(Math.pow((p1.first - p2.first), 2.0) + Math.pow((p1.second - p2.second), 2.0));
     }
 
-    static Pair tracePath(Cell[][] cellDetails, int cols, int rows, Pair dest)
-    {   //A* Search algorithm path
-        System.out.println("The Path:  ");
-
-        Stack<Pair> path = new Stack<>();
-
+    static Pair tracePath(Cell[][] cellDetails, int cols, int rows, Pair dest, Pair start)
+    {
         int row = dest.first;
         int col = dest.second;
 
         Pair nextNode = cellDetails[row][col].parent;
+        Pair res = new Pair(row, col);
         do {
-            path.push(new Pair(row, col));
-            nextNode = cellDetails[row][col].parent;
+            if(nextNode.equals(start)){
+                return res;
+            }
+            res.first = nextNode.first;
+            res.second = nextNode.second;
             row = nextNode.first;
             col = nextNode.second;
-        } while (cellDetails[row][col].parent != nextNode); // until src
+            nextNode = cellDetails[row][col].parent;
+        } while (!nextNode.equals(start)); // until src
 
-        return path.peek();
+        return res;
     }
     public static Pair aStarSearch(MapHolder mapHolder, Pair start, Pair dest)
     {
@@ -143,6 +144,9 @@ public class PathFinding {
 
             for (int addX = -1; addX <= 1; addX++) {
                 for (int addY = -1; addY <= 1; addY++) {
+                    if(Math.abs(addX) == 1 && Math.abs(addY) == 1){
+                        continue;
+                    }
                     Pair neighbour = new Pair(i + addX, j + addY);
                     if (mapHolder.inBounds(neighbour.first, neighbour.second)) {
                         if(cellDetails[neighbour.first] == null){ cellDetails[neighbour.first] = new Cell[mapHolder.WIDTH]; }
@@ -153,7 +157,7 @@ public class PathFinding {
                         if (neighbour.equals(dest)) {
                             cellDetails[neighbour.first][neighbour.second].parent = new Pair ( i, j );
                             System.out.println("The destination cell is found");
-                            return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest);
+                            return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest, start);
                         }
 
                         else if (!closedList[neighbour.first][neighbour.second]

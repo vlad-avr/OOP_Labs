@@ -16,9 +16,9 @@ public class EntitySpawner {
     private final int enemyMinSpawnRate = 10;
     private final int enemyNumberCap = 20;
     private final int minSpawnBoundX = 5;
-    private final int maxSpawnBoundX = 15;
-    private final int minSpawnBoundY = 10;
-    private final int maxSpawnBoundY = 20;
+    private final int maxSpawnBoundX = 5;
+    private final int minSpawnBoundY = 5;
+    private final int maxSpawnBoundY = 5;
     private Context context;
     private MapHolder mapHolder;
     private GameDisplay gameDisplay;
