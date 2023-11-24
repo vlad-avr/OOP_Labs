@@ -28,14 +28,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private GameDisplay gameDisplay;
     private Player player;
     private MapHolder mapHolder;
-    private final int displayX;
-    private final int displayY;
+    private EntitySpawner entitySpawner;
+    //private final int displayX;
+    //private final int displayY;
     private static boolean toUpdate = true;
 
     public Game(Context context) {
         super(context);
-        displayX = this.getResources().getDisplayMetrics().widthPixels;
-        displayY = this.getResources().getDisplayMetrics().heightPixels;
+        //displayX = this.getResources().getDisplayMetrics().widthPixels;
+        //displayY = this.getResources().getDisplayMetrics().heightPixels;
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         // Initialize display and center it around the player
@@ -45,6 +46,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         mapHolder.generateMapPlan();
         player = new Player(context, mapHolder, 10);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
+        entitySpawner = new EntitySpawner(context, mapHolder, player, gameDisplay);
         loop = new MainLoop(this, surfaceHolder);
         setFocusable(true);
     }
@@ -75,11 +77,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         // Draw Tilemap
         mapHolder.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
+        entitySpawner.draw(canvas);
     }
 
     public void update(){
-        gameDisplay.update();
         player.update();
+        entitySpawner.update();
+        gameDisplay.update();
+        toUpdate = false;
     }
 
     public static boolean isToUpdate(){
