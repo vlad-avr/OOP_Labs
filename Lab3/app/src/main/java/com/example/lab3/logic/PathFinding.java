@@ -4,11 +4,14 @@ import android.util.Log;
 
 import com.example.lab3.mapping.MapHolder;
 
+import java.util.PriorityQueue;
+import java.util.Stack;
+
 public class PathFinding {
 
     public static class Pair {
-        int first;
-        int second;
+        public int first;
+        public int second;
         public Pair(int first, int second){
             this.first = first;
             this.second = second;
@@ -19,7 +22,7 @@ public class PathFinding {
             return obj instanceof Pair && this.first == ((Pair)obj).first && this.second == ((Pair)obj).second;
         }
     }
-    class Cell{
+    public static class Cell{
         public double g;
         public double h;
         public double f;
@@ -38,36 +41,67 @@ public class PathFinding {
             this.f = f;
         }
     }
-    private double calculateHValue(int posX, int posY, int destX, int destY)
-    {
-        return Math.sqrt(Math.pow((posX - destX), 2.0) + Math.pow((posY - destY), 2.0));
+
+    public static class Details {
+        double value;
+        int i;
+        int j;
+
+        public Details(double value, int i, int j) {
+            this.value = value;
+            this.i = i;
+            this.j = j;
+        }
     }
-/*
-    void aStarSearch(MapHolder mapHolder, int startX, int startY, int destX, int destY)
+    private static double calculateHValue(Pair p1, Pair p2)
+    {
+        return Math.sqrt(Math.pow((p1.first - p2.first), 2.0) + Math.pow((p1.second - p2.second), 2.0));
+    }
+
+    static Pair tracePath(Cell[][] cellDetails, int cols, int rows, Pair dest)
+    {   //A* Search algorithm path
+        System.out.println("The Path:  ");
+
+        Stack<Pair> path = new Stack<>();
+
+        int row = dest.first;
+        int col = dest.second;
+
+        Pair nextNode = cellDetails[row][col].parent;
+        do {
+            path.push(new Pair(row, col));
+            nextNode = cellDetails[row][col].parent;
+            row = nextNode.first;
+            col = nextNode.second;
+        } while (cellDetails[row][col].parent != nextNode); // until src
+
+        return path.peek();
+    }
+    public static Pair aStarSearch(MapHolder mapHolder, Pair start, Pair dest)
     {
 
-        if (!mapHolder.inBounds(startY, startX)) {
+        if (!mapHolder.inBounds(start.first, start.second)) {
             Log.d("A*","Source is invalid...");
-            return;
+            return null;
         }
 
 
-        if (!mapHolder.inBounds(destY, destX)) {
+        if (!mapHolder.inBounds(dest.first, dest.second)) {
             Log.d("A*","Destination is invalid...");
-            return;
+            return null;
         }
 
 
-        if (!mapHolder.tileIsPassable(startY, startX)
-                || !mapHolder.tileIsPassable(destY, destX)) {
+        if (!mapHolder.tileIsPassable(start.first, start.second)
+                || !mapHolder.tileIsPassable(dest.first, dest.second)) {
             Log.d("A*","Source or destination is blocked...");
-            return;
+            return null;
         }
 
 
-        if (startX == destX && startY == destY) {
+        if (start.equals(dest)) {
             Log.d("A*","We're already (t)here...");
-            return;
+            return null;
         }
 
 
@@ -77,8 +111,8 @@ public class PathFinding {
 
         int i, j;
         // Initialising of the starting cell
-        i = startY;
-        j = startX;
+        i = start.first;
+        j = start.second;
         cellDetails[i][j] = new Cell();
         cellDetails[i][j].f = 0.0;
         cellDetails[i][j].g = 0.0;
@@ -110,21 +144,20 @@ public class PathFinding {
             for (int addX = -1; addX <= 1; addX++) {
                 for (int addY = -1; addY <= 1; addY++) {
                     Pair neighbour = new Pair(i + addX, j + addY);
-                    if (isValid(grid, rows, cols, neighbour)) {
-                        if(cellDetails[neighbour.first] == null){ cellDetails[neighbour.first] = new Cell[cols]; }
+                    if (mapHolder.inBounds(neighbour.first, neighbour.second)) {
+                        if(cellDetails[neighbour.first] == null){ cellDetails[neighbour.first] = new Cell[mapHolder.WIDTH]; }
                         if (cellDetails[neighbour.first][neighbour.second] == null) {
                             cellDetails[neighbour.first][neighbour.second] = new Cell();
                         }
 
-                        if (isDestination(neighbour, dest)) {
+                        if (neighbour.equals(dest)) {
                             cellDetails[neighbour.first][neighbour.second].parent = new Pair ( i, j );
                             System.out.println("The destination cell is found");
-                            tracePath(cellDetails, rows, cols, dest);
-                            return;
+                            return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest);
                         }
 
                         else if (!closedList[neighbour.first][neighbour.second]
-                                && isUnBlocked(grid, rows, cols, neighbour)) {
+                                && mapHolder.tileIsPassable(neighbour.first, neighbour.second)) {
                             double gNew, hNew, fNew;
                             gNew = cellDetails[i][j].g + 1.0;
                             hNew = calculateHValue(neighbour, dest);
@@ -147,8 +180,7 @@ public class PathFinding {
                 }
             }
         }
-
-        System.out.println("Failed to find the Destination Cell");
+        Log.d("A*", "Failed to find the Destination Cell");
+        return null;
     }
-*/
 }
