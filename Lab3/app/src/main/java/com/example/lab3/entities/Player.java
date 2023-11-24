@@ -18,8 +18,8 @@ public class Player extends Entity{
     private boolean turnTaken = false;
     //private PlayerState playerState;
 
-    public Player(Context context, MapHolder mapHolder, int maxHealth) {
-        super(context, mapHolder, maxHealth, mapHolder.START_X, mapHolder.START_Y);
+    public Player(Context context, MapHolder mapHolder,int startX, int startY,  int maxHealth) {
+        super(context, mapHolder, maxHealth, startX, startY);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosY, mapPosX, false);
