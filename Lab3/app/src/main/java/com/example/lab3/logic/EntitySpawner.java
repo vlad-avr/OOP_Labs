@@ -56,7 +56,7 @@ public class EntitySpawner {
     private void spawnEnemy(){
         int spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
         int spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
-        while (!mapHolder.inBounds(spawnY, spawnX) || !mapHolder.tileIsPassable(spawnY, spawnX)){
+        while (!mapHolder.inBounds(spawnX, spawnY) || !mapHolder.tileIsPassable(spawnX, spawnY)){
             spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
             spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
         }

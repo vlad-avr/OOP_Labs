@@ -44,11 +44,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mapHolder = new MapHolder(context);
         mapHolder.generateMapPlan();
-        int startX = Game.rnd.nextInt(mapHolder.WIDTH);
-        int startY = Game.rnd.nextInt(mapHolder.HEIGHT);
-        while (!mapHolder.inBounds(startY, startX) || !(mapHolder.tileIsPassable(startY, startX))){
-            startX = Game.rnd.nextInt(mapHolder.WIDTH);
-            startY = Game.rnd.nextInt(mapHolder.HEIGHT);
+        int startX = Game.rnd.nextInt(mapHolder.HEIGHT);
+        int startY = Game.rnd.nextInt(mapHolder.WIDTH);
+        while (!mapHolder.inBounds(startX, startY) || !(mapHolder.tileIsPassable(startX, startY))){
+            startX = Game.rnd.nextInt(mapHolder.HEIGHT);
+            startY = Game.rnd.nextInt(mapHolder.WIDTH);
         }
         player = new Player(context, mapHolder, startX, startY, 10);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);

@@ -26,7 +26,7 @@ public class WidgetsPanel extends LinearLayout {
         bDown.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, 1);
+                playerRef.move(1, 0);
             }
         });
         bLeft = new Button(context);
@@ -35,7 +35,7 @@ public class WidgetsPanel extends LinearLayout {
         bLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(-1, 0);
+                playerRef.move(0, -1);
             }
         });
         bRight = new Button(context);
@@ -44,7 +44,7 @@ public class WidgetsPanel extends LinearLayout {
         bRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(1, 0);
+                playerRef.move(0, 1);
             }
         });
         bUp = new Button(context);
@@ -53,7 +53,7 @@ public class WidgetsPanel extends LinearLayout {
         bUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, -1);
+                playerRef.move(-1, 0);
             }
         });
         addView(bLeft);

@@ -16,12 +16,12 @@ public class Enemy extends Entity{
         super(context, mapHolder, maxHealth, posX, posY);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
-        mapHolder.setTilePassable(mapPosY, mapPosX, false);
+        mapHolder.setTilePassable(mapPosX, mapPosY, false);
         this.range = range;
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionX), (int)gameDisplay.gameToDisplayCoordinatesY(positionY));
+        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
     }
 
     @Override

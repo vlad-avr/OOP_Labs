@@ -50,9 +50,9 @@ public class MapHolder {
         rockSheet = new RockSheet(context);
     }
     private void initMap(){
-        mapPlan = new int[WIDTH][HEIGHT];
-        for(int i = 0; i < WIDTH; i++){
-            for(int j = 0; j < HEIGHT; j++){
+        mapPlan = new int[HEIGHT][WIDTH];
+        for(int i = 0; i < HEIGHT; i++){
+            for(int j = 0; j < WIDTH; j++){
                 if(rnd.nextFloat() < wallsToFloorsRatio) {
                     mapPlan[i][j] = GROUND;
                 }else {
@@ -64,13 +64,13 @@ public class MapHolder {
 
     private void cellularAutomata(int iterations){
         for(int iter = 0; iter < iterations; iter++){
-            int[][] mapCopy = new int[WIDTH][HEIGHT];
-            for(int row = 0; row < WIDTH; row++){
+            int[][] mapCopy = new int[HEIGHT][WIDTH];
+            for(int row = 0; row < HEIGHT; row++){
                 System.arraycopy(mapPlan[row], 0, mapCopy[row], 0, HEIGHT);
                 //mapCopy[row] = mapPlan[row].clone();
             }
-            for(int i = 0; i < WIDTH; i++){
-                for(int j = 0; j < HEIGHT; j++){
+            for(int i = 0; i < HEIGHT; i++){
+                for(int j = 0; j < WIDTH; j++){
                     int wallCount = 0;
                     for(int k = i-1; k <= i+1; k++){
                         for(int l = j-1; l <= j+1;l++) {
@@ -97,8 +97,8 @@ public class MapHolder {
     }
 
     private void fillSand(){
-        for(int i = 0; i < WIDTH; i++){
-            for(int j = 0; j < HEIGHT; j++){
+        for(int i = 0; i < HEIGHT; i++){
+            for(int j = 0; j < WIDTH; j++){
                 if(mapPlan[i][j] == WATER){
                     continue;
                 }
@@ -143,10 +143,10 @@ public class MapHolder {
     }
 
     private void drawMapTiles(){
-        mapVisual = new Tile[WIDTH][HEIGHT];
+        mapVisual = new Tile[HEIGHT][WIDTH];
 
-        for(int i = 0; i < WIDTH; i++){
-            for(int j = 0; j < HEIGHT; j++){
+        for(int i = 0; i < HEIGHT; i++){
+            for(int j = 0; j < WIDTH; j++){
                 Tile tile;
                 boolean toFill = false;
                 switch (mapPlan[i][j]){
@@ -189,15 +189,15 @@ public class MapHolder {
         }
         Bitmap.Config config = Bitmap.Config.ARGB_8888;
         mapBitmap = Bitmap.createBitmap(
-                WIDTH*TILE_WIDTH_PIXELS,
                 HEIGHT*TILE_HEIGHT_PIXELS,
+                WIDTH*TILE_WIDTH_PIXELS,
                 config
         );
 
         Canvas mapCanvas = new Canvas(mapBitmap);
 
-        for (int iRow = 0; iRow < WIDTH; iRow++) {
-            for (int iCol = 0; iCol < HEIGHT; iCol++) {
+        for (int iRow = 0; iRow < HEIGHT; iRow++) {
+            for (int iCol = 0; iCol < WIDTH; iCol++) {
                 mapVisual[iRow][iCol].draw(mapCanvas);
             }
         }
@@ -293,7 +293,7 @@ public class MapHolder {
     }
 
     public boolean inBounds(int i, int j){
-        return (i < WIDTH && j < HEIGHT && i >= 0 && j >= 0);
+        return (i < HEIGHT && j < WIDTH && i >= 0 && j >= 0);
     }
 
     public boolean tileIsPassable(int i, int j){

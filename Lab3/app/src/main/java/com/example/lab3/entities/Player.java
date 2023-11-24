@@ -22,20 +22,20 @@ public class Player extends Entity{
         super(context, mapHolder, maxHealth, startX, startY);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
-        mapHolder.setTilePassable(mapPosY, mapPosX, false);
+        mapHolder.setTilePassable(mapPosX, mapPosY, false);
         //this.healthBar = new HealthBar(context, this);
         //this.playerState = new PlayerState(this);
     }
 
     public void update() {
         super.update();
-        if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosY + dirY, mapPosX + dirX)) {
-            mapHolder.setTilePassable(mapPosY, mapPosX, true);
+        if(!(dirY == 0 && dirX == 0) && mapHolder.tileIsPassable(mapPosX + dirX, mapPosY + dirY)) {
+            mapHolder.setTilePassable(mapPosX, mapPosY, true);
             positionX += dirX * MapHolder.TILE_WIDTH_PIXELS;
             positionY += dirY * MapHolder.TILE_HEIGHT_PIXELS;
             mapPosX += dirX;
             mapPosY += dirY;
-            mapHolder.setTilePassable(mapPosY, mapPosX, false);
+            mapHolder.setTilePassable(mapPosX, mapPosY, false);
             dirX = 0;
             dirY = 0;
             turnTaken = true;
@@ -50,14 +50,14 @@ public class Player extends Entity{
     public void move(int dirX, int dirY){
         int stepX = mapPosX + dirX;
         int stepY = mapPosY + dirY;
-        if(mapHolder.inBounds(stepY, stepX) && mapHolder.tileIsPassable(stepY, stepX)) {
+        if(mapHolder.inBounds(stepX, stepY) && mapHolder.tileIsPassable(stepX, stepY)) {
             this.dirX = dirX;
             this.dirY = dirY;
         }
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionX), (int)gameDisplay.gameToDisplayCoordinatesY(positionY));
+        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
         //healthBar.draw(canvas, gameDisplay);
     }
 

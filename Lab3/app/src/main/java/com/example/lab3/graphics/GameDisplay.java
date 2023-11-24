@@ -37,8 +37,8 @@ public class GameDisplay {
         gameToDisplayCoordinatesOffsetY = displayCenterY - gameCenterY;
     }*/
     public void update(){
-        gameCenterX = centerObject.getPositionX();
-        gameCenterY = centerObject.getPositionY();
+        gameCenterX = centerObject.getPositionY();
+        gameCenterY = centerObject.getPositionX();
 
         gameToDisplayCoordinatesOffsetX = displayCenterX - gameCenterX;
         gameToDisplayCoordinatesOffsetY = displayCenterY - gameCenterY;
