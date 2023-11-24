@@ -13,6 +13,7 @@ public class Entity extends GameObject{
     protected final int maxHealth;
     protected int health;
     protected int stackedDamage = 0;
+    protected int damageDelt = 2;
 
     public Entity(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY){
         super(posX, posY);
@@ -41,5 +42,9 @@ public class Entity extends GameObject{
     @Override
     public void update() {
         takeDamage();
+    }
+
+    public int dealDamage() {
+        return damageDelt;
     }
 }

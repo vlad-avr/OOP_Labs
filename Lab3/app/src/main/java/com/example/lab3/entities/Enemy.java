@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.lab3.R;
+import com.example.lab3.actions.EntityAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.logic.Game;
@@ -13,11 +14,9 @@ import com.example.lab3.mapping.MapHolder;
 
 public class Enemy extends Entity{
 
-    private double range;/*
-    protected int maxPatrolBoundX = 40;
-    protected int minPatrolBoundX = 5;
-    protected int maxPatrolBoundY = 40;
-    protected int minPatrolBoundY = 5;*/
+    private double range;
+
+    protected EntityAction action;
     protected PathFinding.Pair wanderDir = new PathFinding.Pair(0, 1);
     private int attackRange;
     private int speed;
@@ -32,6 +31,7 @@ public class Enemy extends Entity{
         this.range = range;
         this.attackRange = attackRange;
         this.player = player;
+        this.action = new EntityAction(this);
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
