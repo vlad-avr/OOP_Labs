@@ -60,7 +60,7 @@ public class EntitySpawner {
             spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
             spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
         }
-        Enemy enemy = new Enemy(context, mapHolder, 5, spawnX, spawnY, 5, 1,player);
+        Enemy enemy = new Enemy(context, mapHolder, 5, spawnX, spawnY, 20, 1, 2, player);
         enemies.add(enemy);
         enemySpawnRate = Game.rnd.nextInt(enemyMaxSpawnRate) + enemyMinSpawnRate;
     }

@@ -20,10 +20,11 @@ public class Enemy extends Entity{
     protected int minPatrolBoundY = 5;*/
     protected PathFinding.Pair wanderDir = new PathFinding.Pair(0, 1);
     private int attackRange;
+    private int speed;
     private Player player;
     private boolean agroed = false;
 
-    public Enemy(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY, int range, int attackRange, Player player){
+    public Enemy(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY, int range, int attackRange,int speed, Player player){
         super(context, mapHolder, maxHealth, posX, posY);
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
@@ -45,7 +46,7 @@ public class Enemy extends Entity{
                 Log.d("Enemy", "ATTACK ");
             }else {
                 PathFinding.Pair playerPos = new PathFinding.Pair(player.getMapPosX(), player.getMapPosY());
-                PathFinding.Pair stepPos = PathFinding.aStarSearch(mapHolder, new PathFinding.Pair(mapPosX, mapPosY), playerPos);
+                PathFinding.Pair stepPos = PathFinding.aStarSearch(mapHolder, new PathFinding.Pair(mapPosX, mapPosY), playerPos, speed);
                 if (stepPos != null) {
                     move(stepPos.first, stepPos.second);
                 }

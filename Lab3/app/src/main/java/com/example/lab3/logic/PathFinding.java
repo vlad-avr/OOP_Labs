@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.lab3.mapping.MapHolder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
@@ -58,27 +60,22 @@ public class PathFinding {
         return Math.sqrt(Math.pow((p1.first - p2.first), 2.0) + Math.pow((p1.second - p2.second), 2.0));
     }
 
-    static Pair tracePath(Cell[][] cellDetails, int cols, int rows, Pair dest, Pair start)
+    static Pair tracePath(Cell[][] cellDetails, int cols, int rows, Pair dest, Pair start, int speed)
     {
         int row = dest.first;
         int col = dest.second;
-
+        List<Pair> path = new ArrayList<>();
         Pair nextNode = cellDetails[row][col].parent;
-        Pair res = new Pair(row, col);
         do {
-            if(nextNode.equals(start)){
-                return res;
-            }
-            res.first = nextNode.first;
-            res.second = nextNode.second;
+            path.add(nextNode);
             row = nextNode.first;
             col = nextNode.second;
             nextNode = cellDetails[row][col].parent;
         } while (!nextNode.equals(start)); // until src
 
-        return res;
+        return path.get(Math.max(path.size() - speed - 2, 1));
     }
-    public static Pair aStarSearch(MapHolder mapHolder, Pair start, Pair dest)
+    public static Pair aStarSearch(MapHolder mapHolder, Pair start, Pair dest, int speed)
     {
 
         if (!mapHolder.inBounds(start.first, start.second)) {
@@ -155,7 +152,7 @@ public class PathFinding {
                         if (neighbour.equals(dest)) {
                             cellDetails[neighbour.first][neighbour.second].parent = new Pair ( i, j );
                             System.out.println("The destination cell is found");
-                            return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest, start);
+                            return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest, start, speed);
                         }
 
                         else if (!closedList[neighbour.first][neighbour.second]
