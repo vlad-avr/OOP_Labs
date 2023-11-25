@@ -33,11 +33,17 @@ public class Enemy extends Entity{
         this.attackRange = attackRange;
         this.player = player;
         this.action = new EntityAction(this);
+        this.speed = speed;
         action.setPrompt("Damage enemy");
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
+    }
+
+    @Override
+    public void die() {
+
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.mapping.MapHolder;
 
-public class Entity extends GameObject{
+public abstract class Entity extends GameObject{
 
     protected MapHolder mapHolder;
     protected Context context;
@@ -33,12 +33,17 @@ public class Entity extends GameObject{
 
     private void takeDamage(){
         this.health -= Math.min(health, stackedDamage);
+        if(health <= 0){
+            die();
+        }
         stackedDamage = 0;
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
 
     }
+
+    public abstract void die();
 
     @Override
     public void update() {
