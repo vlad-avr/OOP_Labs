@@ -10,6 +10,7 @@ import com.example.lab3.actions.WaitAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.inventory.Armor;
+import com.example.lab3.inventory.Consumable;
 import com.example.lab3.inventory.Item;
 import com.example.lab3.inventory.Weapon;
 import com.example.lab3.logic.Game;
@@ -177,8 +178,9 @@ public class Player extends Entity{
         return this.armor;
     }
 
-    public void heal(int hp) {
-        health += Math.min(hp, maxHealth - health);
+    public void heal(Consumable holder) {
+        health += Math.min(holder.getHP(), maxHealth - health);
+        inventory.remove(holder);
         updateHealth();
     }
 }

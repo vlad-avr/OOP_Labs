@@ -164,7 +164,7 @@ public class EntitySpawner {
         enemy.setName("Goblin");
         enemy.setGoldDropBounds(5, 10);
         enemy.setShroomsDropBounds(0, 1);
-        enemy.setDropChance(0.3);
+        enemy.setDropChance(0.5);
         enemy.addDroppable("S1");
         enemy.addDroppable("P1");
         enemy.addDroppable("C1");
@@ -284,7 +284,7 @@ public class EntitySpawner {
         enemy.setName("Slime");
         enemy.setGoldDropBounds(0, 5);
         enemy.setShroomsDropBounds(0, 1);
-        enemy.setDropChance(0.1);
+        enemy.setDropChance(0.6);
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
         return enemy;
@@ -301,7 +301,7 @@ public class EntitySpawner {
         enemy.setName("Rock Spider");
         enemy.setGoldDropBounds(0, 2);
         enemy.setShroomsDropBounds(0, 2);
-        enemy.setDropChance(0.1);
+        enemy.setDropChance(0.6);
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
         return enemy;

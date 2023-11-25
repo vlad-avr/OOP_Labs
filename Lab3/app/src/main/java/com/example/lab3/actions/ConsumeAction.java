@@ -16,6 +16,6 @@ public class ConsumeAction extends InventoryAction{
 
     @Override
     public void performAction(Player player){
-        player.heal(holder.getHP());
+        player.heal(holder);
     }
 }

@@ -12,6 +12,7 @@ public class Consumable extends Item{
         super(name);
         this.healingPoints = HP;
         action = new ConsumeAction(this);
+        action.setPrompt(name);
     }
 
     public int getHP(){
