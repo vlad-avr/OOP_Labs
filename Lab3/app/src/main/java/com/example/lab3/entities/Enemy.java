@@ -159,8 +159,8 @@ public class Enemy extends Entity{
     }
 
     public void removeFromMap(){
-        int goldDropped = maxGold - Game.rnd.nextInt(maxGold - minGold);
-        int shroomsDropped = maxShrooms - Game.rnd.nextInt(maxShrooms - minShrooms);
+        int goldDropped = maxGold - Game.rnd.nextInt(Math.max(maxGold - minGold, 1));
+        int shroomsDropped = maxShrooms - Game.rnd.nextInt(Math.max(maxShrooms - minShrooms, 1));
         if(droppable.size() != 0) {
             Item itemDropped = droppable.get(Game.rnd.nextInt(droppable.size()));
             player.addItem(itemDropped);

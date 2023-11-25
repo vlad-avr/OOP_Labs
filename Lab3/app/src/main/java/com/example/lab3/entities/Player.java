@@ -176,4 +176,9 @@ public class Player extends Entity{
     public Armor getArmor() {
         return this.armor;
     }
+
+    public void heal(int hp) {
+        health += Math.min(hp, maxHealth - health);
+        updateHealth();
+    }
 }

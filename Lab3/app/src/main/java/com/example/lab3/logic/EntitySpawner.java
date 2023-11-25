@@ -155,6 +155,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.2);
         enemy.setName("Goblin");
+        enemy.setGoldDropBounds(5, 10);
+        enemy.setShroomsDropBounds(0, 1);
         return enemy;
     }
     private Enemy initAngryTree(int posX, int posY){
@@ -167,6 +169,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.8);
         enemy.setAttackFailChance(0.5);
         enemy.setName("Angry Tree");
+        enemy.setGoldDropBounds(100, 150);
+        enemy.setShroomsDropBounds(20, 30);
         return enemy;
     }
     private Enemy initBushMaster(int posX, int posY){
@@ -179,6 +183,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.6);
         enemy.setAttackFailChance(0.8);
         enemy.setName("Bush Master");
+        enemy.setGoldDropBounds(10, 15);
+        enemy.setShroomsDropBounds(0, 5);
         return enemy;
     }
     private Enemy initBug(int posX, int posY){
@@ -191,6 +197,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.3);
         enemy.setName("Bug");
+        enemy.setGoldDropBounds(20, 30);
+        enemy.setShroomsDropBounds(5, 10);
         return enemy;
     }
     private Enemy initGolem(int posX, int posY){
@@ -203,6 +211,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.8);
         enemy.setAttackFailChance(0.5);
         enemy.setName("Golem");
+        enemy.setGoldDropBounds(100, 150);
+        enemy.setShroomsDropBounds(30, 40);
         return enemy;
     }
     private Enemy initMage(int posX, int posY){
@@ -215,6 +225,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.05);
         enemy.setAttackFailChance(0.8);
         enemy.setName("Mage");
+        enemy.setGoldDropBounds(0, 5);
+        enemy.setShroomsDropBounds(20, 50);
         return enemy;
     }
     private Enemy initSlime(int posX, int posY){
@@ -227,6 +239,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.5);
         enemy.setName("Slime");
+        enemy.setGoldDropBounds(0, 5);
+        enemy.setShroomsDropBounds(0, 1);
         return enemy;
     }
     private Enemy initRockSpider(int posX, int posY){
@@ -239,6 +253,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.05);
         enemy.setAttackFailChance(0.2);
         enemy.setName("Rock Spider");
+        enemy.setGoldDropBounds(0, 2);
+        enemy.setShroomsDropBounds(0, 2);
         return enemy;
     }
     private Enemy initHeadCrab(int posX, int posY){
@@ -251,6 +267,8 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.1);
         enemy.setAttackFailChance(0.6);
         enemy.setName("Skull Crab");
+        enemy.setGoldDropBounds(20, 40);
+        enemy.setShroomsDropBounds(5, 30);
         return enemy;
     }
 
