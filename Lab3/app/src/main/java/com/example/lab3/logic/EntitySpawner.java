@@ -142,7 +142,14 @@ public class EntitySpawner {
         enemy.setName("Guard");
         enemy.setGoldDropBounds(20, 30);
         enemy.setShroomsDropBounds(0, 5);
-
+        enemy.setDropChance(0.8);
+        enemy.addDroppable("S2");
+        enemy.addDroppable("S3");
+        enemy.addDroppable("H1");
+        enemy.addDroppable("A1");
+        enemy.addDroppable("P2");
+        enemy.addDroppable("P3");
+        enemy.addDroppable("C2");
         return enemy;
     }
     private Enemy initGoblin(int posX, int posY){
@@ -157,6 +164,11 @@ public class EntitySpawner {
         enemy.setName("Goblin");
         enemy.setGoldDropBounds(5, 10);
         enemy.setShroomsDropBounds(0, 1);
+        enemy.setDropChance(0.3);
+        enemy.addDroppable("S1");
+        enemy.addDroppable("P1");
+        enemy.addDroppable("C1");
+        enemy.addDroppable("C2");
         return enemy;
     }
     private Enemy initAngryTree(int posX, int posY){
@@ -171,6 +183,11 @@ public class EntitySpawner {
         enemy.setName("Angry Tree");
         enemy.setGoldDropBounds(100, 150);
         enemy.setShroomsDropBounds(20, 30);
+        enemy.setDropChance(1.0);
+        enemy.addDroppable("S4");
+        enemy.addDroppable("A4");
+        enemy.addDroppable("P4");
+        enemy.addDroppable("C4");
         return enemy;
     }
     private Enemy initBushMaster(int posX, int posY){
@@ -185,6 +202,13 @@ public class EntitySpawner {
         enemy.setName("Bush Master");
         enemy.setGoldDropBounds(10, 15);
         enemy.setShroomsDropBounds(0, 5);
+        enemy.setDropChance(0.6);
+        enemy.addDroppable("S1");
+        enemy.addDroppable("S2");
+        enemy.addDroppable("P1");
+        enemy.addDroppable("P2");
+        enemy.addDroppable("C1");
+        enemy.addDroppable("C2");
         return enemy;
     }
     private Enemy initBug(int posX, int posY){
@@ -199,6 +223,14 @@ public class EntitySpawner {
         enemy.setName("Bug");
         enemy.setGoldDropBounds(20, 30);
         enemy.setShroomsDropBounds(5, 10);
+        enemy.setDropChance(0.8);
+        enemy.addDroppable("S2");
+        enemy.addDroppable("H1");
+        enemy.addDroppable("H2");
+        enemy.addDroppable("P1");
+        enemy.addDroppable("P2");
+        enemy.addDroppable("C2");
+        enemy.addDroppable("C3");
         return enemy;
     }
     private Enemy initGolem(int posX, int posY){
@@ -213,6 +245,11 @@ public class EntitySpawner {
         enemy.setName("Golem");
         enemy.setGoldDropBounds(100, 150);
         enemy.setShroomsDropBounds(30, 40);
+        enemy.setDropChance(1.0);
+        enemy.addDroppable("S4");
+        enemy.addDroppable("H4");
+        enemy.addDroppable("P4");
+        enemy.addDroppable("C4");
         return enemy;
     }
     private Enemy initMage(int posX, int posY){
@@ -227,6 +264,12 @@ public class EntitySpawner {
         enemy.setName("Mage");
         enemy.setGoldDropBounds(0, 5);
         enemy.setShroomsDropBounds(20, 50);
+        enemy.setDropChance(1.0);
+        enemy.addDroppable("A2");
+        enemy.addDroppable("H2");
+        enemy.addDroppable("P2");
+        enemy.addDroppable("C2");
+        enemy.addDroppable("C3");
         return enemy;
     }
     private Enemy initSlime(int posX, int posY){
@@ -241,6 +284,9 @@ public class EntitySpawner {
         enemy.setName("Slime");
         enemy.setGoldDropBounds(0, 5);
         enemy.setShroomsDropBounds(0, 1);
+        enemy.setDropChance(0.1);
+        enemy.addDroppable("C1");
+        enemy.addDroppable("C2");
         return enemy;
     }
     private Enemy initRockSpider(int posX, int posY){
@@ -255,6 +301,9 @@ public class EntitySpawner {
         enemy.setName("Rock Spider");
         enemy.setGoldDropBounds(0, 2);
         enemy.setShroomsDropBounds(0, 2);
+        enemy.setDropChance(0.1);
+        enemy.addDroppable("C1");
+        enemy.addDroppable("C2");
         return enemy;
     }
     private Enemy initHeadCrab(int posX, int posY){
@@ -269,6 +318,15 @@ public class EntitySpawner {
         enemy.setName("Skull Crab");
         enemy.setGoldDropBounds(20, 40);
         enemy.setShroomsDropBounds(5, 30);
+        enemy.setDropChance(0.8);
+        enemy.addDroppable("A1");
+        enemy.addDroppable("A2");
+        enemy.addDroppable("S2");
+        enemy.addDroppable("H1");
+        enemy.addDroppable("H2");
+        enemy.addDroppable("P2");
+        enemy.addDroppable("C1");
+        enemy.addDroppable("C2");
         return enemy;
     }
 

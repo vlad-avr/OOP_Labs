@@ -65,10 +65,8 @@ public class ItemProducer {
             return new Consumable("Fruit", HP);
         }else if(HP < 10){
             return new Consumable("Healing Herbs", HP);
-        }else if(HP < 20){
+        }else {
             return new Consumable("Healing Potion", HP);
-        }else{
-            return new Consumable("Purifying Potion", HP);
         }
     }
 }

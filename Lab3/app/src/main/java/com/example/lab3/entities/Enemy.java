@@ -10,6 +10,7 @@ import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.inventory.Item;
+import com.example.lab3.inventory.ItemProducer;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
@@ -31,7 +32,8 @@ public class Enemy extends Entity{
     private int maxGold;
     private int minShrooms;
     private int maxShrooms;
-    private List<Item> droppable = new ArrayList<>();
+    private List<String> droppable = new ArrayList<>();
+    private double dropChance;
     private boolean agroed = false;
     private Player player;
 
@@ -158,12 +160,88 @@ public class Enemy extends Entity{
         maxShrooms = max;
     }
 
+    public void addDroppable(String id){
+        droppable.add(id);
+    }
+
+    public void setDropChance(double chance){
+        this.dropChance = chance;
+    }
+
     public void removeFromMap(){
         int goldDropped = maxGold - Game.rnd.nextInt(Math.max(maxGold - minGold, 1));
         int shroomsDropped = maxShrooms - Game.rnd.nextInt(Math.max(maxShrooms - minShrooms, 1));
-        if(droppable.size() != 0) {
-            Item itemDropped = droppable.get(Game.rnd.nextInt(droppable.size()));
-            player.addItem(itemDropped);
+        double roll = Game.rnd.nextDouble();
+        if(roll <= dropChance && droppable.size() != 0) {
+            Item itemDropped = null;
+            String prompt = droppable.get(Game.rnd.nextInt(droppable.size()));
+            switch (prompt){
+                case "S1":
+                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.SWORD);
+                    break;
+                case "S2":
+                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.SWORD);
+                    break;
+                case "S3":
+                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.SWORD);
+                    break;
+                case "S4":
+                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.SWORD);
+                    break;
+                case "A1":
+                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.AXE);
+                    break;
+                case "A2":
+                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.AXE);
+                    break;
+                case "A3":
+                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.AXE);
+                    break;
+                case "A4":
+                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.AXE);
+                    break;
+                case "H1":
+                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.HAMMER);
+                    break;
+                case "H2":
+                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.HAMMER);
+                    break;
+                case "H3":
+                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.HAMMER);
+                    break;
+                case "H4":
+                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.HAMMER);
+                    break;
+                case "P1":
+                    itemDropped = ItemProducer.makeArmor(1, 0.7);
+                    break;
+                case "P2":
+                    itemDropped = ItemProducer.makeArmor(1, 0.8);;
+                    break;
+                case "P3":
+                    itemDropped = ItemProducer.makeArmor(1, 0.9);;
+                    break;
+                case "P4":
+                    itemDropped = ItemProducer.makeArmor(1, 1.0);;
+                    break;
+                case "C1":
+                    itemDropped = ItemProducer.makeConsumable(1+Game.rnd.nextInt(5));
+                    break;
+                case "C2":
+                    itemDropped = ItemProducer.makeConsumable(3+Game.rnd.nextInt(5));
+                    break;
+                case "C3":
+                    itemDropped = ItemProducer.makeConsumable(6+Game.rnd.nextInt(5));
+                    break;
+                case "C4":
+                    itemDropped = ItemProducer.makeConsumable(10+Game.rnd.nextInt(10));
+                    break;
+                default:
+                    itemDropped = null;
+            }
+            if(itemDropped != null) {
+                player.addItem(itemDropped);
+            }
         }
         player.addGold(goldDropped);
         player.addShrooms(shroomsDropped);
