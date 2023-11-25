@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -29,17 +30,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private Player player;
     private MapHolder mapHolder;
     private EntitySpawner entitySpawner;
+
     //private final int displayX;
     //private final int displayY;
     private static boolean toUpdate = true;
 
     public Game(Context context) {
         super(context);
-        //displayX = this.getResources().getDisplayMetrics().widthPixels;
-        //displayY = this.getResources().getDisplayMetrics().heightPixels;
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mapHolder = new MapHolder(context);
