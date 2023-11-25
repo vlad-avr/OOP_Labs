@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -55,6 +56,19 @@ public class InventoryUI extends Dialog {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         buttonLayout.setOrientation(LinearLayout.VERTICAL);
+        TextView healthView = new TextView(getContext());
+        healthView.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+        healthView.setText("Health : " + game.getPlayer().getHealth() + "/" + game.getPlayer().getMaxHealth());
+        healthView.setGravity(Gravity.CENTER);
+        TextView gold = new TextView(getContext());
+        gold.setText("Gold : " + game.getPlayer().getGoldCount());
+        gold.setGravity(Gravity.CENTER);
+        TextView shrooms = new TextView(getContext());
+        shrooms.setText("Shrooms : "  + game.getPlayer().getShroomsCount());
+        shrooms.setGravity(Gravity.CENTER);
+        buttonLayout.addView(healthView);
+        buttonLayout.addView(gold);
+        buttonLayout.addView(shrooms);
 
         List<Item> items = game.getPlayer().getInventory();
         for (Item item : items) {

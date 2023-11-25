@@ -103,7 +103,7 @@ public class Player extends Entity{
                     Enemy enemy = tile.getEnemy();
                     StaticObject obj = tile.getObject();
                     if(enemy != null){
-                        enemy.action.setExtraPrompt("HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + " [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        enemy.action.setExtraPrompt("(HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + "+" + enemy.getProtection() + " | DMG : " + enemy.getDamage() + ") [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
                         actions.add(enemy.action);
                     }
                     if(obj != null){

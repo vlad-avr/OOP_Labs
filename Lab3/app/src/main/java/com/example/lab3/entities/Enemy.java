@@ -48,7 +48,7 @@ public class Enemy extends Entity{
     }
 
     public void setName(String name){
-        action.setPrompt("Damage " + name);
+        action.setPrompt("Attack " + name);
     }
 
     public void setMaxHealth(int maxHealth){
@@ -80,6 +80,8 @@ public class Enemy extends Entity{
         this.attackFailChance = chance;
     }
     public void setProtection(int protection){this.protection = protection;}
+    public int getProtection(){return this.protection;}
+    public int getDamage(){return this.damageDelt;}
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
