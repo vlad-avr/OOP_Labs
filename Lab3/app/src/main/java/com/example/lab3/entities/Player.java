@@ -9,7 +9,9 @@ import com.example.lab3.actions.Action;
 import com.example.lab3.actions.WaitAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
-import com.example.lab3.graphics.Sprite;
+import com.example.lab3.inventory.Armor;
+import com.example.lab3.inventory.Item;
+import com.example.lab3.inventory.Weapon;
 import com.example.lab3.logic.Game;
 import com.example.lab3.mapping.MapHolder;
 import com.example.lab3.mapping.StaticObject;
@@ -21,6 +23,11 @@ import java.util.List;
 public class Player extends Entity{
     private int speed = 1;
     private int dirX, dirY = 0;
+
+    private Armor armor;
+    private Weapon weapon;
+
+    private List<Item> inventory = new ArrayList<>();
     private WaitAction waitAction = new WaitAction();
 
     private boolean turnTaken = false;
@@ -86,11 +93,11 @@ public class Player extends Entity{
                     Enemy enemy = tile.getEnemy();
                     StaticObject obj = tile.getObject();
                     if(enemy != null){
-                        enemy.action.setPositionalPrompt("HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + " [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        enemy.action.setExtraPrompt("HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + " [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
                         actions.add(enemy.action);
                     }
                     if(obj != null){
-                        obj.getAction().setPositionalPrompt("[" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        obj.getAction().setExtraPrompt("[" + (i-mapPosX) + "," + (j-mapPosY) + "]");
                         tempUtilStorage.add(obj.getAction());
                     }
                 }
@@ -105,6 +112,18 @@ public class Player extends Entity{
     public void act(Action action){
         action.performAction(this);
         turnTaken = true;
+    }
+
+    public List<Item> getInventory(){
+        return this.inventory;
+    }
+
+    public void setArmor(Armor armor){
+        this.armor = armor;
+    }
+
+    public void setWeapon(Weapon weapon){
+        this.weapon = weapon;
     }
 
     public void passTurn() {

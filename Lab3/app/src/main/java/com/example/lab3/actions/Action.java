@@ -1,13 +1,12 @@
 package com.example.lab3.actions;
 
-import com.example.lab3.entities.GameObject;
 import com.example.lab3.entities.Player;
 
 public abstract class Action {
     private String prompt = "none";
-    private String positionalPrompt = "";
+    private String extraPrompt = "";
     public void performAction(Player player){
-        positionalPrompt = "";
+        extraPrompt = "";
     }
 
     public void setPrompt(String prompt){
@@ -16,10 +15,10 @@ public abstract class Action {
     public String getPrompt() {
         return prompt;
     }
-    public String getPositionalPrompt(){
-        return positionalPrompt;
+    public String getExtraPrompt(){
+        return extraPrompt;
     }
-    public void setPositionalPrompt(String posPrompt){
-        this.positionalPrompt = posPrompt;
+    public void setExtraPrompt(String posPrompt){
+        this.extraPrompt = posPrompt;
     }
 }

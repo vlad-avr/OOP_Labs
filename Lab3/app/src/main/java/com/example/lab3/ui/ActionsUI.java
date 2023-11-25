@@ -59,7 +59,7 @@ public class ActionsUI extends Dialog{
         List<Action> actions = game.getPlayer().getActions();
         for (Action action : actions) {
             Button button = new Button(getContext());
-            button.setText(action.getPrompt() + " " + action.getPositionalPrompt());
+            button.setText(action.getPrompt() + " " + action.getExtraPrompt());
             if(action instanceof EntityAction){
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
             }else if(action instanceof UtilityAction){
