@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 
 import com.example.lab3.graphics.GameDisplay;
+import com.example.lab3.graphics.HealthBar;
 import com.example.lab3.mapping.MapHolder;
 
 public abstract class Entity extends GameObject{
@@ -19,8 +20,6 @@ public abstract class Entity extends GameObject{
 
     public Entity(Context context, MapHolder mapHolder, int posX, int posY){
         super(posX, posY);
-        this.maxHealth = maxHealth;
-        this.health = this.maxHealth;
         this.context = context;
         this.mapHolder = mapHolder;
     }
@@ -42,7 +41,6 @@ public abstract class Entity extends GameObject{
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-
     }
 
     public boolean isDead(){
@@ -61,5 +59,9 @@ public abstract class Entity extends GameObject{
 
     public int dealDamage() {
         return damageDelt;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }

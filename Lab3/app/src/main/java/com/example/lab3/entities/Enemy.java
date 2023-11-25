@@ -70,15 +70,14 @@ public class Enemy extends Entity{
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
+        super.draw(canvas, gameDisplay);
     }
 
     @Override
     public void update() {
         super.update();
-        Log.d("Enemy", "health: " + health);
         if(agroed){
             if (GameObject.getMapDistBetweenObjects(player, this) <= attackRange) {
-                Log.d("Enemy", "ATTACK ");
                 attack();
             }else {
                 PathFinding.Pair playerPos = new PathFinding.Pair(player.getMapPosX(), player.getMapPosY());

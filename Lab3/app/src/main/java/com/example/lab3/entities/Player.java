@@ -86,7 +86,7 @@ public class Player extends Entity{
                     Enemy enemy = tile.getEnemy();
                     StaticObject obj = tile.getObject();
                     if(enemy != null){
-                        enemy.action.setPositionalPrompt("[" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        enemy.action.setPositionalPrompt("HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + " [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
                         actions.add(enemy.action);
                     }
                     if(obj != null){
