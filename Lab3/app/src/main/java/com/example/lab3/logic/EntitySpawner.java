@@ -46,12 +46,17 @@ public class EntitySpawner {
         }else{
             enemySpawnRate--;
         }
+        List<Enemy> toRemove = new ArrayList<>();
         for(Enemy enemy : enemies){
             enemy.updateHealth();
-            if(enemy.isDead()){
-                removeEnemy(enemy);
+            if(!enemy.isDead()) {
+                enemy.update();
+            }else{
+                toRemove.add(enemy);
             }
-            enemy.update();
+        }
+        for(Enemy enemyToRemove : toRemove){
+            removeEnemy(enemyToRemove);
         }
     }
 

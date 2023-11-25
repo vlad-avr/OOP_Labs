@@ -99,6 +99,10 @@ public class Enemy extends Entity{
     }
 
     protected void move(int x, int y){
+        double roll = Game.rnd.nextDouble();
+        if(roll < fumbleChance){
+            return;
+        }
         if(!mapHolder.inBounds(x,y) || !mapHolder.tileIsPassable(x, y)){
             return;
         }
@@ -113,7 +117,10 @@ public class Enemy extends Entity{
     }
 
     protected void attack(){
-        player.stackDamage(damageDelt);
+        double roll = Game.rnd.nextDouble();
+        if(roll > attackFailChance) {
+            player.stackDamage(damageDelt);
+        }
     }
 
     protected PathFinding.Pair getRandMove(){
