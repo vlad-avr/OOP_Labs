@@ -42,13 +42,8 @@ public class Enemy extends Entity{
     }
 
     @Override
-    public void die() {
-
-    }
-
-    @Override
     public void update() {
-        super.updateHealth();
+        super.update();
         Log.d("Enemy", "health: " + health);
         if(agroed){
             if (GameObject.getMapDistBetweenObjects(player, this) <= attackRange) {
@@ -105,6 +100,11 @@ public class Enemy extends Entity{
             }
         }
         return wanderDir;
+    }
+
+    public void removeFromMap(){
+        mapHolder.getTile(mapPosX, mapPosY).setEnemy(null);
+        mapHolder.getTile(mapPosX, mapPosY).setPassable(true);
     }
 
 }

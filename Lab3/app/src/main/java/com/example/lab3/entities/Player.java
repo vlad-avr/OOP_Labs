@@ -72,10 +72,6 @@ public class Player extends Entity{
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
     }
 
-    @Override
-    public void die() {
-
-    }
 
     public List<Action> getActions(){
         List<Action> actions = new ArrayList<>();

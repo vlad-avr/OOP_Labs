@@ -43,6 +43,10 @@ public class EntitySpawner {
             enemySpawnRate--;
         }
         for(Enemy enemy : enemies){
+            enemy.updateHealth();
+            if(enemy.isDead()){
+                removeEnemy(enemy);
+            }
             enemy.update();
         }
     }
@@ -65,7 +69,8 @@ public class EntitySpawner {
         enemySpawnRate = Game.rnd.nextInt(enemyMaxSpawnRate) + enemyMinSpawnRate;
     }
 
-    private void removeEnemy(){
-
+    private void removeEnemy(Enemy enemy){
+        enemy.removeFromMap();
+        enemies.remove(enemy);
     }
 }

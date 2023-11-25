@@ -15,6 +15,8 @@ public abstract class Entity extends GameObject{
     protected int stackedDamage = 0;
     protected int damageDelt = 2;
 
+    protected boolean isDead = false;
+
     public Entity(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY){
         super(posX, posY);
         this.maxHealth = maxHealth;
@@ -34,7 +36,7 @@ public abstract class Entity extends GameObject{
     private void takeDamage(){
         this.health -= Math.min(health, stackedDamage);
         if(health <= 0){
-            die();
+            isDead = true;
         }
         stackedDamage = 0;
     }
@@ -43,7 +45,10 @@ public abstract class Entity extends GameObject{
 
     }
 
-    public abstract void die();
+    public boolean isDead(){
+        return this.isDead;
+    }
+
 
     @Override
     public void update() {
