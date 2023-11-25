@@ -150,6 +150,7 @@ public class EntitySpawner {
         enemy.addDroppable("P2");
         enemy.addDroppable("P3");
         enemy.addDroppable("C2");
+        enemy.setProtection(5);
         return enemy;
     }
     private Enemy initGoblin(int posX, int posY){
@@ -158,7 +159,7 @@ public class EntitySpawner {
         enemy.setSpeed(2);
         enemy.setRange(20);
         enemy.setDamageDelt(1);
-        enemy.setMaxHealth(3);
+        enemy.setMaxHealth(4);
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.2);
         enemy.setName("Goblin");
@@ -169,6 +170,7 @@ public class EntitySpawner {
         enemy.addDroppable("P1");
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
+        enemy.setProtection(0);
         return enemy;
     }
     private Enemy initAngryTree(int posX, int posY){
@@ -188,6 +190,7 @@ public class EntitySpawner {
         enemy.addDroppable("A4");
         enemy.addDroppable("P4");
         enemy.addDroppable("C4");
+        enemy.setProtection(10);
         return enemy;
     }
     private Enemy initBushMaster(int posX, int posY){
@@ -209,6 +212,7 @@ public class EntitySpawner {
         enemy.addDroppable("P2");
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
+        enemy.setProtection(0);
         return enemy;
     }
     private Enemy initBug(int posX, int posY){
@@ -231,6 +235,7 @@ public class EntitySpawner {
         enemy.addDroppable("P2");
         enemy.addDroppable("C2");
         enemy.addDroppable("C3");
+        enemy.setProtection(3);
         return enemy;
     }
     private Enemy initGolem(int posX, int posY){
@@ -250,6 +255,7 @@ public class EntitySpawner {
         enemy.addDroppable("H4");
         enemy.addDroppable("P4");
         enemy.addDroppable("C4");
+        enemy.setProtection(10);
         return enemy;
     }
     private Enemy initMage(int posX, int posY){
@@ -270,6 +276,7 @@ public class EntitySpawner {
         enemy.addDroppable("P2");
         enemy.addDroppable("C2");
         enemy.addDroppable("C3");
+        enemy.setProtection(2);
         return enemy;
     }
     private Enemy initSlime(int posX, int posY){
@@ -287,6 +294,7 @@ public class EntitySpawner {
         enemy.setDropChance(0.6);
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
+        enemy.setProtection(0);
         return enemy;
     }
     private Enemy initRockSpider(int posX, int posY){
@@ -304,6 +312,7 @@ public class EntitySpawner {
         enemy.setDropChance(0.6);
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
+        enemy.setProtection(0);
         return enemy;
     }
     private Enemy initHeadCrab(int posX, int posY){
@@ -327,6 +336,7 @@ public class EntitySpawner {
         enemy.addDroppable("P2");
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
+        enemy.setProtection(4);
         return enemy;
     }
 

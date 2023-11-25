@@ -1,7 +1,6 @@
 package com.example.lab3.inventory;
 
 import com.example.lab3.actions.ConsumeAction;
-import com.example.lab3.actions.EquipAction;
 
 public class Consumable extends Item{
 

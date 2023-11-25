@@ -3,6 +3,7 @@ package com.example.lab3.entities;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.util.Pair;
 
 import com.example.lab3.R;
 import com.example.lab3.actions.Action;
@@ -14,6 +15,7 @@ import com.example.lab3.inventory.Consumable;
 import com.example.lab3.inventory.Item;
 import com.example.lab3.inventory.Weapon;
 import com.example.lab3.logic.Game;
+import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
 import com.example.lab3.mapping.StaticObject;
 import com.example.lab3.mapping.Tile;
@@ -154,6 +156,10 @@ public class Player extends Entity{
         });
     }
 
+    public PathFinding.Pair getDamage(){
+        return new PathFinding.Pair(weapon.damage, weapon.piercing);
+    }
+
     public int getShroomsCount(){
         return shroomsCount;
     }
@@ -172,6 +178,12 @@ public class Player extends Entity{
 
     public Weapon getWeapon() {
         return this.weapon;
+    }
+
+    @Override
+    public void stackDamage(int damage){
+        int damageToTake = Math.max(damage - armor.protection, 0);
+        super.stackDamage(damageToTake);
     }
 
     public Armor getArmor() {

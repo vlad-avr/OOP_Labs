@@ -34,6 +34,7 @@ public class Enemy extends Entity{
     private int maxShrooms;
     private List<String> droppable = new ArrayList<>();
     private double dropChance;
+    private int protection;
     private boolean agroed = false;
     private Player player;
 
@@ -78,6 +79,7 @@ public class Enemy extends Entity{
     public void setAttackFailChance(double chance){
         this.attackFailChance = chance;
     }
+    public void setProtection(int protection){this.protection = protection;}
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
@@ -106,6 +108,10 @@ public class Enemy extends Entity{
         }else{
             agroed = false;
         }
+    }
+
+    public int calculateDamage(PathFinding.Pair damage){
+        return Math.abs(Math.min(Math.max(protection - damage.second, 0) - damage.first, 0));
     }
 
     protected void move(int x, int y){
