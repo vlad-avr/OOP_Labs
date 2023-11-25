@@ -27,7 +27,9 @@ public class Player extends Entity{
     //private PlayerState playerState;
 
     public Player(Context context, MapHolder mapHolder,int startX, int startY,  int maxHealth) {
-        super(context, mapHolder, maxHealth, startX, startY);
+        super(context, mapHolder, startX, startY);
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);

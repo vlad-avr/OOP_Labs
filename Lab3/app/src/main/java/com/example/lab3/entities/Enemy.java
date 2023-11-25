@@ -8,6 +8,7 @@ import com.example.lab3.R;
 import com.example.lab3.actions.EntityAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
+import com.example.lab3.graphics.Sprite;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
@@ -20,21 +21,51 @@ public class Enemy extends Entity{
     protected PathFinding.Pair wanderDir = new PathFinding.Pair(0, 1);
     private int attackRange;
     private int speed;
-    private Player player;
+    private double fumbleChance = 0.0;
+    private double attackFailChance = 0.0;
     private boolean agroed = false;
+    private Player player;
 
-    public Enemy(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY, int range, int attackRange,int speed, Player player){
-        super(context, mapHolder, maxHealth, posX, posY);
-        SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
-        sprite = singleSheet.getSprite();
+    public Enemy(Context context, MapHolder mapHolder, int posX, int posY, Sprite sprite, Player player){
+        super(context, mapHolder, posX, posY);
+        this.sprite = sprite;
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
         mapHolder.getTile(mapPosX, mapPosY).setEnemy(this);
-        this.range = range;
-        this.attackRange = attackRange;
-        this.player = player;
         this.action = new EntityAction(this);
+        this.player = player;
+    }
+
+    public void setName(String name){
+        action.setPrompt("Damage " + name);
+    }
+
+    public void setMaxHealth(int maxHealth){
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+    }
+
+    public void setSpeed(int speed){
         this.speed = speed;
-        action.setPrompt("Damage enemy");
+    }
+
+    public void setFumbleChance(double fumbleChance){
+        this.fumbleChance = fumbleChance;
+    }
+
+    public void setRange(double range){
+        this.range = range;
+    }
+
+    public void setAttackRange(int attackRange){
+        this.attackRange = attackRange;
+    }
+
+    public void setDamageDelt(int damageDelt){
+        this.damageDelt = damageDelt;
+    }
+
+    public void setAttackFailChance(double chance){
+        this.attackFailChance = chance;
     }
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {

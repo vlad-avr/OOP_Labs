@@ -10,14 +10,14 @@ public abstract class Entity extends GameObject{
 
     protected MapHolder mapHolder;
     protected Context context;
-    protected final int maxHealth;
+    protected int maxHealth;
     protected int health;
     protected int stackedDamage = 0;
     protected int damageDelt = 2;
 
     protected boolean isDead = false;
 
-    public Entity(Context context, MapHolder mapHolder, int maxHealth, int posX, int posY){
+    public Entity(Context context, MapHolder mapHolder, int posX, int posY){
         super(posX, posY);
         this.maxHealth = maxHealth;
         this.health = this.maxHealth;
