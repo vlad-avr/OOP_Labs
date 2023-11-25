@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         FrameLayout game = new FrameLayout(this);
         Game gameView = new Game (this);
-        ControlsPanel controlsPanel = new ControlsPanel(this, gameView.getPlayer());
+        ControlsPanel controlsPanel = new ControlsPanel(this, gameView);
         ActionsPanel actionsPanel = new ActionsPanel(this, gameView);
 
         game.addView(gameView);

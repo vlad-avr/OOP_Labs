@@ -30,6 +30,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private Player player;
     private MapHolder mapHolder;
     private EntitySpawner entitySpawner;
+    private Context context;
+    private SurfaceHolder surfaceHolder;
 
     //private final int displayX;
     //private final int displayY;
@@ -37,22 +39,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
 
     public Game(Context context) {
         super(context);
-        SurfaceHolder surfaceHolder = getHolder();
+        surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mapHolder = new MapHolder(context);
-        mapHolder.generateMapPlan();
-        int startX = Game.rnd.nextInt(mapHolder.HEIGHT);
-        int startY = Game.rnd.nextInt(mapHolder.WIDTH);
-        while (!mapHolder.inBounds(startX, startY) || !(mapHolder.tileIsPassable(startX, startY))){
-            startX = Game.rnd.nextInt(mapHolder.HEIGHT);
-            startY = Game.rnd.nextInt(mapHolder.WIDTH);
-        }
-        player = new Player(context, mapHolder, startX, startY, 10);
-        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
-        entitySpawner = new EntitySpawner(context, mapHolder, player, gameDisplay);
-        loop = new MainLoop(this, surfaceHolder);
+        this.context = context;
+        initGame();
         setFocusable(true);
     }
 
@@ -91,8 +81,32 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             entitySpawner.update();
             player.updateHealth();
             toUpdate = false;
+            if(player.isDead()){
+                //loop.stopLoop();
+                initGame();
+            }
         }
         gameDisplay.update();
+    }
+
+    private void initGame(){
+        /*if(loop != null && loop.isAlive()){
+            loop.stopLoop();
+        }*/
+        mapHolder = new MapHolder(context);
+        mapHolder.generateMapPlan();
+        int startX = Game.rnd.nextInt(mapHolder.HEIGHT);
+        int startY = Game.rnd.nextInt(mapHolder.WIDTH);
+        while (!mapHolder.inBounds(startX, startY) || !(mapHolder.tileIsPassable(startX, startY))){
+            startX = Game.rnd.nextInt(mapHolder.HEIGHT);
+            startY = Game.rnd.nextInt(mapHolder.WIDTH);
+        }
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        player = new Player(context, mapHolder, startX, startY, 10);
+        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
+        entitySpawner = new EntitySpawner(context, mapHolder, player, gameDisplay);
+        loop = new MainLoop(this, surfaceHolder);
     }
 
     public static boolean isToUpdate(){

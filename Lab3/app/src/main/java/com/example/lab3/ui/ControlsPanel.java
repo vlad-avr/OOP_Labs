@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.lab3.entities.Player;
+import com.example.lab3.logic.Game;
 
 public class ControlsPanel extends LinearLayout {
     private Button bUp;
@@ -14,11 +15,11 @@ public class ControlsPanel extends LinearLayout {
     private Button bRight;
     private Button bLeft;
 
-    private Player playerRef;
+    private Game game;
 
-    public ControlsPanel(Context context, Player player) {
+    public ControlsPanel(Context context, Game game) {
         super(context);
-        this.playerRef = player;
+        this.game = game;
         this.setGravity(Gravity.CENTER | Gravity.BOTTOM);
         bDown = new Button(context);
         bDown.setWidth(64);
@@ -26,7 +27,7 @@ public class ControlsPanel extends LinearLayout {
         bDown.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(1, 0);
+                game.getPlayer().move(1, 0);
             }
         });
         bLeft = new Button(context);
@@ -35,7 +36,7 @@ public class ControlsPanel extends LinearLayout {
         bLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, -1);
+                game.getPlayer().move(0, -1);
             }
         });
         bRight = new Button(context);
@@ -44,7 +45,7 @@ public class ControlsPanel extends LinearLayout {
         bRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(0, 1);
+                game.getPlayer().move(0, 1);
             }
         });
         bUp = new Button(context);
@@ -53,7 +54,7 @@ public class ControlsPanel extends LinearLayout {
         bUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerRef.move(-1, 0);
+                game.getPlayer().move(-1, 0);
             }
         });
         addView(bLeft);

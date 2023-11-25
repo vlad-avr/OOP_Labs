@@ -28,8 +28,8 @@ public class HealthBar {
         borderPaint.setColor(borderColor);
 
         this.healthPaint = new Paint();
-        int healthColor = ContextCompat.getColor(context, R.color.healthBarContent);
-        healthPaint.setColor(healthColor);
+        //int healthColor = ContextCompat.getColor(context, R.color.healthBarContent);
+        //healthPaint.setColor(healthColor);
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {

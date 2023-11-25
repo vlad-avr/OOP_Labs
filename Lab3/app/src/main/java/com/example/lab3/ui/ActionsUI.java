@@ -11,7 +11,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.lab3.R;
 import com.example.lab3.actions.Action;
+import com.example.lab3.actions.EntityAction;
+import com.example.lab3.actions.UtilityAction;
 import com.example.lab3.logic.Game;
 
 import java.util.List;
@@ -55,6 +60,11 @@ public class ActionsUI extends Dialog{
         for (Action action : actions) {
             Button button = new Button(getContext());
             button.setText(action.getPrompt() + " " + action.getPositionalPrompt());
+            if(action instanceof EntityAction){
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+            }else if(action instanceof UtilityAction){
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+            }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
