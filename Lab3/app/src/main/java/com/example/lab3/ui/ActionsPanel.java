@@ -36,6 +36,13 @@ public class ActionsPanel extends LinearLayout {
         inventoryButton = new Button(context);
         inventoryButton.setText("Inv.");
         inventoryButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        inventoryButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InventoryUI inventoryUI = new InventoryUI(context, game);
+                inventoryUI.show();
+            }
+        });
         addView(actionButton);
         addView(inventoryButton);
     }

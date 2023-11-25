@@ -18,11 +18,14 @@ import com.example.lab3.mapping.StaticObject;
 import com.example.lab3.mapping.Tile;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Player extends Entity{
-    private int speed = 1;
     private int dirX, dirY = 0;
+
+    private int goldCount = 0;
+    private int shroomsCount = 0;
 
     private Armor armor;
     private Weapon weapon;
@@ -41,6 +44,10 @@ public class Player extends Entity{
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
         waitAction.setPrompt("Wait");
+        this.armor = new Armor(0, 1.0, "Armor");
+        this.weapon = new Weapon(1, 0, false, false, "Sword");
+        addItem(armor);
+        addItem(weapon);
     }
 
     @Override
@@ -130,4 +137,43 @@ public class Player extends Entity{
         turnTaken = true;
     }
 
+    public void addItem(Item itemDropped) {
+        inventory.add(itemDropped);
+        inventory.sort(new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                if(o1.sortingWeight > o2.sortingWeight){
+                    return 1;
+                }else if(o1.sortingWeight < o2.sortingWeight){
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        });
+    }
+
+    public int getShroomsCount(){
+        return shroomsCount;
+    }
+
+    public int getGoldCount(){
+        return goldCount;
+    }
+
+    public void addGold(int gold){
+        this.goldCount += gold;
+    }
+
+    public void addShrooms(int shrooms){
+        this.shroomsCount += shrooms;
+    }
+
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
+
+    public Armor getArmor() {
+        return this.armor;
+    }
 }

@@ -11,8 +11,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.lab3.R;
 import com.example.lab3.actions.InventoryAction;
+import com.example.lab3.inventory.Armor;
 import com.example.lab3.inventory.Item;
+import com.example.lab3.inventory.Weapon;
 import com.example.lab3.logic.Game;
 
 import java.util.List;
@@ -56,6 +61,17 @@ public class InventoryUI extends Dialog {
             InventoryAction action = item.getAction();
             Button button = new Button(getContext());
             button.setText(action.getPrompt() + " " + action.getExtraPrompt());
+            if(item instanceof Weapon){
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                if(item == game.getPlayer().getWeapon()){
+                    button.setActivated(false);
+                }
+            }else if(item instanceof Armor){
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+                if(item == game.getPlayer().getArmor()){
+                    button.setActivated(false);
+                }
+            }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

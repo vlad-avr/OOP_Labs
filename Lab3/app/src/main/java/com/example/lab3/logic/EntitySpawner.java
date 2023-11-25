@@ -140,6 +140,9 @@ public class EntitySpawner {
         enemy.setFumbleChance(0.3);
         enemy.setAttackFailChance(0.6);
         enemy.setName("Guard");
+        enemy.setGoldDropBounds(20, 30);
+        enemy.setShroomsDropBounds(0, 5);
+
         return enemy;
     }
     private Enemy initGoblin(int posX, int posY){

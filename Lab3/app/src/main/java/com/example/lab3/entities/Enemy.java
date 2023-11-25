@@ -9,9 +9,13 @@ import com.example.lab3.actions.EntityAction;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
+import com.example.lab3.inventory.Item;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Enemy extends Entity{
 
@@ -23,6 +27,11 @@ public class Enemy extends Entity{
     private int speed;
     private double fumbleChance = 0.0;
     private double attackFailChance = 0.0;
+    private int minGold;
+    private int maxGold;
+    private int minShrooms;
+    private int maxShrooms;
+    private List<Item> droppable = new ArrayList<>();
     private boolean agroed = false;
     private Player player;
 
@@ -139,7 +148,25 @@ public class Enemy extends Entity{
         return wanderDir;
     }
 
+    public void setGoldDropBounds(int min, int max){
+        minGold = min;
+        maxGold = max;
+    }
+
+    public void setShroomsDropBounds(int min, int max){
+        minShrooms = min;
+        maxShrooms = max;
+    }
+
     public void removeFromMap(){
+        int goldDropped = maxGold - Game.rnd.nextInt(maxGold - minGold);
+        int shroomsDropped = maxShrooms - Game.rnd.nextInt(maxShrooms - minShrooms);
+        if(droppable.size() != 0) {
+            Item itemDropped = droppable.get(Game.rnd.nextInt(droppable.size()));
+            player.addItem(itemDropped);
+        }
+        player.addGold(goldDropped);
+        player.addShrooms(shroomsDropped);
         mapHolder.getTile(mapPosX, mapPosY).setEnemy(null);
         mapHolder.getTile(mapPosX, mapPosY).setPassable(true);
     }

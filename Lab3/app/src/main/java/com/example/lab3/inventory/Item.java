@@ -4,8 +4,15 @@ import com.example.lab3.actions.InventoryAction;
 import com.example.lab3.graphics.Sprite;
 
 public abstract class Item {
-    private InventoryAction action;
 
+    public final int sortingWeight = 0;
+
+    public final String name;
+    protected InventoryAction action;
+
+    public Item(String name){
+        this.name = name;
+    }
     public InventoryAction getAction(){
         return action;
     }
