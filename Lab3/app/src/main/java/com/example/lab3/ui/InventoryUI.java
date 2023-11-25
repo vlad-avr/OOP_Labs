@@ -67,10 +67,12 @@ public class InventoryUI extends Dialog {
                     button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.equipped));
                 }
             }else if(item instanceof Armor){
-                button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.armor));
                 if(item == game.getPlayer().getArmor()){
                     button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.equipped));
                 }
+            }else{
+                button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
             }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

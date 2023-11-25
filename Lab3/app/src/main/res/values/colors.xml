@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="healthBarBorder">#4d4d4d</color>
     <color name="green">#37ff00</color>
     <color name="red">#ff1100</color>
+    <color name="armor">#f2b807</color>
     <color name="equipped">#99a7cf</color>
 </resources>
