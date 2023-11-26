@@ -67,11 +67,11 @@ public class EntityFactory {
     }
 
     private void spawnEnemy(){
-        int spawnX = player.getMapPosX() + (Game.rnd.nextInt(2) - 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
-        int spawnY = player.getMapPosY() + (Game.rnd.nextInt(2) - 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
+        int spawnX = player.getMapPosX() + (-1 + Game.rnd.nextInt(2) * 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
+        int spawnY = player.getMapPosY() + (-1 + Game.rnd.nextInt(2) * 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
         while (!mapHolder.inBounds(spawnX, spawnY) || !mapHolder.tileIsPassable(spawnX, spawnY)){
-            spawnX = player.getMapPosX() + (Game.rnd.nextInt(2) - 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
-            spawnY = player.getMapPosY() + (Game.rnd.nextInt(2) - 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
+            spawnX = player.getMapPosX() + (-1 + Game.rnd.nextInt(2) * 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
+            spawnY = player.getMapPosY() + (-1 + Game.rnd.nextInt(2) * 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
         }
         Tile.TileType tileType = mapHolder.getTile(spawnX, spawnY).getTileType();
         Enemy enemy = null;
