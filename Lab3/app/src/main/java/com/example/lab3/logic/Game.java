@@ -10,6 +10,8 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.example.lab3.MainActivity;
+import com.example.lab3.R;
 import com.example.lab3.entities.Player;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.inventory.Shop;
@@ -26,7 +28,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private Player player;
     private MapHolder mapHolder;
     private EntityFactory entityFactory;
-    private Context context;
+    private MainActivity context;
     private SurfaceHolder surfaceHolder;
     private Shop shop;
 
@@ -36,12 +38,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     //private final int displayY;
     private static boolean toUpdate = true;
 
-    public Game(Context context) {
+    public Game(MainActivity context) {
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         this.context = context;
-        initGame();
         setFocusable(true);
     }
 
@@ -84,13 +85,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             toUpdate = false;
             if(player.isDead()){
                 //loop.stopLoop();
-                initGame();
+
             }
         }
         gameDisplay.update();
     }
 
-    private void initGame(){
+    public void initGame(){
         mapHolder = new MapHolder(context);
         mapHolder.generateMapPlan();
         int startX = Game.rnd.nextInt(mapHolder.HEIGHT);
@@ -123,6 +124,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public Player getPlayer() {
         return player;
     }
+
 
     public Shop getShop(){return shop;}
 }

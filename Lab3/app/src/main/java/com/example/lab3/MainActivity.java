@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -16,13 +17,21 @@ import com.example.lab3.ui.ShopPanel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FrameLayout game;
+    private Game gameView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        FrameLayout game = new FrameLayout(this);
-        Game gameView = new Game (this);
+        initGame();
+        setContentView(R.layout.activity_main);
+    }
+
+    private void initGame(){
+        game = new FrameLayout(this);
+        gameView = new Game (this);
         ControlsPanel controlsPanel = new ControlsPanel(this, gameView);
         ActionsPanel actionsPanel = new ActionsPanel(this, gameView);
         LinearLayout layout = new LinearLayout(this);
@@ -36,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         game.addView(actionsPanel);
         game.addView(layout);
 
+    }
+    public void startGame(View view){
+        gameView.initGame();
         setContentView(game);
+    }
+
+    public void exit(View view){
+        finish();
+        System.exit(0);
     }
 }
