@@ -23,24 +23,37 @@ public class ItemProducer {
     public static final int AXE = 1;
     public static final int HAMMER = 2;
     public static Weapon makeWeapon(int tier, int type){
+        String name = "Sword";
+        boolean canChop = false;
+        boolean canMine = false;
+        double prcModifier = 1;
+        if(type == AXE){
+            canChop = true;
+            prcModifier = 0.8;
+            name = "Axe";
+        }else if(type == HAMMER){
+            canMine = true;
+            prcModifier = 0.8;
+            name = "Hammer";
+        }
         switch (tier){
             case 2:
                 return new Weapon(maxDmgT2 - Game.rnd.nextInt(maxDmgT2-maxDmgT1),
-                        maxPrcT2 - Game.rnd.nextInt(maxPrcT2-maxPrcT1),
-                        false, false, "Sword");
+                        (int)(prcModifier*(maxPrcT2 - Game.rnd.nextInt(maxPrcT2-maxPrcT1))),
+                        canChop, canMine, name);
             case 3:
                 return new Weapon(maxDmgT3 - Game.rnd.nextInt(maxDmgT3-maxDmgT2),
-                        maxPrcT3 - Game.rnd.nextInt(maxPrcT3-maxPrcT2),
-                        false, false, "Sword");
+                        (int)(prcModifier*(maxPrcT3 - Game.rnd.nextInt(maxPrcT3-maxPrcT2))),
+                        canChop, canMine, name);
             case 4:
                 return new Weapon(maxDmgT4 - Game.rnd.nextInt(maxDmgT4-maxDmgT3),
-                        maxPrcT4 - Game.rnd.nextInt(maxPrcT4-maxPrcT3),
-                        false, false, "Sword");
+                        (int)(prcModifier*(maxPrcT4 - Game.rnd.nextInt(maxPrcT4-maxPrcT3))),
+                        canChop, canMine, name);
             case 1:
             default:
                 return new Weapon(maxDmgT1 - Game.rnd.nextInt(maxDmgT1-minDmg),
                         maxPrcT1 - Game.rnd.nextInt(maxPrcT1-minPrc),
-                        false, false, "Sword");
+                        canChop, canMine, name);
         }
     }
 
