@@ -17,10 +17,10 @@ public class EntityFactory {
     private final int enemyMaxSpawnRate = 20;
     private final int enemyMinSpawnRate = 10;
     private final int enemyNumberCap = 20;
-    private final int minSpawnBoundX = 10;
-    private final int maxSpawnBoundX = 10;
-    private final int minSpawnBoundY = 10;
-    private final int maxSpawnBoundY = 10;
+    private final int minSpawnBoundX = 20;
+    private final int maxSpawnBoundX = 30;
+    private final int minSpawnBoundY = 20;
+    private final int maxSpawnBoundY = 30;
     private Context context;
     private MapHolder mapHolder;
     private GameDisplay gameDisplay;
@@ -67,11 +67,11 @@ public class EntityFactory {
     }
 
     private void spawnEnemy(){
-        int spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
-        int spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
+        int spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
+        int spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
         while (!mapHolder.inBounds(spawnX, spawnY) || !mapHolder.tileIsPassable(spawnX, spawnY)){
-            spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundX) + minSpawnBoundX;
-            spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*Game.rnd.nextInt(maxSpawnBoundY) + minSpawnBoundY;
+            spawnX = player.getMapPosX() + (Game.rnd.nextInt(1) - 2)*(maxSpawnBoundX - Game.rnd.nextInt(maxSpawnBoundX - minSpawnBoundX));
+            spawnY = player.getMapPosY() + (Game.rnd.nextInt(1) - 2)*(maxSpawnBoundY - Game.rnd.nextInt(maxSpawnBoundY - minSpawnBoundY));
         }
         Tile.TileType tileType = mapHolder.getTile(spawnX, spawnY).getTileType();
         Enemy enemy = null;
@@ -121,6 +121,7 @@ public class EntityFactory {
         }
         if(enemy != null) {
             enemies.add(enemy);
+            Game.actionsLog.stackLog(enemy.getName() + " has appeared somewhere.", Game.actionsLog.attention);
         }
         enemySpawnRate = Game.rnd.nextInt(enemyMaxSpawnRate) + enemyMinSpawnRate;
     }

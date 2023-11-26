@@ -29,6 +29,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private SurfaceHolder surfaceHolder;
     private Shop shop;
 
+    public static ActionsLog actionsLog = new ActionsLog();
+
     //private final int displayX;
     //private final int displayY;
     private static boolean toUpdate = true;
@@ -69,6 +71,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         mapHolder.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
         entityFactory.draw(canvas);
+        //actionsLog.draw(canvas);
     }
 
     public void update(){
@@ -87,9 +90,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     private void initGame(){
-        /*if(loop != null && loop.isAlive()){
-            loop.stopLoop();
-        }*/
         mapHolder = new MapHolder(context);
         mapHolder.generateMapPlan();
         int startX = Game.rnd.nextInt(mapHolder.HEIGHT);
@@ -98,6 +98,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             startX = Game.rnd.nextInt(mapHolder.HEIGHT);
             startY = Game.rnd.nextInt(mapHolder.WIDTH);
         }
+        actionsLog.init(context);
+        actionsLog.clearLogs();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         player = new Player(context, mapHolder, startX, startY, 10);
@@ -114,6 +116,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public static void sendUpdateRequest(){
         toUpdate = true;
     }
+
 
     public Player getPlayer() {
         return player;

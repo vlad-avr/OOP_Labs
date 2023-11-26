@@ -76,6 +76,7 @@ public class Weapon extends Item{
     }
     public void mend(){
         this.durability = maxDurability;
+        action.setExtraPrompt(getDesc());
     }
     public boolean isFixed(){
         return durability == maxDurability;

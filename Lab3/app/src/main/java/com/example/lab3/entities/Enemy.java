@@ -32,6 +32,7 @@ public class Enemy extends Entity{
     private List<String> droppable = new ArrayList<>();
     private double dropChance;
     private int protection;
+    private String name;
     private boolean agroed = false;
     private Player player;
 
@@ -46,7 +47,10 @@ public class Enemy extends Entity{
 
     public void setName(String name){
         action.setPrompt("Attack " + name);
+        this.name = name;
     }
+
+    public String getName(){ return name;}
 
     public void setMaxHealth(int maxHealth){
         this.maxHealth = maxHealth;
@@ -103,8 +107,14 @@ public class Enemy extends Entity{
             move(mapPosX + wanderDir.first, mapPosY + wanderDir.second);
         }
         if(GameObject.getDistanceBetweenObjects(player, this) <= range){
+            if(!agroed){
+                Game.actionsLog.stackLog(name + " is coming for you!", Game.actionsLog.danger);
+            }
             agroed = true;
         }else{
+            if(agroed){
+                Game.actionsLog.stackLog(name + " is no longer after you!", Game.actionsLog.attention);
+            }
             agroed = false;
         }
     }

@@ -52,6 +52,7 @@ public class Armor extends Item{
 
     public void mend(){
         this.durability = maxDurability;
+        action.setExtraPrompt(getDesc());
     }
 
     public boolean isFixed(){

@@ -153,18 +153,22 @@ public class Player extends Entity{
     }
 
     public void setArmor(Armor armor){
+        Game.actionsLog.stackLog("You equip Armor : " + armor.getDesc(), Game.actionsLog.neutral);
         this.armor = armor;
     }
 
     public void setWeapon(Weapon weapon){
+        Game.actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), Game.actionsLog.neutral);
         this.weapon = weapon;
     }
 
     public void passTurn() {
+        Game.actionsLog.stackLog("You wait.", Game.actionsLog.neutral);
         turnTaken = true;
     }
 
     public void addItem(Item itemDropped) {
+        Game.actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), Game.actionsLog.neutral);
         inventory.add(itemDropped);
         inventory.sort(new Comparator<Item>() {
             @Override
@@ -196,10 +200,16 @@ public class Player extends Entity{
     }
 
     public void addGold(int gold){
+        if(gold != 0) {
+            Game.actionsLog.stackLog("You receive " + gold + " gold.", Game.actionsLog.gold);
+        }
         this.goldCount += gold;
     }
 
     public void addShrooms(int shrooms){
+        if(shrooms != 0) {
+            Game.actionsLog.stackLog("You spend " + shrooms + " shrooms.", Game.actionsLog.shrooms);
+        }
         this.shroomsCount += shrooms;
     }
 
@@ -220,16 +230,24 @@ public class Player extends Entity{
     }
 
     public void heal(Consumable holder) {
-        health += Math.min(holder.getHP(), maxHealth - health);
+        int toHeal = Math.min(holder.getHP(), maxHealth - health);
+        Game.actionsLog.stackLog("You heal for " + toHeal + " points.", Game.actionsLog.heal);
+        health += toHeal;
         inventory.remove(holder);
         updateHealth();
     }
 
     public void reduceGold(int toReduce){
+        if(toReduce != 0) {
+            Game.actionsLog.stackLog("You spend " + toReduce + " gold.", Game.actionsLog.gold);
+        }
         goldCount -= toReduce;
     }
 
     public void reduceShrooms(int price) {
+        if(price != 0) {
+            Game.actionsLog.stackLog("You spend " + price + " shrooms.", Game.actionsLog.shrooms);
+        }
         shroomsCount -= price;
     }
 }
