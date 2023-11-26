@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ActionsLog {
 
-    public class Pair{
+    private class Pair{
         public String log;
         public Paint paint;
         public Pair(String log, Paint paint){
@@ -41,7 +41,9 @@ public class ActionsLog {
     }
 
     public void clearLogs(){
-        logs.clear();
+        if (logs.size() != 0) {
+            logs.clear();
+        }
     }
 
     public void init(Context context){
@@ -60,10 +62,11 @@ public class ActionsLog {
     }
 
     public void draw(Canvas canvas){
+        /*
         for(int i = 0; i < logs.size(); i++){
             Pair toLog = logs.get(i);
             canvas.drawText(toLog.log, 20, 300*(i+1), toLog.paint);
-        }
+        }*/
     }
 
 }

@@ -17,6 +17,7 @@ import com.example.lab3.inventory.Armor;
 import com.example.lab3.inventory.Consumable;
 import com.example.lab3.inventory.Item;
 import com.example.lab3.inventory.Weapon;
+import com.example.lab3.logic.ActionsLog;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
@@ -47,8 +48,11 @@ public class Player extends Entity{
     private Paint shroomsPaint;
     private Paint bgPaint;
 
-    public Player(Context context, MapHolder mapHolder,int startX, int startY,  int maxHealth) {
+    //private ActionsLog actionsLog;
+
+    public Player(Context context, MapHolder mapHolder, int startX, int startY, int maxHealth/*, ActionsLog actionsLog*/) {
         super(context, mapHolder, startX, startY);
+        //this.actionsLog = actionsLog;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
@@ -153,22 +157,22 @@ public class Player extends Entity{
     }
 
     public void setArmor(Armor armor){
-        Game.actionsLog.stackLog("You equip Armor : " + armor.getDesc(), Game.actionsLog.neutral);
+        //actionsLog.stackLog("You equip Armor : " + armor.getDesc(), actionsLog.neutral);
         this.armor = armor;
     }
 
     public void setWeapon(Weapon weapon){
-        Game.actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), Game.actionsLog.neutral);
+        //actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), actionsLog.neutral);
         this.weapon = weapon;
     }
 
     public void passTurn() {
-        Game.actionsLog.stackLog("You wait.", Game.actionsLog.neutral);
+        //actionsLog.stackLog("You wait.", actionsLog.neutral);
         turnTaken = true;
     }
 
     public void addItem(Item itemDropped) {
-        Game.actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), Game.actionsLog.neutral);
+        //actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), actionsLog.neutral);
         inventory.add(itemDropped);
         inventory.sort(new Comparator<Item>() {
             @Override
@@ -201,14 +205,14 @@ public class Player extends Entity{
 
     public void addGold(int gold){
         if(gold != 0) {
-            Game.actionsLog.stackLog("You receive " + gold + " gold.", Game.actionsLog.gold);
+            //actionsLog.stackLog("You receive " + gold + " gold.", actionsLog.gold);
         }
         this.goldCount += gold;
     }
 
     public void addShrooms(int shrooms){
         if(shrooms != 0) {
-            Game.actionsLog.stackLog("You spend " + shrooms + " shrooms.", Game.actionsLog.shrooms);
+            //actionsLog.stackLog("You spend " + shrooms + " shrooms.", actionsLog.shrooms);
         }
         this.shroomsCount += shrooms;
     }
@@ -231,22 +235,26 @@ public class Player extends Entity{
 
     public void heal(Consumable holder) {
         int toHeal = Math.min(holder.getHP(), maxHealth - health);
-        Game.actionsLog.stackLog("You heal for " + toHeal + " points.", Game.actionsLog.heal);
+        //actionsLog.stackLog("You heal for " + toHeal + " points.", actionsLog.heal);
         health += toHeal;
         inventory.remove(holder);
         updateHealth();
     }
 
+    //public ActionsLog getLogger(){
+    //    return actionsLog;
+    //}
+
     public void reduceGold(int toReduce){
         if(toReduce != 0) {
-            Game.actionsLog.stackLog("You spend " + toReduce + " gold.", Game.actionsLog.gold);
+            //actionsLog.stackLog("You spend " + toReduce + " gold.", actionsLog.gold);
         }
         goldCount -= toReduce;
     }
 
     public void reduceShrooms(int price) {
         if(price != 0) {
-            Game.actionsLog.stackLog("You spend " + price + " shrooms.", Game.actionsLog.shrooms);
+            //actionsLog.stackLog("You spend " + price + " shrooms.", actionsLog.shrooms);
         }
         shroomsCount -= price;
     }

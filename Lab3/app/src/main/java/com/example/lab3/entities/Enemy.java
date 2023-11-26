@@ -108,12 +108,12 @@ public class Enemy extends Entity{
         }
         if(GameObject.getDistanceBetweenObjects(player, this) <= range){
             if(!agroed){
-                Game.actionsLog.stackLog(name + " is coming for you!", Game.actionsLog.danger);
+                //player.getLogger().stackLog(name + " is coming for you!", player.getLogger().danger);
             }
             agroed = true;
         }else{
             if(agroed){
-                Game.actionsLog.stackLog(name + " is no longer after you!", Game.actionsLog.attention);
+                //player.getLogger().stackLog(name + " is no longer after you!", player.getLogger().attention);
             }
             agroed = false;
         }

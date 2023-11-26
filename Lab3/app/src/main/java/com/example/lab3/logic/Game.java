@@ -29,7 +29,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private SurfaceHolder surfaceHolder;
     private Shop shop;
 
-    public static ActionsLog actionsLog = new ActionsLog();
+    //public ActionsLog actionsLog;
 
     //private final int displayX;
     //private final int displayY;
@@ -98,11 +98,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             startX = Game.rnd.nextInt(mapHolder.HEIGHT);
             startY = Game.rnd.nextInt(mapHolder.WIDTH);
         }
-        actionsLog.init(context);
-        actionsLog.clearLogs();
+        //actionsLog = new ActionsLog();
+        //actionsLog.init(context);
+        //actionsLog.clearLogs();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        player = new Player(context, mapHolder, startX, startY, 10);
+        player = new Player(context, mapHolder, startX, startY, 10/*, actionsLog*/);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
         entityFactory = new EntityFactory(context, mapHolder, player, gameDisplay);
         this.shop = new Shop(this);
