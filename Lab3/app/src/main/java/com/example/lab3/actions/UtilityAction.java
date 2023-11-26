@@ -1,10 +1,7 @@
 package com.example.lab3.actions;
 
-import android.util.Log;
-
 import com.example.lab3.entities.Player;
 import com.example.lab3.inventory.Consumable;
-import com.example.lab3.inventory.Item;
 import com.example.lab3.logic.Game;
 import com.example.lab3.mapping.StaticObject;
 
@@ -51,7 +48,7 @@ public class UtilityAction extends Action{
     public void setGoldDropChance(double goldDropChance){
         this.goldDropChance = goldDropChance;
     }
-    public void setGoldShroomsChance(double shroomsDropChance){
+    public void setShroomsDropChance(double shroomsDropChance){
         this.shroomsDropChance = shroomsDropChance;
     }
     public void setItemDropChance(double itemDropChance){

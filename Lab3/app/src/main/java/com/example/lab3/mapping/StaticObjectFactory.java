@@ -25,8 +25,9 @@ public class StaticObjectFactory {
                 obj = new StaticObject(plantSheet.getSprite(plantType), "Harvest Pine");
                 action = obj.getAction();
                 action.setChopRequired(true);
+                action.setShroomsDropChance(0.3);
                 action.setGoldDropBounds(0, 0);
-                action.setShroomsDropBounds(0, 2);
+                action.setShroomsDropBounds(0, 4);
                 action.setItemDropChance(0.1);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(10) + 1));
                 break;
@@ -35,7 +36,7 @@ public class StaticObjectFactory {
                 action = obj.getAction();
                 action.setChopRequired(true);
                 action.setGoldDropBounds(0, 0);
-                action.setGoldShroomsChance(0.2);
+                action.setShroomsDropChance(0.2);
                 action.setShroomsDropBounds(0, 4);
                 action.setItemDropChance(0.6);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(8) + 1));
@@ -45,7 +46,7 @@ public class StaticObjectFactory {
                 action = obj.getAction();
                 action.setGoldDropBounds(0, 0);
                 action.setShroomsDropBounds(0, 0);
-                action.setItemDropChance(0.7);
+                action.setItemDropChance(0.5);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(3) + 1));
                 break;
             case SHROOM:
@@ -53,7 +54,7 @@ public class StaticObjectFactory {
                 obj = new StaticObject(plantSheet.getSprite(plantType), "Harvest Shroom");
                 action = obj.getAction();
                 action.setGoldDropBounds(0, 0);
-                action.setGoldShroomsChance(0.5);
+                action.setShroomsDropChance(0.5);
                 action.setShroomsDropBounds(0, 1);
                 break;
         }
@@ -70,7 +71,7 @@ public class StaticObjectFactory {
                 action.setMineRequired(true);
                 action.setGoldDropChance(0.05);
                 action.setGoldDropBounds(0, 5);
-                action.setGoldShroomsChance(0.05);
+                action.setShroomsDropChance(0.05);
                 action.setShroomsDropBounds(0, 2);
                 action.setItemDropChance(0.1);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(4) + 1));
@@ -96,7 +97,7 @@ public class StaticObjectFactory {
                 action = obj.getAction();
                 action.setMineRequired(true);
                 action.setGoldDropBounds(0, 0);
-                action.setGoldShroomsChance(0.8);
+                action.setShroomsDropChance(0.8);
                 action.setShroomsDropBounds(2, 15);
                 action.setItemDropChance(0.1);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(4) + 1));
@@ -105,9 +106,9 @@ public class StaticObjectFactory {
             default:
                 obj = new StaticObject(rockSheet.getSprite(rockType), "Mine small rock");
                 action = obj.getAction();
-                action.setGoldDropChance(0.5);
-                action.setGoldDropBounds(0, 5);
-                action.setGoldShroomsChance(0.2);
+                action.setGoldDropChance(0.2);
+                action.setGoldDropBounds(0, 2);
+                action.setShroomsDropChance(0.2);
                 action.setShroomsDropBounds(0, 1);
                 break;
         }

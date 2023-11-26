@@ -192,7 +192,11 @@ public class Player extends Entity{
 
     public PathFinding.Pair getDamage(){
         weapon.reduceDurability();
-        return new PathFinding.Pair(weapon.getDamage(), weapon.piercing);
+        int dmg = weapon.getDamage();
+        if(dmg == 0){
+            actionsLog.stackLog("Your Weapon is broken - you can't hit a damn thing!", ActionsLog.ATTENTION);
+        }
+        return new PathFinding.Pair(dmg, weapon.piercing);
     }
 
     public int getShroomsCount(){
@@ -212,7 +216,7 @@ public class Player extends Entity{
 
     public void addShrooms(int shrooms){
         if(shrooms != 0) {
-            actionsLog.stackLog("You spend " + shrooms + " shrooms.", ActionsLog.SHROOMS);
+            actionsLog.stackLog("You receive " + shrooms + " shrooms.", ActionsLog.SHROOMS);
         }
         this.shroomsCount += shrooms;
     }
@@ -223,6 +227,12 @@ public class Player extends Entity{
 
     public void stackDamage(int damage, String name){
         int damageToTake = Math.max(damage - armor.getProtection(), 0);
+        if(damageToTake == 0){
+            double roll = Game.rnd.nextDouble();
+            if(roll < 0.5){
+                damageToTake = 1;
+            }
+        }
         if(damageToTake != 0) {
             actionsLog.stackLog(name + " hits you for " + damageToTake + " damage!", ActionsLog.DANGER);
         }else{
