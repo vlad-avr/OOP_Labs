@@ -2,8 +2,11 @@ package com.example.lab3.entities;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 import android.util.Pair;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.lab3.R;
 import com.example.lab3.actions.Action;
@@ -39,6 +42,9 @@ public class Player extends Entity{
     private boolean turnTaken = false;
     //private PlayerState playerState;
 
+    private Paint healthPaint;
+    private Paint bgPaint;
+
     public Player(Context context, MapHolder mapHolder,int startX, int startY,  int maxHealth) {
         super(context, mapHolder, startX, startY);
         this.maxHealth = maxHealth;
@@ -51,6 +57,11 @@ public class Player extends Entity{
         this.weapon = new Weapon(1, 0, false, false, "Sword");
         addItem(armor);
         addItem(weapon);
+        healthPaint = new Paint();
+        healthPaint.setColor(ContextCompat.getColor(context, R.color.green));
+        healthPaint.setTextSize(35);
+        bgPaint = new Paint();
+        bgPaint.setColor(ContextCompat.getColor(context, R.color.bg));
     }
 
     @Override
@@ -89,6 +100,8 @@ public class Player extends Entity{
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
+        canvas.drawRect(0, 0, 400, 200, bgPaint);
+        canvas.drawText("Health : "  + health  + "\\" + maxHealth, 20, 20, healthPaint);
     }
 
 
@@ -103,7 +116,9 @@ public class Player extends Entity{
                     Enemy enemy = tile.getEnemy();
                     StaticObject obj = tile.getObject();
                     if(enemy != null){
-                        enemy.action.setExtraPrompt("(HP : " + enemy.getHealth() + "\\" + enemy.getMaxHealth() + "+" + enemy.getProtection() + " | DMG : " + enemy.getDamage() + ") [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
+                        enemy.action.setExtraPrompt("(HP : " + enemy.getHealth() + "\\" +
+                                enemy.getMaxHealth() + "+" + enemy.getProtection() + " | DMG : " + enemy.getDamage() +
+                                ") [" + (i-mapPosX) + "," + (j-mapPosY) + "]");
                         actions.add(enemy.action);
                     }
                     if(obj != null){
@@ -145,10 +160,12 @@ public class Player extends Entity{
         inventory.sort(new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
-                if(o1.sortingWeight > o2.sortingWeight){
-                    return 1;
-                }else if(o1.sortingWeight < o2.sortingWeight){
+                if((o1 instanceof Weapon && (o2 instanceof Armor || o2 instanceof Consumable)) ||
+                        (o1 instanceof Armor && o2 instanceof Consumable)){
                     return -1;
+                }else if((o1 instanceof Armor && o2 instanceof Weapon) ||
+                        (o1 instanceof Consumable && (o2 instanceof Weapon || o2 instanceof Armor))){
+                    return 1;
                 }else{
                     return 0;
                 }

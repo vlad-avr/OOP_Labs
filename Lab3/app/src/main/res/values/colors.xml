@@ -6,4 +6,5 @@
     <color name="red">#ff1100</color>
     <color name="armor">#f2b807</color>
     <color name="equipped">#99a7cf</color>
+    <color name="bg">#616161</color>
 </resources>
