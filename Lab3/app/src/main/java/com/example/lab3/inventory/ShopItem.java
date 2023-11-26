@@ -16,7 +16,7 @@ public class ShopItem {
 
     private void calculatePrice(){
         if(item instanceof Weapon){
-            price = (((Weapon) item).damage-1) * 5 + ((Weapon) item).piercing * 6;
+            price = (((Weapon) item).getDamageRaw()-1) * 5 + ((Weapon) item).piercing * 6;
         }else if(item instanceof Armor){
             price = ((Armor) item).protection * 8;
         }else if(item instanceof Consumable){

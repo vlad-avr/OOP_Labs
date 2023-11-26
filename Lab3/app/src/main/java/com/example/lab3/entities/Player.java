@@ -55,8 +55,8 @@ public class Player extends Entity{
         sprite = singleSheet.getSprite();
         mapHolder.setTilePassable(mapPosX, mapPosY, false);
         waitAction.setPrompt("Wait");
-        this.armor = new Armor(0, 1.0, "Armor");
-        this.weapon = new Weapon(1, 0, false, false, "Sword");
+        this.armor = new Armor(0, 20, "Armor");
+        this.weapon = new Weapon(1, 0, 20,false, false, "Sword");
         addItem(armor);
         addItem(weapon);
         healthPaint = new Paint();
@@ -94,7 +94,6 @@ public class Player extends Entity{
     @Override
     public void updateHealth(){
         super.updateHealth();
-        Log.d("PLAYER", "updateHealth: " + health);
     }
 
     public void move(int dirX, int dirY){
@@ -184,7 +183,8 @@ public class Player extends Entity{
     }
 
     public PathFinding.Pair getDamage(){
-        return new PathFinding.Pair(weapon.damage, weapon.piercing);
+        weapon.reduceDurability();
+        return new PathFinding.Pair(weapon.getDamage(), weapon.piercing);
     }
 
     public int getShroomsCount(){
@@ -209,9 +209,11 @@ public class Player extends Entity{
 
     @Override
     public void stackDamage(int damage){
-        int damageToTake = Math.max(damage - armor.protection, 0);
+        int damageToTake = Math.max(damage - armor.getProtection(), 0);
+        armor.reduceDurability();
         super.stackDamage(damageToTake);
     }
+
 
     public Armor getArmor() {
         return this.armor;

@@ -32,8 +32,8 @@ public class Shop {
 
     private void restock(){
         items.clear();
-        items.add(new ShopItem(new Weapon(1, 0, false, false, "Sword"), this));
-        items.add(new ShopItem(new Armor(0, 1.0, "Armor"), this));
+        items.add(new ShopItem(new Weapon(1, 0, 20,false, false, "Sword"), this));
+        items.add(new ShopItem(new Armor(0, 20, "Armor"), this));
         for(int i = 1; i <= 3; i++){
             int roll = Game.rnd.nextInt(3);
             switch (roll){
