@@ -63,7 +63,7 @@ public class EnchantUI extends Dialog {
             Button button = new Button(getContext());
             button.setText(action.getPrompt() + " " + action.getExtraPrompt());
             button.setTextColor(ContextCompat.getColor(getContext(), R.color.shroom));
-            if(game.getPlayer().getGoldCount() < enchantment.getPrice() ||
+            if(game.getPlayer().getShroomsCount() < enchantment.getPrice() ||
                     (enchantment.getType() == Enchantment.EnchantmentType.MEND_WEAPON && game.getPlayer().getWeapon().isFixed()) ||
                     (enchantment.getType() == Enchantment.EnchantmentType.MEND_ARMOR && game.getPlayer().getArmor().isFixed()) ||
                     (enchantment.getType() == Enchantment.EnchantmentType.ENCHANT_FOR_DODGE && game.getPlayer().getArmor().maxDodge()) ||

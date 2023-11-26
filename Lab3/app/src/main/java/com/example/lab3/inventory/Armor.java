@@ -3,6 +3,9 @@ package com.example.lab3.inventory;
 import com.example.lab3.actions.EquipAction;
 import com.example.lab3.logic.Game;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Armor extends Item{
     public final int protection;
     public final int maxDurability;
@@ -21,8 +24,11 @@ public class Armor extends Item{
     }
 
     public String getDesc(){
-        return "(PROT " + protection + "|DUR " + durability + "\\" + maxDurability + " |DG " + dodgeChance + ")";
+        DecimalFormat dc = new DecimalFormat("#.#");
+        dc.setRoundingMode(RoundingMode.FLOOR);
+        return "(PROT " + protection + "|DUR " + durability + "\\" + maxDurability + " |DG " + dc.format(dodgeChance) + ")";
     }
+
 
     public void reduceDurability() {
         if(durability > 0){
@@ -37,6 +43,7 @@ public class Armor extends Item{
 
     public void moreDodge(){
         dodgeChance += 0.1;
+        action.setExtraPrompt(getDesc());
     }
 
     public boolean maxDodge(){

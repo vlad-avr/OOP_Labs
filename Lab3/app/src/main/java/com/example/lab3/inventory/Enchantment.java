@@ -74,6 +74,6 @@ public class Enchantment {
             default:
                 price = 400;
         }
-        action.setPrompt("Buy " + name + " " + " for " + price + " gold");
+        action.setPrompt("Buy " + name + " " + " for " + price + " shrooms");
     }
 }

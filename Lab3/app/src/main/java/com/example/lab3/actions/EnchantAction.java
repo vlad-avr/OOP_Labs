@@ -29,5 +29,6 @@ public class EnchantAction extends Action{
             default:
                 System.out.println("END");
         }
+        player.reduceShrooms(holder.getPrice());
     }
 }

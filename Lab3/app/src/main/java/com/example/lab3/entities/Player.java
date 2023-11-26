@@ -228,4 +228,8 @@ public class Player extends Entity{
     public void reduceGold(int toReduce){
         goldCount -= toReduce;
     }
+
+    public void reduceShrooms(int price) {
+        shroomsCount -= price;
+    }
 }

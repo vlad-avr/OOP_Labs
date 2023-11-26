@@ -3,6 +3,9 @@ package com.example.lab3.inventory;
 import com.example.lab3.actions.EquipAction;
 import com.example.lab3.logic.Game;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Weapon extends Item{
 
     private final int damage;
@@ -30,7 +33,9 @@ public class Weapon extends Item{
     }
 
     public String getDesc(){
-        return "(DMG " + damage + "|PRC " + piercing + "|DUR " + durability + "\\" + maxDurability + " |CRT " + critChance + ")";
+        DecimalFormat dc = new DecimalFormat("#.#");
+        dc.setRoundingMode(RoundingMode.FLOOR);
+        return "(DMG " + damage + "|PRC " + piercing + "|DUR " + durability + "\\" + maxDurability + " |CRT " + dc.format(critChance) + ")";
     }
 
     public int getDamage() {
@@ -56,12 +61,14 @@ public class Weapon extends Item{
         action.setExtraPrompt(getDesc());
     }
 
+
     public int getDurability() {
         return maxDurability - durability;
     }
 
     public void moreCrit(){
         critChance += 0.1;
+        action.setExtraPrompt(getDesc());
     }
 
     public boolean maxCrit(){
