@@ -10,7 +10,7 @@ public class Weapon extends Item{
     public final boolean canChop;
     public final boolean canMine;
 
-    private double critChance = 0;
+    private double critChance = 0.0;
 
     public int durability;
     public final int maxDurability;
@@ -30,7 +30,7 @@ public class Weapon extends Item{
     }
 
     public String getDesc(){
-        return "(DMG " + damage + "|PRC " + piercing + "|DUR " + durability + "\\" + maxDurability + ")";
+        return "(DMG " + damage + "|PRC " + piercing + "|DUR " + durability + "\\" + maxDurability + " |CRT " + critChance + ")";
     }
 
     public int getDamage() {
@@ -54,5 +54,20 @@ public class Weapon extends Item{
             durability--;
         }
         action.setExtraPrompt(getDesc());
+    }
+
+    public int getDurability() {
+        return maxDurability - durability;
+    }
+
+    public void moreCrit(){
+        critChance += 0.1;
+    }
+
+    public boolean maxCrit(){
+        return critChance >= 1.0;
+    }
+    public void mend(){
+        this.durability = maxDurability;
     }
 }

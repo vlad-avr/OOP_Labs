@@ -1,5 +1,6 @@
 package com.example.lab3.inventory;
 
+import com.example.lab3.entities.Player;
 import com.example.lab3.logic.Game;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 
 public class Shop {
     private List<ShopItem> items = new ArrayList<>();
+    private List<Enchantment> enchantments = new ArrayList<>();
     private Game game;
 
     private final int maxTimeToRestock = 15;
@@ -20,6 +22,7 @@ public class Shop {
     public List<ShopItem> getItems(){
         return this.items;
     }
+    public List<Enchantment> getEnchantments(){return this.enchantments;}
 
     public void update(){
         if(timeToRestock == 0){
@@ -53,6 +56,12 @@ public class Shop {
         }
         for (int i = 1; i <= 4; i++){
             items.add(new ShopItem(ItemFactory.makeConsumable(i*5 - Game.rnd.nextInt(5)), this));
+        }
+    }
+
+    public void updateEnchantments(Player player){
+        for(Enchantment enchantment : enchantments){
+            enchantment.calculatePrice(player);
         }
     }
 
