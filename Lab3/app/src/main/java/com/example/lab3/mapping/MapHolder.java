@@ -154,30 +154,30 @@ public class MapHolder {
                         if(rnd.nextFloat() < groundFillChance){
                             toFill = true;
                         }
-                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.GROUND);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.GROUND, this, i, j);
                         mapVisual[i][j] = tile;
                         break;
                     case ROCK:
                         if(rnd.nextFloat() < rockFillChance){
                             toFill = true;
                         }
-                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.ROCK);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.ROCK, this, i, j);
                         mapVisual[i][j] = tile;
                         break;
                     case SAND:
                         if(rnd.nextFloat() < sandFillChance){
                             toFill = true;
                         }
-                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.SAND);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.SAND, this, i, j);
                         mapVisual[i][j] = tile;
                         break;
                     case WATER:
-                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WATER);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WATER, this, i, j);
                         tile.setPassable(false);
                         mapVisual[i][j] = tile;
                         break;
                     case WALL:
-                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WALL);
+                        tile = new Tile(tileSheet, getRectByIndex(i, j), Tile.TileType.WALL, this, i, j);
                         mapVisual[i][j] = tile;
                         break;
 
@@ -201,6 +201,11 @@ public class MapHolder {
                 mapVisual[iRow][iCol].draw(mapCanvas);
             }
         }
+    }
+
+    public void updateTile(int i, int j){
+        Canvas mapCanvas = new Canvas(mapBitmap);
+        mapVisual[i][j].draw(mapCanvas);
     }
 
     private void genTileFiller(Tile tile){

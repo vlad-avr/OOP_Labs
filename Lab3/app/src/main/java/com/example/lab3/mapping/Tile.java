@@ -21,11 +21,19 @@ public class Tile {
     private boolean taken = false;
     private final TileType tileType;
 
+    private MapHolder mapHolder;
 
-    public Tile(TileSheet spriteSheet, Rect mapLocationRect, Tile.TileType tileType) {
+    private final int posX;
+    private final int posY;
+
+
+    public Tile(TileSheet spriteSheet, Rect mapLocationRect, Tile.TileType tileType, MapHolder mapHolder, int posX, int posY) {
         this.mapLocationRect = mapLocationRect;
         sprite = spriteSheet.getSprite(tileType);
         this.tileType = tileType;
+        this.mapHolder = mapHolder;
+        this.posX = posX;
+        this.posY = posY;
     }
 
     public TileType getTileType(){
@@ -79,6 +87,7 @@ public class Tile {
         if(!passable){
             passable = true;
         }
+        mapHolder.updateTile(posX, posY);
     }
 
     public static enum TileType {
