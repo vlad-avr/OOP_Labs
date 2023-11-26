@@ -121,7 +121,7 @@ public class EntityFactory {
         }
         if(enemy != null) {
             enemies.add(enemy);
-            player.getLogger().stackLog(enemy.getName() + " has appeared somewhere.", player.getLogger().ATTENTION);
+            player.getLogger().stackLog(enemy.getName() + " has appeared somewhere.", ActionsLog.ATTENTION);
         }
         enemySpawnRate = Game.rnd.nextInt(enemyMaxSpawnRate) + enemyMinSpawnRate;
     }

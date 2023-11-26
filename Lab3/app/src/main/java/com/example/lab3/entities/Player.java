@@ -157,22 +157,22 @@ public class Player extends Entity{
     }
 
     public void setArmor(Armor armor){
-        actionsLog.stackLog("You equip Armor : " + armor.getDesc(), actionsLog.NEUTRAL);
+        actionsLog.stackLog("You equip Armor : " + armor.getDesc(), ActionsLog.NEUTRAL);
         this.armor = armor;
     }
 
     public void setWeapon(Weapon weapon){
-        actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), actionsLog.NEUTRAL);
+        actionsLog.stackLog("You equip " + weapon.name + " : " + weapon.getDesc(), ActionsLog.NEUTRAL);
         this.weapon = weapon;
     }
 
     public void passTurn() {
-        actionsLog.stackLog("You wait.", actionsLog.NEUTRAL);
+        actionsLog.stackLog("You wait.", ActionsLog.NEUTRAL);
         turnTaken = true;
     }
 
     public void addItem(Item itemDropped) {
-        actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), actionsLog.NEUTRAL);
+        actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), ActionsLog.NEUTRAL);
         inventory.add(itemDropped);
         inventory.sort(new Comparator<Item>() {
             @Override
@@ -205,14 +205,14 @@ public class Player extends Entity{
 
     public void addGold(int gold){
         if(gold != 0) {
-            actionsLog.stackLog("You receive " + gold + " gold.", actionsLog.GOLD);
+            actionsLog.stackLog("You receive " + gold + " gold.", ActionsLog.GOLD);
         }
         this.goldCount += gold;
     }
 
     public void addShrooms(int shrooms){
         if(shrooms != 0) {
-            actionsLog.stackLog("You spend " + shrooms + " shrooms.", actionsLog.SHROOMS);
+            actionsLog.stackLog("You spend " + shrooms + " shrooms.", ActionsLog.SHROOMS);
         }
         this.shroomsCount += shrooms;
     }
@@ -221,9 +221,13 @@ public class Player extends Entity{
         return this.weapon;
     }
 
-    @Override
-    public void stackDamage(int damage){
+    public void stackDamage(int damage, String name){
         int damageToTake = Math.max(damage - armor.getProtection(), 0);
+        if(damageToTake != 0) {
+            actionsLog.stackLog(name + " hits you for " + damageToTake + " damage!", ActionsLog.DANGER);
+        }else{
+            actionsLog.stackLog(name + " attack is deflected by your armor!", ActionsLog.ATTENTION);
+        }
         armor.reduceDurability();
         super.stackDamage(damageToTake);
     }

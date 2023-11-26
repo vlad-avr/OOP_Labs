@@ -8,6 +8,7 @@ import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.inventory.Item;
 import com.example.lab3.inventory.ItemFactory;
+import com.example.lab3.logic.ActionsLog;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
@@ -108,19 +109,21 @@ public class Enemy extends Entity{
         }
         if(GameObject.getDistanceBetweenObjects(player, this) <= range){
             if(!agroed){
-                player.getLogger().stackLog(name + " is coming for you!", player.getLogger().DANGER);
+                player.getLogger().stackLog(name + " is coming for you!", ActionsLog.DANGER);
             }
             agroed = true;
         }else{
             if(agroed){
-                player.getLogger().stackLog(name + " is no longer after you!", player.getLogger().ATTENTION);
+                player.getLogger().stackLog(name + " is no longer after you!", ActionsLog.ATTENTION);
             }
             agroed = false;
         }
     }
 
     public int calculateDamage(PathFinding.Pair damage){
-        return Math.abs(Math.min(Math.max(protection - damage.second, 0) - damage.first, 0));
+        int toDamage = Math.abs(Math.min(Math.max(protection - damage.second, 0) - damage.first, 0));
+        player.getLogger().stackLog("You strike " + name + " for " + toDamage + " damage!", ActionsLog.ATTENTION);
+        return toDamage;
     }
 
     protected void move(int x, int y){
@@ -144,7 +147,9 @@ public class Enemy extends Entity{
     protected void attack(){
         double roll = Game.rnd.nextDouble();
         if(roll > attackFailChance) {
-            player.stackDamage(damageDelt);
+            player.stackDamage(damageDelt, name);
+        }else{
+            player.getLogger().stackLog(name + " misses you!", ActionsLog.ATTENTION);
         }
     }
 
@@ -184,6 +189,7 @@ public class Enemy extends Entity{
     }
 
     public void removeFromMap(){
+        player.getLogger().stackLog(name + " is defeated!", ActionsLog.ATTENTION);
         int goldDropped = maxGold - Game.rnd.nextInt(Math.max(maxGold - minGold, 1));
         int shroomsDropped = maxShrooms - Game.rnd.nextInt(Math.max(maxShrooms - minShrooms, 1));
         double roll = Game.rnd.nextDouble();
