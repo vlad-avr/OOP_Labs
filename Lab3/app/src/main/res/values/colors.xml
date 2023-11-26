@@ -7,4 +7,6 @@
     <color name="armor">#f2b807</color>
     <color name="equipped">#99a7cf</color>
     <color name="bg">#616161</color>
+    <color name="gold">#dfe300</color>
+    <color name="shroom">#a800ab</color>
 </resources>

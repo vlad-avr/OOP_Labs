@@ -43,6 +43,8 @@ public class Player extends Entity{
     //private PlayerState playerState;
 
     private Paint healthPaint;
+    private Paint goldPaint;
+    private Paint shroomsPaint;
     private Paint bgPaint;
 
     public Player(Context context, MapHolder mapHolder,int startX, int startY,  int maxHealth) {
@@ -60,6 +62,12 @@ public class Player extends Entity{
         healthPaint = new Paint();
         healthPaint.setColor(ContextCompat.getColor(context, R.color.green));
         healthPaint.setTextSize(35);
+        goldPaint = new Paint();
+        goldPaint.setColor(ContextCompat.getColor(context, R.color.gold));
+        goldPaint.setTextSize(35);
+        shroomsPaint = new Paint();
+        shroomsPaint.setColor(ContextCompat.getColor(context, R.color.shroom));
+        shroomsPaint.setTextSize(35);
         bgPaint = new Paint();
         bgPaint.setColor(ContextCompat.getColor(context, R.color.bg));
     }
@@ -101,7 +109,9 @@ public class Player extends Entity{
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
         canvas.drawRect(0, 0, 400, 200, bgPaint);
-        canvas.drawText("Health : "  + health  + "\\" + maxHealth, 20, 20, healthPaint);
+        canvas.drawText("Health : "  + health  + "\\" + maxHealth, 20, 40, healthPaint);
+        canvas.drawText("Gold : " + goldCount, 20, 80, goldPaint);
+        canvas.drawText("Shrooms : " + shroomsCount, 20, 120, shroomsPaint);
     }
 
 
