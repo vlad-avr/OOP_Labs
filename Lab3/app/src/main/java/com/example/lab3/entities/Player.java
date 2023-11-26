@@ -48,11 +48,11 @@ public class Player extends Entity{
     private Paint shroomsPaint;
     private Paint bgPaint;
 
-    //private ActionsLog actionsLog;
+    private ActionsLog actionsLog;
 
-    public Player(Context context, MapHolder mapHolder, int startX, int startY, int maxHealth/*, ActionsLog actionsLog*/) {
+    public Player(Context context, MapHolder mapHolder, int startX, int startY, int maxHealth, ActionsLog actionsLog) {
         super(context, mapHolder, startX, startY);
-        //this.actionsLog = actionsLog;
+        this.actionsLog = actionsLog;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         SingleSheet singleSheet = new SingleSheet(context, R.drawable.player);
@@ -157,22 +157,22 @@ public class Player extends Entity{
     }
 
     public void setArmor(Armor armor){
-        //actionsLog.stackLog("You equip Armor : " + armor.getDesc(), actionsLog.neutral);
+        actionsLog.stackLog("You equip Armor : " + armor.getDesc(), actionsLog.NEUTRAL);
         this.armor = armor;
     }
 
     public void setWeapon(Weapon weapon){
-        //actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), actionsLog.neutral);
+        actionsLog.stackLog("You equip " + weapon.name + " : " + armor.getDesc(), actionsLog.NEUTRAL);
         this.weapon = weapon;
     }
 
     public void passTurn() {
-        //actionsLog.stackLog("You wait.", actionsLog.neutral);
+        actionsLog.stackLog("You wait.", actionsLog.NEUTRAL);
         turnTaken = true;
     }
 
     public void addItem(Item itemDropped) {
-        //actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), actionsLog.neutral);
+        actionsLog.stackLog("You receive item : " + itemDropped.name + itemDropped.getAction().getExtraPrompt(), actionsLog.NEUTRAL);
         inventory.add(itemDropped);
         inventory.sort(new Comparator<Item>() {
             @Override
@@ -205,14 +205,14 @@ public class Player extends Entity{
 
     public void addGold(int gold){
         if(gold != 0) {
-            //actionsLog.stackLog("You receive " + gold + " gold.", actionsLog.gold);
+            actionsLog.stackLog("You receive " + gold + " gold.", actionsLog.GOLD);
         }
         this.goldCount += gold;
     }
 
     public void addShrooms(int shrooms){
         if(shrooms != 0) {
-            //actionsLog.stackLog("You spend " + shrooms + " shrooms.", actionsLog.shrooms);
+            actionsLog.stackLog("You spend " + shrooms + " shrooms.", actionsLog.SHROOMS);
         }
         this.shroomsCount += shrooms;
     }
@@ -235,26 +235,26 @@ public class Player extends Entity{
 
     public void heal(Consumable holder) {
         int toHeal = Math.min(holder.getHP(), maxHealth - health);
-        //actionsLog.stackLog("You heal for " + toHeal + " points.", actionsLog.heal);
+        actionsLog.stackLog("You heal for " + toHeal + " points.", actionsLog.HEAL);
         health += toHeal;
         inventory.remove(holder);
         updateHealth();
     }
 
-    //public ActionsLog getLogger(){
-    //    return actionsLog;
-    //}
+    public ActionsLog getLogger(){
+        return actionsLog;
+    }
 
     public void reduceGold(int toReduce){
         if(toReduce != 0) {
-            //actionsLog.stackLog("You spend " + toReduce + " gold.", actionsLog.gold);
+            actionsLog.stackLog("You spend " + toReduce + " gold.", actionsLog.GOLD);
         }
         goldCount -= toReduce;
     }
 
     public void reduceShrooms(int price) {
         if(price != 0) {
-            //actionsLog.stackLog("You spend " + price + " shrooms.", actionsLog.shrooms);
+            actionsLog.stackLog("You spend " + price + " shrooms.", actionsLog.SHROOMS);
         }
         shroomsCount -= price;
     }

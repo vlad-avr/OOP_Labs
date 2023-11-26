@@ -155,7 +155,6 @@ public class PathFinding {
 
                         if (neighbour.equals(dest)) {
                             cellDetails[neighbour.first][neighbour.second].parent = new Pair ( i, j );
-                            System.out.println("The destination cell is found");
                             return tracePath(cellDetails, mapHolder.HEIGHT, mapHolder.WIDTH, dest, start, speed);
                         }
 

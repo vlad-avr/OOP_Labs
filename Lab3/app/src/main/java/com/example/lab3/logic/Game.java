@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -29,7 +30,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private SurfaceHolder surfaceHolder;
     private Shop shop;
 
-    //public ActionsLog actionsLog;
+    public ActionsLog actionsLog;
 
     //private final int displayX;
     //private final int displayY;
@@ -71,7 +72,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         mapHolder.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
         entityFactory.draw(canvas);
-        //actionsLog.draw(canvas);
+        actionsLog.draw(canvas);
     }
 
     public void update(){
@@ -98,12 +99,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             startX = Game.rnd.nextInt(mapHolder.HEIGHT);
             startY = Game.rnd.nextInt(mapHolder.WIDTH);
         }
-        //actionsLog = new ActionsLog();
-        //actionsLog.init(context);
-        //actionsLog.clearLogs();
+        actionsLog = new ActionsLog();
+        actionsLog.init(context);
+        actionsLog.clearLogs();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        player = new Player(context, mapHolder, startX, startY, 10/*, actionsLog*/);
+        player = new Player(context, mapHolder, startX, startY, 10, actionsLog);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
         entityFactory = new EntityFactory(context, mapHolder, player, gameDisplay);
         this.shop = new Shop(this);
