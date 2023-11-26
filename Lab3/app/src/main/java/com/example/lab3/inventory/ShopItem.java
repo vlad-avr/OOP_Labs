@@ -6,15 +6,17 @@ public class ShopItem {
     private Item item;
     private BuyAction buyAction;
     private int price;
-    public ShopItem(Item item){
+    private Shop shop;
+    public ShopItem(Item item, Shop shop){
         this.item = item;
         calculatePrice();
+        this.shop = shop;
         this.buyAction = new BuyAction(this);
     }
 
     private void calculatePrice(){
         if(item instanceof Weapon){
-            price = ((Weapon) item).damage * 5 + ((Weapon) item).piercing * 6;
+            price = (((Weapon) item).damage-1) * 5 + ((Weapon) item).piercing * 6;
         }else if(item instanceof Armor){
             price = ((Armor) item).protection * 8;
         }else if(item instanceof Consumable){
@@ -30,5 +32,9 @@ public class ShopItem {
 
     public Item getItem(){
         return this.item;
+    }
+
+    public void getBought() {
+        shop.removeItem(this);
     }
 }

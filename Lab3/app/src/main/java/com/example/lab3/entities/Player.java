@@ -222,4 +222,8 @@ public class Player extends Entity{
         inventory.remove(holder);
         updateHealth();
     }
+
+    public void reduceGold(int toReduce){
+        goldCount -= toReduce;
+    }
 }
