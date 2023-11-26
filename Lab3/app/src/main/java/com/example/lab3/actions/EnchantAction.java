@@ -8,7 +8,6 @@ public class EnchantAction extends Action{
 
     public EnchantAction(Enchantment holder){
         this.holder = holder;
-        setPrompt("Buy " + holder.getName() + " " + " for " + holder.getPrice() + " gold");
     }
 
     @Override

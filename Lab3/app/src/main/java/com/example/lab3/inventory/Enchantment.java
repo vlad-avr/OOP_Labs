@@ -60,7 +60,7 @@ public class Enchantment {
     public void calculatePrice(Player player){
         switch (type){
             case MEND_ARMOR:
-                price = player.getArmor().protection*5 + player.getArmor().getDurability()*2;
+                price = (player.getArmor().protection+1)*5 + player.getArmor().getDurability()*2;
                 break;
             case MEND_WEAPON:
                 price = player.getWeapon().getDamageRaw()*3 + player.getWeapon().piercing*4 + player.getWeapon().getDurability()*2;
@@ -69,10 +69,11 @@ public class Enchantment {
                 price = player.getWeapon().getDamageRaw()*8;
                 break;
             case ENCHANT_FOR_DODGE:
-                price = player.getArmor().protection*8;
+                price = (player.getArmor().protection+1)*8;
                 break;
             default:
                 price = 400;
         }
+        action.setPrompt("Buy " + name + " " + " for " + price + " gold");
     }
 }

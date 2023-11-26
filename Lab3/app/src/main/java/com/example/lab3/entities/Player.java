@@ -107,7 +107,7 @@ public class Player extends Entity{
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(positionY), (int)gameDisplay.gameToDisplayCoordinatesY(positionX));
-        canvas.drawRect(0, 0, 400, 200, bgPaint);
+        canvas.drawRect(0, 0, 300, 150, bgPaint);
         canvas.drawText("Health : "  + health  + "\\" + maxHealth, 20, 40, healthPaint);
         canvas.drawText("Gold : " + goldCount, 20, 80, goldPaint);
         canvas.drawText("Shrooms : " + shroomsCount, 20, 120, shroomsPaint);

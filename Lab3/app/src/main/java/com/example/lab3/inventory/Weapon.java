@@ -70,4 +70,7 @@ public class Weapon extends Item{
     public void mend(){
         this.durability = maxDurability;
     }
+    public boolean isFixed(){
+        return durability == maxDurability;
+    }
 }

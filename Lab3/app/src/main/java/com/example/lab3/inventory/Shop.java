@@ -17,6 +17,7 @@ public class Shop {
     public Shop(Game game){
         this.game = game;
         restock();
+        initEnchantments();
     }
 
     public List<ShopItem> getItems(){
@@ -63,6 +64,19 @@ public class Shop {
         for(Enchantment enchantment : enchantments){
             enchantment.calculatePrice(player);
         }
+    }
+
+    private void initEnchantments(){
+        enchantments.add(new Enchantment(Enchantment.EnchantmentType.MEND_WEAPON));
+        enchantments.get(enchantments.size()-1).calculatePrice(game.getPlayer());
+        enchantments.add(new Enchantment(Enchantment.EnchantmentType.MEND_ARMOR));
+        enchantments.get(enchantments.size()-1).calculatePrice(game.getPlayer());
+        enchantments.add(new Enchantment(Enchantment.EnchantmentType.ENCHANT_FOR_CRITS));
+        enchantments.get(enchantments.size()-1).calculatePrice(game.getPlayer());
+        enchantments.add(new Enchantment(Enchantment.EnchantmentType.ENCHANT_FOR_DODGE));
+        enchantments.get(enchantments.size()-1).calculatePrice(game.getPlayer());
+        enchantments.add(new Enchantment(Enchantment.EnchantmentType.ENDCHANT));
+        enchantments.get(enchantments.size()-1).calculatePrice(game.getPlayer());
     }
 
     public void removeItem(ShopItem shopItem) {

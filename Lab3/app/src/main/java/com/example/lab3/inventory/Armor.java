@@ -47,6 +47,10 @@ public class Armor extends Item{
         this.durability = maxDurability;
     }
 
+    public boolean isFixed(){
+        return durability == maxDurability;
+    }
+
     public int getProtection(){
         if(durability == 0){
             return 0;
