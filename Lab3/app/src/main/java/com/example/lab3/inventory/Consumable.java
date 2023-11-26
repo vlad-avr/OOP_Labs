@@ -4,7 +4,6 @@ import com.example.lab3.actions.ConsumeAction;
 
 public class Consumable extends Item{
 
-    public static final int sortingWeight = 1;
     private int healingPoints;
 
     public Consumable(String name, int HP) {

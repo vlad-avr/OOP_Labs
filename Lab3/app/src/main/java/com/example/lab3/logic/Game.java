@@ -80,6 +80,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     public void update(){
         player.update();
         if(toUpdate) {
+            shop.update();
             entitySpawner.update();
             player.updateHealth();
             toUpdate = false;

@@ -4,7 +4,6 @@ import com.example.lab3.actions.EquipAction;
 
 public class Weapon extends Item{
 
-    public static final int sortingWeight = 3;
     public final int damage;
     public final int piercing;
     public final boolean canChop;

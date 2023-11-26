@@ -5,8 +5,6 @@ import com.example.lab3.graphics.Sprite;
 
 public abstract class Item {
 
-    public final int sortingWeight = 0;
-
     public final String name;
     protected InventoryAction action;
 

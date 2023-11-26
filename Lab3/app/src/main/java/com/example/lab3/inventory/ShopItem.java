@@ -37,4 +37,8 @@ public class ShopItem {
     public void getBought() {
         shop.removeItem(this);
     }
+
+    public BuyAction getAction(){
+        return this.buyAction;
+    }
 }
