@@ -3,18 +3,12 @@ package com.example.lab3.logic;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
-import com.example.lab3.R;
 import com.example.lab3.entities.Player;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.inventory.Shop;
@@ -30,7 +24,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
     private GameDisplay gameDisplay;
     private Player player;
     private MapHolder mapHolder;
-    private EntitySpawner entitySpawner;
+    private EntityFactory entityFactory;
     private Context context;
     private SurfaceHolder surfaceHolder;
     private Shop shop;
@@ -74,14 +68,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         // Draw Tilemap
         mapHolder.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
-        entitySpawner.draw(canvas);
+        entityFactory.draw(canvas);
     }
 
     public void update(){
         player.update();
         if(toUpdate) {
             shop.update();
-            entitySpawner.update();
+            entityFactory.update();
             player.updateHealth();
             toUpdate = false;
             if(player.isDead()){
@@ -108,7 +102,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         player = new Player(context, mapHolder, startX, startY, 10);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
-        entitySpawner = new EntitySpawner(context, mapHolder, player, gameDisplay);
+        entityFactory = new EntityFactory(context, mapHolder, player, gameDisplay);
         this.shop = new Shop(this);
         loop = new MainLoop(this, surfaceHolder);
     }

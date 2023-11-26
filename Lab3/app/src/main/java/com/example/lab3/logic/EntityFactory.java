@@ -13,7 +13,7 @@ import com.example.lab3.mapping.Tile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntitySpawner {
+public class EntityFactory {
     private final int enemyMaxSpawnRate = 20;
     private final int enemyMinSpawnRate = 10;
     private final int enemyNumberCap = 20;
@@ -29,7 +29,7 @@ public class EntitySpawner {
     private EnemySheet enemySheet;
     private List<Enemy> enemies = new ArrayList<>();
 
-    public EntitySpawner(Context context, MapHolder mapHolder, Player player, GameDisplay gameDisplay){
+    public EntityFactory(Context context, MapHolder mapHolder, Player player, GameDisplay gameDisplay){
         this.context = context;
         this.mapHolder = mapHolder;
         this.gameDisplay = gameDisplay;

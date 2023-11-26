@@ -2,15 +2,12 @@ package com.example.lab3.entities;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 
-import com.example.lab3.R;
 import com.example.lab3.actions.EntityAction;
 import com.example.lab3.graphics.GameDisplay;
-import com.example.lab3.graphics.SingleSheet;
 import com.example.lab3.graphics.Sprite;
 import com.example.lab3.inventory.Item;
-import com.example.lab3.inventory.ItemProducer;
+import com.example.lab3.inventory.ItemFactory;
 import com.example.lab3.logic.Game;
 import com.example.lab3.logic.PathFinding;
 import com.example.lab3.mapping.MapHolder;
@@ -185,64 +182,64 @@ public class Enemy extends Entity{
             String prompt = droppable.get(Game.rnd.nextInt(droppable.size()));
             switch (prompt){
                 case "S1":
-                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.SWORD);
+                    itemDropped = ItemFactory.makeWeapon(1, ItemFactory.SWORD);
                     break;
                 case "S2":
-                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.SWORD);
+                    itemDropped = ItemFactory.makeWeapon(2, ItemFactory.SWORD);
                     break;
                 case "S3":
-                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.SWORD);
+                    itemDropped = ItemFactory.makeWeapon(3, ItemFactory.SWORD);
                     break;
                 case "S4":
-                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.SWORD);
+                    itemDropped = ItemFactory.makeWeapon(4, ItemFactory.SWORD);
                     break;
                 case "A1":
-                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.AXE);
+                    itemDropped = ItemFactory.makeWeapon(1, ItemFactory.AXE);
                     break;
                 case "A2":
-                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.AXE);
+                    itemDropped = ItemFactory.makeWeapon(2, ItemFactory.AXE);
                     break;
                 case "A3":
-                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.AXE);
+                    itemDropped = ItemFactory.makeWeapon(3, ItemFactory.AXE);
                     break;
                 case "A4":
-                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.AXE);
+                    itemDropped = ItemFactory.makeWeapon(4, ItemFactory.AXE);
                     break;
                 case "H1":
-                    itemDropped = ItemProducer.makeWeapon(1, ItemProducer.HAMMER);
+                    itemDropped = ItemFactory.makeWeapon(1, ItemFactory.HAMMER);
                     break;
                 case "H2":
-                    itemDropped = ItemProducer.makeWeapon(2, ItemProducer.HAMMER);
+                    itemDropped = ItemFactory.makeWeapon(2, ItemFactory.HAMMER);
                     break;
                 case "H3":
-                    itemDropped = ItemProducer.makeWeapon(3, ItemProducer.HAMMER);
+                    itemDropped = ItemFactory.makeWeapon(3, ItemFactory.HAMMER);
                     break;
                 case "H4":
-                    itemDropped = ItemProducer.makeWeapon(4, ItemProducer.HAMMER);
+                    itemDropped = ItemFactory.makeWeapon(4, ItemFactory.HAMMER);
                     break;
                 case "P1":
-                    itemDropped = ItemProducer.makeArmor(1, 0.7);
+                    itemDropped = ItemFactory.makeArmor(1, 0.7);
                     break;
                 case "P2":
-                    itemDropped = ItemProducer.makeArmor(1, 0.8);;
+                    itemDropped = ItemFactory.makeArmor(1, 0.8);;
                     break;
                 case "P3":
-                    itemDropped = ItemProducer.makeArmor(1, 0.9);;
+                    itemDropped = ItemFactory.makeArmor(1, 0.9);;
                     break;
                 case "P4":
-                    itemDropped = ItemProducer.makeArmor(1, 1.0);;
+                    itemDropped = ItemFactory.makeArmor(1, 1.0);;
                     break;
                 case "C1":
-                    itemDropped = ItemProducer.makeConsumable(1+Game.rnd.nextInt(5));
+                    itemDropped = ItemFactory.makeConsumable(1+Game.rnd.nextInt(5));
                     break;
                 case "C2":
-                    itemDropped = ItemProducer.makeConsumable(3+Game.rnd.nextInt(5));
+                    itemDropped = ItemFactory.makeConsumable(3+Game.rnd.nextInt(5));
                     break;
                 case "C3":
-                    itemDropped = ItemProducer.makeConsumable(6+Game.rnd.nextInt(5));
+                    itemDropped = ItemFactory.makeConsumable(6+Game.rnd.nextInt(5));
                     break;
                 case "C4":
-                    itemDropped = ItemProducer.makeConsumable(10+Game.rnd.nextInt(10));
+                    itemDropped = ItemFactory.makeConsumable(10+Game.rnd.nextInt(10));
                     break;
                 default:
                     itemDropped = null;

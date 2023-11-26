@@ -67,7 +67,7 @@ public class ShopUI extends Dialog {
             button.setTextColor(ContextCompat.getColor(getContext(), R.color.gold));
             if(game.getPlayer().getGoldCount() < item.getPrice()){
                 button.setEnabled(false);
-                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.expensive));
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.unable));
             }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

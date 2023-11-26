@@ -2,7 +2,7 @@ package com.example.lab3.inventory;
 
 import com.example.lab3.logic.Game;
 
-public class ItemProducer {
+public class ItemFactory {
 
     private static final int minDmg = 0;
     private static final int maxDmgT1 = 5;

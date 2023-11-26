@@ -38,21 +38,21 @@ public class Shop {
             int roll = Game.rnd.nextInt(3);
             switch (roll){
                 case 0:
-                    items.add(new ShopItem(ItemProducer.makeWeapon(i, ItemProducer.SWORD), this));
+                    items.add(new ShopItem(ItemFactory.makeWeapon(i, ItemFactory.SWORD), this));
                     break;
                 case 1:
-                    items.add(new ShopItem(ItemProducer.makeWeapon(i, ItemProducer.HAMMER), this));
+                    items.add(new ShopItem(ItemFactory.makeWeapon(i, ItemFactory.HAMMER), this));
                     break;
                 case 2:
-                    items.add(new ShopItem(ItemProducer.makeWeapon(i, ItemProducer.AXE), this));
+                    items.add(new ShopItem(ItemFactory.makeWeapon(i, ItemFactory.AXE), this));
                     break;
             }
         }
         for(int i = 1; i <= 3; i++){
-            items.add(new ShopItem(ItemProducer.makeArmor(i, 0.8), this));
+            items.add(new ShopItem(ItemFactory.makeArmor(i, 0.8), this));
         }
         for (int i = 1; i <= 4; i++){
-            items.add(new ShopItem(ItemProducer.makeConsumable(i*5 - Game.rnd.nextInt(5)), this));
+            items.add(new ShopItem(ItemFactory.makeConsumable(i*5 - Game.rnd.nextInt(5)), this));
         }
     }
 

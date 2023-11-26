@@ -63,6 +63,11 @@ public class ActionsUI extends Dialog{
             if(action instanceof EntityAction){
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
             }else if(action instanceof UtilityAction){
+                if((!game.getPlayer().getWeapon().canMine && ((UtilityAction) action).isMineRequired()) ||
+                        (!game.getPlayer().getWeapon().canChop && ((UtilityAction) action).isChopRequired())){
+                    button.setEnabled(false);
+                    button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.unable));
+                }
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
             }
             button.setOnClickListener(new View.OnClickListener() {

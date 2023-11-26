@@ -38,56 +38,30 @@ public class Tile {
 */
     public void addRock(RockSheet rockSheet, RockSheet.ROCKS rockType) {
         if(taken){return;}
-        String prompt = "";
         switch (rockType){
-            case SMOL:
-                prompt = "Break small rock";
-                break;
             case BIG:
-                passable = false;
-                prompt = "Break big rock";
-                break;
             case GOLD:
-                passable = false;
-                prompt = "Mine gold";
-                break;
             case RUBY:
-                passable = false;
-                prompt = "Mine ruby";
-                break;
             case MUSHROOM:
                 passable = false;
-                prompt = "Harvest shrooms";
                 break;
         }
-        addedObject = new StaticObject(rockSheet.getSprite(rockType), prompt);
+        addedObject = StaticObjectFactory.makeRock(rockType, rockSheet);
+        addedObject.setTile(this);
         taken = true;
     }
 
     public void addPlant(PlantSheet plantSheet, PlantSheet.PLANTS plantType) {
         if(taken){return;}
-        String prompt = "";
         switch (plantType){
-            case SHROOM:
-                prompt = "Harvest shroom";
-                break;
-            case BRIAR:
-                prompt = "Cut briar";
-                break;
             case PINE:
-                prompt = "Chop pine";
-                passable = false;
-                break;
             case TREE:
-                prompt = "Chomp tree";
-                passable = false;
-                break;
             case BUSH:
-                prompt = "Harvest bush";
                 passable = false;
                 break;
         }
-        addedObject = new StaticObject(plantSheet.getSprite(plantType), prompt);
+        addedObject = StaticObjectFactory.makePlant(plantType, plantSheet);
+        addedObject.setTile(this);
         taken = true;
     }
 
@@ -97,6 +71,14 @@ public class Tile {
 
     public void setPassable(boolean passable){
         this.passable = passable;
+    }
+
+    public void removeObj() {
+        addedObject = null;
+        taken = false;
+        if(!passable){
+            passable = true;
+        }
     }
 
     public static enum TileType {
