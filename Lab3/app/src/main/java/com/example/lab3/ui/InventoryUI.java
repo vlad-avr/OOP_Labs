@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.lab3.R;
 import com.example.lab3.actions.InventoryAction;
+import com.example.lab3.actions.SellAction;
 import com.example.lab3.inventory.Armor;
 import com.example.lab3.inventory.Item;
 import com.example.lab3.inventory.Weapon;
@@ -65,11 +66,13 @@ public class InventoryUI extends Dialog {
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
                 if(item == game.getPlayer().getWeapon()){
                     button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.equipped));
+                    button.setEnabled(false);
                 }
             }else if(item instanceof Armor){
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.armor));
                 if(item == game.getPlayer().getArmor()){
                     button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.equipped));
+                    button.setEnabled(false);
                 }
             }else{
                 button.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
@@ -79,6 +82,15 @@ public class InventoryUI extends Dialog {
                 public void onClick(View v) {
                     game.getPlayer().act(action);
                     dismiss();
+                }
+            });
+            SellAction sellAction = item.getSellAction();
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    game.getPlayer().act(sellAction);
+                    dismiss();
+                    return false;
                 }
             });
             buttonLayout.addView(button);

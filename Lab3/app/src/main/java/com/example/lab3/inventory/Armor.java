@@ -1,6 +1,7 @@
 package com.example.lab3.inventory;
 
 import com.example.lab3.actions.EquipAction;
+import com.example.lab3.actions.SellAction;
 import com.example.lab3.logic.Game;
 
 import java.math.RoundingMode;
@@ -21,8 +22,10 @@ public class Armor extends Item{
         durability = maxDurability;
         action.setPrompt(name);
         action.setExtraPrompt(getDesc());
+        sellAction = new SellAction(this);
     }
 
+    @Override
     public String getDesc(){
         DecimalFormat dc = new DecimalFormat("#.#");
         dc.setRoundingMode(RoundingMode.FLOOR);
