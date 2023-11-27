@@ -32,6 +32,7 @@ public class EnchantAction extends Action{
                 player.getLogger().stackLog("You mend your Weapon by unfathomable gibberish...", ActionsLog.SHROOMS);
             case ENDCHANT:
             default:
+                player.setDeathMessage("You find peace in the sweet embrace of death. You feel relieved..");
                 player.getLogger().stackLog("Your mind is overwhelmed by knowledge that you SHOULD NOT HAVE LEARNT...", ActionsLog.SHROOMS);
         }
         player.reduceShrooms(holder.getPrice());

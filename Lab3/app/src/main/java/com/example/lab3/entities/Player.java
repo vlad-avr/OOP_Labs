@@ -50,6 +50,8 @@ public class Player extends Entity{
 
     private ActionsLog actionsLog;
 
+    private String deathMessage = "You are dead!";
+
     public Player(Context context, MapHolder mapHolder, int startX, int startY, int maxHealth, ActionsLog actionsLog) {
         super(context, mapHolder, startX, startY);
         this.actionsLog = actionsLog;
@@ -117,6 +119,13 @@ public class Player extends Entity{
         canvas.drawText("Shrooms : " + shroomsCount, 20, 120, shroomsPaint);
     }
 
+    public void setDeathMessage(String message){
+        deathMessage = message;
+    }
+
+    public String getDeathMessage(){
+        return deathMessage;
+    }
 
     public List<Action> getActions(){
         List<Action> actions = new ArrayList<>();

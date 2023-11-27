@@ -16,6 +16,7 @@ import com.example.lab3.entities.Player;
 import com.example.lab3.graphics.GameDisplay;
 import com.example.lab3.inventory.Shop;
 import com.example.lab3.mapping.MapHolder;
+import com.example.lab3.ui.DeathScreenUI;
 
 import java.security.SecureRandom;
 
@@ -85,6 +86,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             toUpdate = false;
             if(player.isDead()){
                 //loop.stopLoop();
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DeathScreenUI deathScreenUI = new DeathScreenUI(context, player.getDeathMessage());
+                        deathScreenUI.show();
+                    }
+                });
 
             }
         }

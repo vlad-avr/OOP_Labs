@@ -17,8 +17,8 @@ import com.example.lab3.ui.ShopPanel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FrameLayout game;
-    private Game gameView;
+    //private FrameLayout game;
+    //private Game gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGame(){
-        game = new FrameLayout(this);
-        gameView = new Game (this);
+
+
+    }
+    public void startGame(View view){
+        FrameLayout game = new FrameLayout(this);
+        Game gameView = new Game (this);
+        gameView.initGame();
         ControlsPanel controlsPanel = new ControlsPanel(this, gameView);
         ActionsPanel actionsPanel = new ActionsPanel(this, gameView);
         LinearLayout layout = new LinearLayout(this);
@@ -44,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         game.addView(controlsPanel);
         game.addView(actionsPanel);
         game.addView(layout);
-
-    }
-    public void startGame(View view){
-        gameView.initGame();
         setContentView(game);
     }
 
