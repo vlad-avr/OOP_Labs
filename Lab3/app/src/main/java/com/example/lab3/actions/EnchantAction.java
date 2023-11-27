@@ -30,6 +30,7 @@ public class EnchantAction extends Action{
             case MEND_WEAPON:
                 player.getWeapon().mend();
                 player.getLogger().stackLog("You mend your Weapon by unfathomable gibberish...", ActionsLog.SHROOMS);
+                break;
             case ENDCHANT:
             default:
                 player.setDeathMessage("You find peace in the sweet embrace of death. You feel relieved..");

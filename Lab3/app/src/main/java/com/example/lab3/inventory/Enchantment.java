@@ -35,7 +35,7 @@ public class Enchantment {
                 break;
             case ENDCHANT:
                 name = "Summon Nath-Horthath";
-                price = 400;
+                price = 200;
                 break;
         }
         action = new EnchantAction(this);
@@ -72,7 +72,7 @@ public class Enchantment {
                 price = (player.getArmor().protection+1)*8;
                 break;
             default:
-                price = 400;
+                price = 200;
         }
         action.setPrompt("Buy " + name + " " + " for " + price + " shrooms");
     }
