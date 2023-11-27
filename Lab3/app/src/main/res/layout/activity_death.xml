@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
+        android:layout_height="59dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -47,7 +47,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="440dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="230dp"
+        android:layout_marginBottom="243dp"
         android:onClick="restartGame"
         android:text="RESTART" />
 
