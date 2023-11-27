@@ -25,7 +25,7 @@ public class StaticObjectFactory {
                 obj = new StaticObject(plantSheet.getSprite(plantType), "Harvest Pine");
                 action = obj.getAction();
                 action.setChopRequired(true);
-                action.setShroomsDropChance(0.3);
+                action.setShroomsDropChance(0.5);
                 action.setGoldDropBounds(0, 0);
                 action.setShroomsDropBounds(0, 4);
                 action.setItemDropChance(0.1);
@@ -46,7 +46,7 @@ public class StaticObjectFactory {
                 action = obj.getAction();
                 action.setGoldDropBounds(0, 0);
                 action.setShroomsDropBounds(0, 0);
-                action.setItemDropChance(0.5);
+                action.setItemDropChance(0.3);
                 action.setItemDrop(ItemFactory.makeConsumable(Game.rnd.nextInt(3) + 1));
                 break;
             case SHROOM:

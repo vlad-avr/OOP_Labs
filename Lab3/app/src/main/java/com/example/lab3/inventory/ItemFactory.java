@@ -4,21 +4,21 @@ import com.example.lab3.logic.Game;
 
 public class ItemFactory {
 
-    private static final int minDmg = 0;
-    private static final int maxDmgT1 = 5;
-    private static final int maxDmgT2 = 15;
-    private static final int maxDmgT3 = 25;
-    private static final int maxDmgT4 = 40;
+    private static final int minDmg = 1;
+    private static final int maxDmgT1 = 3;
+    private static final int maxDmgT2 = 8;
+    private static final int maxDmgT3 = 13;
+    private static final int maxDmgT4 = 20;
     private static final int minPrc = -1;
-    private static final int maxPrcT1 = 5;
-    private static final int maxPrcT2 = 10;
-    private static final int maxPrcT3 = 15;
-    private static final int maxPrcT4 = 20;
+    private static final int maxPrcT1 = 2;
+    private static final int maxPrcT2 = 5;
+    private static final int maxPrcT3 = 10;
+    private static final int maxPrcT4 = 15;
     private static final int minProt = -1;
-    private static final int maxProtT1 = 3;
-    private static final int maxProtT2 = 7;
-    private static final int maxProtT3 = 10;
-    private static final int maxProtT4 = 15;
+    private static final int maxProtT1 = 2;
+    private static final int maxProtT2 = 5;
+    private static final int maxProtT3 = 8;
+    private static final int maxProtT4 = 12;
     private static final int durability = 20;
     private static final int durabilityOffset = 5;
     public static final int SWORD = 0;

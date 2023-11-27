@@ -136,22 +136,22 @@ public class EntityFactory {
         enemy.setAttackRange(2);
         enemy.setSpeed(1);
         enemy.setRange(15);
-        enemy.setDamageDelt(4);
-        enemy.setMaxHealth(20);
+        enemy.setDamageDelt(8);
+        enemy.setMaxHealth(30);
         enemy.setFumbleChance(0.3);
-        enemy.setAttackFailChance(0.6);
+        enemy.setAttackFailChance(0.4);
         enemy.setName("Guard");
         enemy.setGoldDropBounds(20, 30);
         enemy.setShroomsDropBounds(0, 5);
-        enemy.setDropChance(0.8);
+        enemy.setDropChance(0.9);
         enemy.addDroppable("S2");
         enemy.addDroppable("S3");
-        enemy.addDroppable("H1");
-        enemy.addDroppable("A1");
+        enemy.addDroppable("H2");
+        enemy.addDroppable("A2");
         enemy.addDroppable("P2");
         enemy.addDroppable("P3");
         enemy.addDroppable("C2");
-        enemy.setProtection(5);
+        enemy.setProtection(3);
         return enemy;
     }
     private Enemy initGoblin(int posX, int posY){
@@ -160,7 +160,7 @@ public class EntityFactory {
         enemy.setSpeed(2);
         enemy.setRange(20);
         enemy.setDamageDelt(1);
-        enemy.setMaxHealth(4);
+        enemy.setMaxHealth(6);
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.2);
         enemy.setName("Goblin");
@@ -179,10 +179,10 @@ public class EntityFactory {
         enemy.setAttackRange(2);
         enemy.setSpeed(1);
         enemy.setRange(10);
-        enemy.setDamageDelt(8);
-        enemy.setMaxHealth(40);
+        enemy.setDamageDelt(10);
+        enemy.setMaxHealth(50);
         enemy.setFumbleChance(0.8);
-        enemy.setAttackFailChance(0.5);
+        enemy.setAttackFailChance(0.6);
         enemy.setName("Angry Tree");
         enemy.setGoldDropBounds(100, 150);
         enemy.setShroomsDropBounds(20, 30);
@@ -190,8 +190,7 @@ public class EntityFactory {
         enemy.addDroppable("S4");
         enemy.addDroppable("A4");
         enemy.addDroppable("P4");
-        enemy.addDroppable("C4");
-        enemy.setProtection(10);
+        enemy.setProtection(7);
         return enemy;
     }
     private Enemy initBushMaster(int posX, int posY){
@@ -199,8 +198,8 @@ public class EntityFactory {
         enemy.setAttackRange(5);
         enemy.setSpeed(3);
         enemy.setRange(25);
-        enemy.setDamageDelt(1);
-        enemy.setMaxHealth(3);
+        enemy.setDamageDelt(3);
+        enemy.setMaxHealth(5);
         enemy.setFumbleChance(0.6);
         enemy.setAttackFailChance(0.8);
         enemy.setName("Bush Master");
@@ -221,8 +220,8 @@ public class EntityFactory {
         enemy.setAttackRange(1);
         enemy.setSpeed(1);
         enemy.setRange(10);
-        enemy.setDamageDelt(3);
-        enemy.setMaxHealth(7);
+        enemy.setDamageDelt(5);
+        enemy.setMaxHealth(10);
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.3);
         enemy.setName("Bug");
@@ -230,13 +229,12 @@ public class EntityFactory {
         enemy.setShroomsDropBounds(5, 10);
         enemy.setDropChance(0.8);
         enemy.addDroppable("S2");
-        enemy.addDroppable("H1");
+        enemy.addDroppable("A2");
         enemy.addDroppable("H2");
-        enemy.addDroppable("P1");
         enemy.addDroppable("P2");
         enemy.addDroppable("C2");
         enemy.addDroppable("C3");
-        enemy.setProtection(3);
+        enemy.setProtection(1);
         return enemy;
     }
     private Enemy initGolem(int posX, int posY){
@@ -244,10 +242,10 @@ public class EntityFactory {
         enemy.setAttackRange(1);
         enemy.setSpeed(1);
         enemy.setRange(5);
-        enemy.setDamageDelt(5);
+        enemy.setDamageDelt(12);
         enemy.setMaxHealth(50);
         enemy.setFumbleChance(0.8);
-        enemy.setAttackFailChance(0.5);
+        enemy.setAttackFailChance(0.6);
         enemy.setName("Golem");
         enemy.setGoldDropBounds(100, 150);
         enemy.setShroomsDropBounds(30, 40);
@@ -255,8 +253,7 @@ public class EntityFactory {
         enemy.addDroppable("S4");
         enemy.addDroppable("H4");
         enemy.addDroppable("P4");
-        enemy.addDroppable("C4");
-        enemy.setProtection(10);
+        enemy.setProtection(8);
         return enemy;
     }
     private Enemy initMage(int posX, int posY){
@@ -265,7 +262,7 @@ public class EntityFactory {
         enemy.setSpeed(1);
         enemy.setRange(15);
         enemy.setDamageDelt(5);
-        enemy.setMaxHealth(2);
+        enemy.setMaxHealth(5);
         enemy.setFumbleChance(0.05);
         enemy.setAttackFailChance(0.8);
         enemy.setName("Mage");
@@ -275,9 +272,8 @@ public class EntityFactory {
         enemy.addDroppable("A2");
         enemy.addDroppable("H2");
         enemy.addDroppable("P2");
-        enemy.addDroppable("C2");
         enemy.addDroppable("C3");
-        enemy.setProtection(2);
+        enemy.setProtection(1);
         return enemy;
     }
     private Enemy initSlime(int posX, int posY){
@@ -286,12 +282,12 @@ public class EntityFactory {
         enemy.setSpeed(2);
         enemy.setRange(20);
         enemy.setDamageDelt(2);
-        enemy.setMaxHealth(2);
+        enemy.setMaxHealth(6);
         enemy.setFumbleChance(0.5);
         enemy.setAttackFailChance(0.5);
         enemy.setName("Slime");
         enemy.setGoldDropBounds(0, 5);
-        enemy.setShroomsDropBounds(0, 1);
+        enemy.setShroomsDropBounds(0, 3);
         enemy.setDropChance(0.6);
         enemy.addDroppable("C1");
         enemy.addDroppable("C2");
@@ -304,7 +300,7 @@ public class EntityFactory {
         enemy.setSpeed(2);
         enemy.setRange(25);
         enemy.setDamageDelt(1);
-        enemy.setMaxHealth(1);
+        enemy.setMaxHealth(3);
         enemy.setFumbleChance(0.05);
         enemy.setAttackFailChance(0.2);
         enemy.setName("Rock Spider");
@@ -323,10 +319,10 @@ public class EntityFactory {
         enemy.setRange(10);
         enemy.setDamageDelt(5);
         enemy.setMaxHealth(10);
-        enemy.setFumbleChance(0.1);
+        enemy.setFumbleChance(0.2);
         enemy.setAttackFailChance(0.6);
         enemy.setName("Skull Crab");
-        enemy.setGoldDropBounds(20, 40);
+        enemy.setGoldDropBounds(20, 30);
         enemy.setShroomsDropBounds(5, 30);
         enemy.setDropChance(0.8);
         enemy.addDroppable("A1");
