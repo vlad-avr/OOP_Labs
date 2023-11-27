@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MichaelScottQueue<T> {
     private static class Node<T> {
-        final T value;
+        T value;
         AtomicReference<Node<T>> next;
 
         Node(T value) {
@@ -12,30 +12,28 @@ public class MichaelScottQueue<T> {
             this.next = new AtomicReference<>(null);
         }
     }
-    //pointer to Head node
+
     private AtomicReference<Node<T>> head;
-    //pointer to Tail node
     private AtomicReference<Node<T>> tail;
 
     public MichaelScottQueue() {
-        Node<T> sentinel = new Node<>(null);
-        head = new AtomicReference<>(sentinel);
-        tail = new AtomicReference<>(sentinel);
+        Node<T> dummy = new Node<>(null);
+        this.head = new AtomicReference<>(dummy);
+        this.tail = new AtomicReference<>(dummy);
     }
 
     public void enqueue(T value) {
         Node<T> newNode = new Node<>(value);
+
         while (true) {
             Node<T> currentTail = tail.get();
-            Node<T> next = currentTail.next.get();
+            Node<T> tailNext = currentTail.next.get();
+
             if (currentTail == tail.get()) {
-                if (next != null) {
-                    //advance tail
-                    tail.compareAndSet(currentTail, next);
+                if (tailNext != null) {
+                    tail.compareAndSet(currentTail, tailNext);
                 } else {
-                    //attempt to insert new node
                     if (currentTail.next.compareAndSet(null, newNode)) {
-                        //set new tail
                         tail.compareAndSet(currentTail, newNode);
                         return;
                     }
@@ -48,23 +46,32 @@ public class MichaelScottQueue<T> {
         while (true) {
             Node<T> currentHead = head.get();
             Node<T> currentTail = tail.get();
-            Node<T> first = currentHead.next.get();
+            Node<T> firstNode = currentHead.next.get();
 
             if (currentHead == head.get()) {
                 if (currentHead == currentTail) {
-                    if (first == null) {
-                        //empty
+                    if (firstNode == null) {
                         return null;
                     }
-                    //advance tail
-                    tail.compareAndSet(currentTail, first);
+                    tail.compareAndSet(currentTail, firstNode);
                 } else {
-                    T value = first.value;
-                    if (head.compareAndSet(currentHead, first)) {
-                        return value;
+                    if (head.compareAndSet(currentHead, firstNode)) {
+                        return firstNode.value;
                     }
                 }
             }
         }
+    }
+
+    public int size() {
+        int count = 0;
+        Node<T> current = head.get().next.get();
+
+        while (current != null) {
+            count++;
+            current = current.next.get();
+        }
+
+        return count;
     }
 }

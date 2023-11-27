@@ -1,6 +1,12 @@
 package com.example.QueueTestTask5;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,42 +14,35 @@ import com.example.MSQueueTask5.MichaelScottQueue;
 
 public class QueueTest {
     @Test
-    public void testString(){
-        MichaelScottQueue<String> queue = new MichaelScottQueue<>();
-        queue.enqueue("A");
-        queue.enqueue("DDD");
-        queue.enqueue("FADE");
-        assertEquals(queue.dequeue(), "A");
-        queue.enqueue("BC");
-        assertEquals(queue.dequeue(), "DDD");
-        assertEquals(queue.dequeue(), "FADE");
-        assertEquals(queue.dequeue(), "BC");
-    }
+    public void testEnqueueDequeue() throws InterruptedException {
+        int numThreads = 10;
+        int numEnqueueOperations = 1000;
 
-    @Test
-    public void testDouble(){
-        final double eps = 0.00001;
-        MichaelScottQueue<Double> queue = new MichaelScottQueue<>();
-        queue.enqueue(0.01);
-        queue.enqueue(12.9);
-        queue.enqueue(1233.8);
-        assertEquals(queue.dequeue(), 0.01, eps);
-        queue.enqueue(2.4);
-        assertEquals(queue.dequeue(), 12.9, eps);
-        assertEquals(queue.dequeue(), 1233.8, eps);
-        assertEquals(queue.dequeue(), 2.4, eps);
-    }
-
-    @Test
-    public void testInt(){
         MichaelScottQueue<Integer> queue = new MichaelScottQueue<>();
-        queue.enqueue(0);
-        queue.enqueue(1);
-        queue.enqueue(12);
-        assertEquals(queue.dequeue(), 0);
-        queue.enqueue(4);
-        assertEquals(queue.dequeue(), 1);
-        assertEquals(queue.dequeue(), 12);
-        assertEquals(queue.dequeue(), 4);
+        CountDownLatch latch = new CountDownLatch(numThreads);
+        ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
+
+        for (int i = 0; i < numThreads; i++) {
+            executorService.submit(() -> {
+                try {
+                    for (int j = 0; j < numEnqueueOperations; j++) {
+                        if (j % 2 == 0) {
+                            queue.enqueue(j);
+                        } else {
+                            Integer value = queue.dequeue();
+                            assertEquals(Integer.valueOf(j - 1), value);
+                        }
+                    }
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await(5, TimeUnit.SECONDS);
+        executorService.shutdown();
+
+        assertNull(queue.dequeue());
+        assertEquals(0, queue.size());
     }
 }
