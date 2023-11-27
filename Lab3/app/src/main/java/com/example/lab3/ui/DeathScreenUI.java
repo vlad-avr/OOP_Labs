@@ -63,6 +63,7 @@ public class DeathScreenUI extends Dialog {
             @Override
             public void onClick(View v) {
                 mainActivity.exit(v);
+                dismiss();
             }
         });
         Button restartButton = new Button(getContext());
@@ -71,6 +72,7 @@ public class DeathScreenUI extends Dialog {
             @Override
             public void onClick(View v) {
                 mainActivity.startGame(v);
+                dismiss();
             }
         });
         this.setCancelable(false);

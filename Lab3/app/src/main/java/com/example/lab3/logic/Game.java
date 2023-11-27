@@ -85,7 +85,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
             player.updateHealth();
             toUpdate = false;
             if(player.isDead()){
-                //loop.stopLoop();
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -93,7 +92,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                         deathScreenUI.show();
                     }
                 });
-
+                loop.stopLoop();
             }
         }
         gameDisplay.update();
