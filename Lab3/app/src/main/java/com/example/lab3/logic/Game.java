@@ -112,10 +112,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
         loop = new MainLoop(this, surfaceHolder);
     }
 
-    public static boolean isToUpdate(){
-        return toUpdate;
-    }
-
     public static void sendUpdateRequest(){
         toUpdate = true;
     }
