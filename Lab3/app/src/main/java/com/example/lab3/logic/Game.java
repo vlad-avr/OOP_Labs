@@ -88,11 +88,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        loop.stopLoop();
+                        //context.setContentView(R.layout.activity_main);
                         DeathScreenUI deathScreenUI = new DeathScreenUI(context, player.getDeathMessage());
                         deathScreenUI.show();
                     }
                 });
-                loop.stopLoop();
             }
         }
         gameDisplay.update();

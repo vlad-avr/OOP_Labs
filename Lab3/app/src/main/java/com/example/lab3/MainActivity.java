@@ -25,14 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        initGame();
         setContentView(R.layout.activity_main);
     }
 
-    private void initGame(){
-
-
-    }
     public void startGame(View view){
         FrameLayout game = new FrameLayout(this);
         Game gameView = new Game (this);
