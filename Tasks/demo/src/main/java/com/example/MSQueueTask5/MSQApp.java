@@ -1,23 +1,15 @@
-package com.example.QueueTestTask5;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+package com.example.MSQueueTask5;
 
 import java.security.SecureRandom;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Test;
-
-import com.example.MSQueueTask5.MichaelScottQueue;
 import com.example.MyPhaser.CustomPhaser;
 
-public class QueueTest {
-    @Test
-    public void testEnqueueDequeue() throws InterruptedException {
-        int numThreads = 1;
+public class MSQApp {
+    
+    public static void main(String[] args) {
+        int numThreads = 3;
         int numEnqueueOperations = 100;
 
         MichaelScottQueue<Integer> queue = new MichaelScottQueue<>();
@@ -30,14 +22,13 @@ public class QueueTest {
             executorService.submit(() -> {
                 try {
                     for (int j = 0; j < numEnqueueOperations; j++) {
-                        Thread.sleep(rnd.nextInt(100));
+                        Thread.sleep(rnd.nextInt(50) + 100);
                         if (j % 2 == 0) {
-                            System.out.println(j);
                             queue.enqueue(j);
-                            System.out.println(queue.size());
+                            System.out.println(Thread.currentThread().getName() + " enqueued : " + j);
                         } else {
                             Integer value = queue.dequeue();
-                            assertEquals(Integer.valueOf(2), value);
+                            System.out.println(Thread.currentThread().getName() + " dequeued : " + value);
                         }
                     }
                     phaser.arriveAndAwait();
@@ -48,10 +39,15 @@ public class QueueTest {
             });
         }
 
-        phaser.arriveAndAwait();
+        try {
+            phaser.arriveAndAwait();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         executorService.shutdown();
 
-        assertNull(queue.dequeue());
-        assertEquals(0, queue.size());
+        System.out.println(queue.dequeue() == null);
+        System.out.println(queue.size());
     }
 }

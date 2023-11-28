@@ -21,19 +21,17 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="105dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="300dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="310dp"
         android:gravity="center"
-        android:textSize="35sp"
-        android:text="A FUN-GI TO BE AROUND" />
+        android:text="A FUN-GI TO BE AROUND"
+        android:textSize="35sp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -42,11 +40,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="73dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="74dp"
-        android:layout_marginBottom="465dp"
         app:srcCompat="@drawable/fungi" />
 
     <Button
