@@ -1,42 +1,38 @@
 package com.example.MSQueueTask5;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MichaelScottQueue<T> {
     private static class Node<T> {
-        T value;
+        private final T value;
         AtomicReference<Node<T>> next;
-
         Node(T value) {
             this.value = value;
             this.next = new AtomicReference<>(null);
         }
     }
-
-    private AtomicReference<Node<T>> head;
-    private AtomicReference<Node<T>> tail;
-
+    private final AtomicReference<Node<T>> head;
+    private final AtomicReference<Node<T>> tail;
     public MichaelScottQueue() {
-        Node<T> dummy = new Node<>(null);
-        this.head = new AtomicReference<>(dummy);
-        this.tail = new AtomicReference<>(dummy);
+        Node<T> emptyNode = new Node<>(null);
+        head = new AtomicReference<>(emptyNode);
+        tail = new AtomicReference<>(emptyNode);
     }
 
-    public void enqueue(T value) {
-        Node<T> newNode = new Node<>(value);
-
+    public void enqueue(T item) {
+        Node<T> newNode = new Node<>(item);
         while (true) {
-            Node<T> currentTail = tail.get();
-            Node<T> tailNext = currentTail.next.get();
-
-            if (currentTail == tail.get()) {
-                if (tailNext != null) {
-                    tail.compareAndSet(currentTail, tailNext);
-                } else {
-                    if (currentTail.next.compareAndSet(null, newNode)) {
-                        tail.compareAndSet(currentTail, newNode);
+            Node<T> last = tail.get();
+            Node<T> next = last.next.get();
+            if (last == tail.get()) {
+                if (next == null) {
+                    if (last.next.compareAndSet(null, newNode)) {
+                        tail.compareAndSet(last, newNode);
                         return;
                     }
+                } else {
+                    tail.compareAndSet(last, next);
                 }
             }
         }
@@ -44,34 +40,36 @@ public class MichaelScottQueue<T> {
 
     public T dequeue() {
         while (true) {
-            Node<T> currentHead = head.get();
-            Node<T> currentTail = tail.get();
-            Node<T> firstNode = currentHead.next.get();
-
-            if (currentHead == head.get()) {
-                if (currentHead == currentTail) {
-                    if (firstNode == null) {
+            Node<T> first = head.get();
+            Node<T> last = tail.get();
+            Node<T> next = first.next.get();
+            if (first == head.get()) {
+                if (first == last) {
+                    if (next == null) {
                         return null;
                     }
-                    tail.compareAndSet(currentTail, firstNode);
+                    tail.compareAndSet(last, next);
                 } else {
-                    if (head.compareAndSet(currentHead, firstNode)) {
-                        return firstNode.value;
+                    T value = next.value;
+                    if (head.compareAndSet(first, next)) {
+                        return value;
                     }
                 }
             }
         }
     }
-
-    public int size() {
-        int count = 0;
-        Node<T> current = head.get().next.get();
-
-        while (current != null) {
-            count++;
-            current = current.next.get();
+    
+    public int size(){
+        int len = 0;
+        Node<T> first = head.get();
+        Node<T> last = tail.get();
+        while (first != last) {
+            if(first == null){
+                return len;
+            }
+            len++;
+            first = first.next.get();
         }
-
-        return count;
+        return len;
     }
 }
