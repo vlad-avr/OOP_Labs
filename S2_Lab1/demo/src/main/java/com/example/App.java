@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.db.DBFuntionsTest;
+
 /**
  * Hello world!
  */
@@ -12,6 +14,7 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        DBFuntionsTest test = new DBFuntionsTest();
+        test.getConnection("Aircompany", "postgres", "Vlad10092004");
     }
 }
