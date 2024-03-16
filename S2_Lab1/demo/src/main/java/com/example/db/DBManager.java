@@ -3,7 +3,7 @@ package com.example.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DBFuntionsTest {
+public class DBManager {
     
     public Connection getConnection(String dbName, String username, String password){
         Connection connection = null;

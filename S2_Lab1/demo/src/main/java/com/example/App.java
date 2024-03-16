@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.db.DBFuntionsTest;
+import com.example.db.DBManager;
 
 /**
  * Hello world!
@@ -14,7 +14,7 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        DBFuntionsTest test = new DBFuntionsTest();
+        DBManager test = new DBManager();
         test.getConnection("Aircompany", "postgres", "Vlad10092004");
     }
 }
