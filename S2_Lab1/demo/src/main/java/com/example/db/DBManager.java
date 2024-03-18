@@ -21,4 +21,16 @@ public class DBManager {
         return connection;
     }
 
+    public void initTables(){
+        String statement = "CREATE TABLE IF NOT EXISTS flights (" + 
+                            "id SERIAL PRIMARY KEY, " + 
+                            "departure_point CHAR(255) NOT NULL, " +
+                            "destination CHAR(255) NOT NULL, " + 
+                            "departure_time TIMESTAMP NOT NULL, " + 
+                            "arrival_time TIMESTAMP NOT NULL, " + 
+                            "plane_id INTEGER REFERENCES planes(id), " + 
+                            "brigade_id INTEGER REFERENCES brigades(id), " + 
+                            "passa";
+    }
+
 }
