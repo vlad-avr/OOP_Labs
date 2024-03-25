@@ -1,4 +1,4 @@
 package com.aircompany.db.entity;
 
-public class Flight {
+public class Flight extends Entity{
 }
