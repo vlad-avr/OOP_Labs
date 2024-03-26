@@ -24,6 +24,11 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.0.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+      <version>4.0.1</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>Lab1_S2</finalName>

@@ -1,9 +1,11 @@
 package com.aircompany.db.entity;
 
-public class Entity {
-    protected long id;
+import java.util.UUID;
 
-    public long getId(){
+public class Entity {
+    protected UUID id;
+
+    public UUID getId(){
         return id;
     }
 }
