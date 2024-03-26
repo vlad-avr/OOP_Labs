@@ -1,5 +1,7 @@
 package com.aircompany.db.entity;
 
+import java.util.UUID;
+
 public class Plane extends Entity{
     private String model;
     private int minPilots;
@@ -9,6 +11,26 @@ public class Plane extends Entity{
     private double maxLuggage;
     private int maxFlightInMins;
 
+    public Plane(UUID id, String model, int minPilots, int minStuarts, int minRadioOfficers, double maxLuggage, int maxFlightInMins, int passengerSeats){
+        super(id);
+        this.model = model;
+        this.minPilots = minPilots;
+        this.minStuarts = minStuarts;
+        this.minRadioOfficers = minRadioOfficers;
+        this.maxLuggage = maxLuggage;
+        this.maxFlightInMins = maxFlightInMins;
+        this.passengerSeats = passengerSeats;
+    }
+    public Plane(String model, int minPilots, int minStuarts, int minRadioOfficers, double maxLuggage, int maxFlightInMins, int passengerSeats){
+        super();
+        this.model = model;
+        this.minPilots = minPilots;
+        this.minStuarts = minStuarts;
+        this.minRadioOfficers = minRadioOfficers;
+        this.maxLuggage = maxLuggage;
+        this.maxFlightInMins = maxFlightInMins;
+        this.passengerSeats = passengerSeats;
+    }
     public String getModel(){
         return model;
     }
