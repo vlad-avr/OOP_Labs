@@ -1,6 +1,6 @@
 package com.aircompany.servlets;
 
-import com.aircompany.db.dao.CrudDao;
+import com.aircompany.db.dao.DaoManager;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import java.sql.Connection;
 public class RequestServlet extends HttpServlet {
 
     public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        CrudDao DBM = new CrudDao();
+        DaoManager DBM = new DaoManager();
         String res;
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
         if(conn == null){

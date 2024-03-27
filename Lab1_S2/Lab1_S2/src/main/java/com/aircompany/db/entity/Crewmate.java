@@ -3,6 +3,10 @@ package com.aircompany.db.entity;
 import java.util.UUID;
 
 public class Crewmate extends Entity{
+    public Crewmate(UUID id) {
+        super(id);
+    }
+
     public static enum Qualification{
         STUART,
         PILOT,

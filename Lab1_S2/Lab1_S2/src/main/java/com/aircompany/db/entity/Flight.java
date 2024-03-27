@@ -7,6 +7,10 @@ public class Flight extends Entity{
     private UUID brigadeId;
     private UUID planeId;
 
+    public Flight(UUID id) {
+        super(id);
+    }
+
     public UUID getRaceId(){
         return raceId;
     }
@@ -14,7 +18,7 @@ public class Flight extends Entity{
         return brigadeId;
     }
     public UUID getPlaneId(){
-        return brigadeId;
+        return planeId;
     }
 
     public void setBrigadeId(UUID brigadeId){

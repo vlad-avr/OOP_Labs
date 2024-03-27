@@ -17,6 +17,11 @@ public class Brigade extends Entity{
         this.name = name;
         this.isStatic = isStatic;
     }
+
+    public Brigade(UUID id) {
+        super(id);
+    }
+
     public String getName(){
         return name;
     }

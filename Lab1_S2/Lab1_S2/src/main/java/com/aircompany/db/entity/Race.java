@@ -2,6 +2,7 @@ package com.aircompany.db.entity;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Race extends Entity{
     private String departurePlace;
@@ -10,6 +11,10 @@ public class Race extends Entity{
     private Timestamp arrivalTime;
     private int passengers;
     private double luggageWeight;
+
+    public Race(UUID id) {
+        super(id);
+    }
 
     public String getDeparturePlace(){
         return departurePlace;
