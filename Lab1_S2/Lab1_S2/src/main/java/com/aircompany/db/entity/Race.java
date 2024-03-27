@@ -15,6 +15,15 @@ public class Race extends Entity{
     public Race(UUID id) {
         super(id);
     }
+    public Race(UUID id, String departurePlace, String arrivalPlace, Timestamp departureTime, Timestamp arrivalTime, int passengers, double luggageWeight) {
+        super(id);
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.departurePlace = departurePlace;
+        this.arrivalPlace = arrivalPlace;
+        this.passengers = passengers;
+        this.luggageWeight = luggageWeight;
+    }
 
     public String getDeparturePlace(){
         return departurePlace;
