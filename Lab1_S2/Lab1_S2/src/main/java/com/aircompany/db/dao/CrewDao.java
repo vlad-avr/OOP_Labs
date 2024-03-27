@@ -18,11 +18,11 @@ public class CrewDao extends EntityDao{
 
     public void create(Crewmate entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table
-                + " (name, qualification, brigade, id) VALUES ("
-                + entity.getName() + ", "
-                + entity.getQualification() + ", "
-                + entity.getBrigadeId() + ", "
-                + entity.getId().toString() + ")");
+                + " (name, qualification, brigade, id) VALUES (?, ?, ?, ?)");
+        statement.setString(1,entity.getName());
+        statement.setString(2,entity.getQualification().toString());
+        statement.setString(3,entity.getBrigadeId().toString());
+        statement.setString(4,entity.getId());
         statement.executeUpdate();
     }
 
@@ -33,7 +33,7 @@ public class CrewDao extends EntityDao{
             Crewmate entity = new Crewmate(UUID.fromString(resultSet.getString("id")));
             entity.setName(resultSet.getString("name"));
             entity.setQualification(Crewmate.Qualification.valueOf(resultSet.getString("qualification")));
-            entity.setBrigadeId(UUID.fromString(resultSet.getString("brigade")));
+            entity.setBrigadeId(resultSet.getString("brigade"));
             return entity;
         }
         return null;
@@ -61,7 +61,7 @@ public class CrewDao extends EntityDao{
             Crewmate entity = new Crewmate(UUID.fromString(resultSet.getString("id")));
             entity.setName(resultSet.getString("name"));
             entity.setQualification(Crewmate.Qualification.valueOf(resultSet.getString("qualification")));
-            entity.setBrigadeId(UUID.fromString(resultSet.getString("brigade")));
+            entity.setBrigadeId(resultSet.getString("brigade"));
             entities.add(entity);
         }
         return entities;

@@ -3,31 +3,31 @@ package com.aircompany.db.entity;
 import java.util.UUID;
 
 public class Flight extends Entity{
-    private UUID raceId;
-    private UUID brigadeId;
-    private UUID planeId;
+    private String raceId;
+    private String brigadeId;
+    private String planeId;
 
     public Flight(UUID id) {
         super(id);
     }
 
-    public UUID getRaceId(){
+    public String getRaceId(){
         return raceId;
     }
-    public UUID getBrigadeId(){
+    public String getBrigadeId(){
         return brigadeId;
     }
-    public UUID getPlaneId(){
+    public String getPlaneId(){
         return planeId;
     }
 
-    public void setBrigadeId(UUID brigadeId){
+    public void setBrigadeId(String brigadeId){
         this.brigadeId = brigadeId;
     }
-    public void setRaceId(UUID raceId){
+    public void setRaceId(String raceId){
         this.raceId = raceId;
     }
-    public void setPlaneId(UUID planeId){
+    public void setPlaneId(String planeId){
         this.planeId = planeId;
     }
 }

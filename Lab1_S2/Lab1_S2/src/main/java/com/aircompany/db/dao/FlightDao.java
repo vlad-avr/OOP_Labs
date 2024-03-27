@@ -18,11 +18,11 @@ public class FlightDao extends EntityDao{
 
     public void create(Flight entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table
-                + " (race_id, brigade_id, plane_id, id) VALUES ("
-                + entity.getRaceId() + ", "
-                + entity.getBrigadeId() + ", "
-                + entity.getPlaneId() + ", "
-                + entity.getId().toString() + ")");
+                + " (race_id, brigade_id, plane_id, id) VALUES (?, ?, ?, ?)");
+        statement.setString(1, entity.getRaceId());
+        statement.setString(2, entity.getBrigadeId());
+        statement.setString(3, entity.getPlaneId());
+        statement.setString(4, entity.getId());
         statement.executeUpdate();
     }
 
@@ -31,9 +31,9 @@ public class FlightDao extends EntityDao{
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Flight entity = new Flight(UUID.fromString(resultSet.getString("id")));
-            entity.setRaceId(UUID.fromString(resultSet.getString("race_id")));
-            entity.setBrigadeId(UUID.fromString(resultSet.getString("brigade_id")));
-            entity.setPlaneId(UUID.fromString(resultSet.getString("plane_id")));
+            entity.setRaceId(resultSet.getString("race_id"));
+            entity.setBrigadeId(resultSet.getString("brigade_id"));
+            entity.setPlaneId(resultSet.getString("plane_id"));
             return entity;
         }
         return null;
@@ -59,9 +59,9 @@ public class FlightDao extends EntityDao{
         List<Entity> entities = new ArrayList<>();
         while (resultSet.next()){
             Flight entity = new Flight(UUID.fromString(resultSet.getString("id")));
-            entity.setRaceId(UUID.fromString(resultSet.getString("race_id")));
-            entity.setBrigadeId(UUID.fromString(resultSet.getString("brigade_id")));
-            entity.setPlaneId(UUID.fromString(resultSet.getString("plane_id")));
+            entity.setRaceId(resultSet.getString("race_id"));
+            entity.setBrigadeId(resultSet.getString("brigade_id"));
+            entity.setPlaneId(resultSet.getString("plane_id"));
             entities.add(entity);
         }
         return entities;

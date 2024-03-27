@@ -18,12 +18,12 @@ public class PlaneDao extends EntityDao{
 
     public void create(Plane entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table
-                + " (model, passenger_seats, max_luggage_weight, max_flight_in_mins, id) VALUES ("
-                + entity.getModel() + ", "
-                + entity.getPassengerSeats() + ", "
-                + entity.getMaxLuggage() + ", "
-                + entity.getMaxFlightInMins() + ", "
-                + entity.getId().toString() + ")");
+                + " (model, passenger_seats, max_luggage_weight, max_flight_in_mins, id) VALUES (?, ?, ?, ?, ?)");
+        statement.setString(1,entity.getModel());
+        statement.setInt(2,entity.getPassengerSeats());
+        statement.setDouble(3,entity.getMaxLuggage());
+        statement.setInt(4,entity.getMaxFlightInMins());
+        statement.setString(5,entity.getId());
         statement.executeUpdate();
     }
 

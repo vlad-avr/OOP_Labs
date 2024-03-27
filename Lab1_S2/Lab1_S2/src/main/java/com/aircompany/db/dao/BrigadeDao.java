@@ -18,10 +18,10 @@ public class BrigadeDao extends EntityDao{
 
     public void create(Brigade entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("INSERT INTO " + table
-                + " (name, is_static, id) VALUES ("
-                + entity.getName() + ", "
-                + entity.isStatic() + ", "
-                + entity.getId().toString() + ")");
+                + " (name, is_static, id) VALUES (?, ?, ?)");
+        statement.setString(1, entity.getName());
+        statement.setBoolean(2, entity.isStatic());
+        statement.setString(3, entity.getId());
         statement.executeUpdate();
     }
 

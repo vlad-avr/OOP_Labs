@@ -3,15 +3,15 @@ package com.aircompany.db.entity;
 import java.util.UUID;
 
 public class Entity {
-    protected UUID id;
+    protected String id;
 
     public Entity(UUID id){
-        this.id = id;
+        this.id = id.toString();
     }
     public Entity(){
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
-    public UUID getId(){
+    public String getId(){
         return id;
     }
 }

@@ -14,16 +14,16 @@ public class Crewmate extends Entity{
     }
     private String name;
     private Qualification qualification;
-    private UUID brigadeId;
+    private String brigadeId;
 
-    public Crewmate(UUID id, String name, Qualification qualification, UUID brigadeId){
+    public Crewmate(UUID id, String name, Qualification qualification, String brigadeId){
         super(id);
         this.name = name;
         this.qualification = qualification;
         this.brigadeId = brigadeId;
     }
     public Crewmate(){super();}
-    public Crewmate(String name, Qualification qualification, UUID brigadeId){
+    public Crewmate(String name, Qualification qualification, String brigadeId){
         super();
         this.name = name;
         this.qualification = qualification;
@@ -35,7 +35,7 @@ public class Crewmate extends Entity{
     public Qualification getQualification(){
         return qualification;
     }
-    public UUID getBrigadeId(){
+    public String getBrigadeId(){
         return brigadeId;
     }
 
@@ -45,7 +45,7 @@ public class Crewmate extends Entity{
     public void setQualification(Qualification qualification){
         this.qualification = qualification;
     }
-    public void setBrigadeId(UUID brigadeId){
+    public void setBrigadeId(String brigadeId){
         this.brigadeId = brigadeId;
     }
 }
