@@ -28,8 +28,9 @@ public class RaceDao extends EntityDao{
         statement.setString(7, entity.getId());
         statement.executeUpdate();
     }
-    public Entity read(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id.toString());
+    public Entity read(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Race entity = new Race(UUID.fromString(resultSet.getString("id")));
@@ -46,18 +47,20 @@ public class RaceDao extends EntityDao{
 
     public void update(Race entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("UPDATE " + table
-                + " SET departure_place = " + entity.getDeparturePlace()
-                + ", arrival_place = " + entity.getArrivalPlace()
-                + ", departure_time = " + entity.getDepartureTime()
-                + ", arrival_time = " + entity.getArrivalTime()
-                + ", passengers = " + entity.getPassengers()
-                + ", luggage_weight = " + entity.getLuggageWeight()
-                + " WHERE id = " + entity.getId().toString());
+                + " SET departure_place = ?, arrival_place = ?, departure_time = ?, arrival_time = ?, passengers = ?, luggage_weight = ? WHERE id = ?");
+        statement.setString(1, entity.getDeparturePlace());
+        statement.setString(2, entity.getArrivalPlace());
+        statement.setTimestamp(3, entity.getDepartureTime());
+        statement.setTimestamp(4, entity.getArrivalTime());
+        statement.setInt(5, entity.getPassengers());
+        statement.setDouble(6, entity.getLuggageWeight());
+        statement.setString(7, entity.getId());
         statement.executeUpdate();
     }
 
-    public void delete(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = " + id.toString());
+    public void delete(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 

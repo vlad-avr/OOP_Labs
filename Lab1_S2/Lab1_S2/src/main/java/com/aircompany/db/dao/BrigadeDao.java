@@ -25,8 +25,9 @@ public class BrigadeDao extends EntityDao{
         statement.executeUpdate();
     }
 
-    public Entity read(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id.toString());
+    public Entity read(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Brigade entity = new Brigade(UUID.fromString(resultSet.getString("id")));
@@ -39,14 +40,16 @@ public class BrigadeDao extends EntityDao{
 
     public void update(Brigade entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("UPDATE " + table
-                + " SET name = " + entity.getName()
-                + ", is_static = " + entity.isStatic()
-                + " WHERE id = " + entity.getId().toString());
+                + " SET name = ?, is_static = ? WHERE id = ?");
+        statement.setString(1, entity.getName());
+        statement.setBoolean(2, entity.isStatic());
+        statement.setString(3, entity.getId());
         statement.executeUpdate();
     }
 
-    public void delete(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = " + id.toString());
+    public void delete(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 

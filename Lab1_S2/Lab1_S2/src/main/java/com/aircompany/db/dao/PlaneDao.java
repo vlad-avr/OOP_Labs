@@ -27,8 +27,9 @@ public class PlaneDao extends EntityDao{
         statement.executeUpdate();
     }
 
-    public Entity read(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id.toString());
+    public Entity read(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Plane entity = new Plane(UUID.fromString(resultSet.getString("id")));
@@ -43,16 +44,18 @@ public class PlaneDao extends EntityDao{
 
     public void update(Plane entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("UPDATE " + table
-                + " SET model = " + entity.getModel()
-                + ", passenger_seats = " + entity.getPassengerSeats()
-                + ", max_luggage_weight = " + entity.getMaxLuggage()
-                + ", max_flight_in_mins = " + entity.getMaxFlightInMins()
-                + " WHERE id = " + entity.getId().toString());
+                + " SET model = ?, passenger_seats = ?, max_luggage_weight = ?, max_flight_in_mins = ? WHERE id = ?");
+        statement.setString(1, entity.getModel());
+        statement.setInt(2, entity.getPassengerSeats());
+        statement.setDouble(3, entity.getMaxLuggage());
+        statement.setInt(4, entity.getMaxFlightInMins());
+        statement.setString(5, entity.getId());
         statement.executeUpdate();
     }
 
-    public void delete(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = " + id.toString());
+    public void delete(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 

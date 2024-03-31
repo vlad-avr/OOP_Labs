@@ -21,13 +21,14 @@ public class CrewDao extends EntityDao{
                 + " (name, qualification, brigade, id) VALUES (?, ?, ?, ?)");
         statement.setString(1,entity.getName());
         statement.setString(2,entity.getQualification().toString());
-        statement.setString(3,entity.getBrigadeId().toString());
+        statement.setString(3,entity.getBrigadeId());
         statement.setString(4,entity.getId());
         statement.executeUpdate();
     }
 
-    public Entity read(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id.toString());
+    public Entity read(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Crewmate entity = new Crewmate(UUID.fromString(resultSet.getString("id")));
@@ -41,15 +42,17 @@ public class CrewDao extends EntityDao{
 
     public void update(Crewmate entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("UPDATE " + table
-                + " SET name = " + entity.getName()
-                + ", qualification = " + entity.getQualification()
-                + ", brigade = " + entity.getBrigadeId()
-                + " WHERE id = " + entity.getId().toString());
+                + " SET name = ?, qualification = ?, brigade = ? WHERE id = ?");
+        statement.setString(1, entity.getName());
+        statement.setString(2, entity.getQualification().toString());
+        statement.setString(3, entity.getBrigadeId());
+        statement.setString(4, entity.getId());
         statement.executeUpdate();
     }
 
-    public void delete(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = " + id.toString());
+    public void delete(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 

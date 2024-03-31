@@ -26,8 +26,9 @@ public class FlightDao extends EntityDao{
         statement.executeUpdate();
     }
 
-    public Entity read(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = " + id.toString());
+    public Entity read(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
             Flight entity = new Flight(UUID.fromString(resultSet.getString("id")));
@@ -41,15 +42,17 @@ public class FlightDao extends EntityDao{
 
     public void update(Flight entity) throws Exception{
         PreparedStatement statement = connection.prepareStatement("UPDATE " + table
-                + " SET race_id = " + entity.getRaceId()
-                + ", brigade_id = " + entity.getBrigadeId()
-                + ", plane_id = " + entity.getPlaneId()
-                + " WHERE id = " + entity.getId().toString());
+                + " SET race_id = ?, brigade_id = ?, plane_id = ? WHERE id = ?");
+        statement.setString(1, entity.getRaceId());
+        statement.setString(2, entity.getBrigadeId());
+        statement.setString(3, entity.getPlaneId());
+        statement.setString(4, entity.getId());
         statement.executeUpdate();
     }
 
-    public void delete(UUID id) throws Exception{
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = " + id.toString());
+    public void delete(String id) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+        statement.setString(1, id);
         statement.executeUpdate();
     }
 
