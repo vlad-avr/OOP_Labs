@@ -1,38 +1,76 @@
 package com.aircompany.servlets;
 
 import com.aircompany.db.dao.*;
-import com.aircompany.db.entity.Brigade;
-import com.aircompany.db.entity.Crewmate;
-import com.aircompany.db.entity.Plane;
-import com.aircompany.db.entity.Race;
+import com.aircompany.db.entity.*;
+import com.aircompany.parsers.JsonParser;
+import com.aircompany.servlets.util.RequestPack;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@WebServlet("/connect")
+@WebServlet("/request")
 public class RequestServlet extends HttpServlet {
 
-    public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder requestBody = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestBody.append(line);
+        }
+        String requestBodyString = requestBody.toString();
+        RequestPack requestPack = JsonParser.parseRequest(requestBodyString);
         DaoManager DBM = new DaoManager();
-        String res;
+        String res = "";
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        if(conn == null){
-            res = "Nuh uh";
-        }else{
-            res = "Bring'em on!";
-            PlaneDao planeDao = new PlaneDao(conn);
-            CrewDao crewDao = new CrewDao(conn);
-            BrigadeDao brigadeDao = new BrigadeDao(conn);
-            RaceDao raceDao = new RaceDao(conn);
-            try {
+        List<Entity> resList = new ArrayList<>();
+        switch (requestPack.getTable()){
+            case "planes":
+                PlaneDao planeDao = new PlaneDao(conn);
+                try {
+                    resList = planeDao.readAll();
+                    res = JsonParser.toJsonEntities(resList);
+                }catch (Exception e){
+                    res = null;
+                }
+            case "crew":
+                CrewDao crewDao = new CrewDao(conn);
+                try {
+                    resList = crewDao.readAll();
+                    res = JsonParser.toJsonEntities(resList);
+                }catch (Exception e){
+                    res = null;
+                }
+            case "races":
+                RaceDao raceDao = new RaceDao(conn);
+                try {
+                    resList = raceDao.readAll();
+                    res = JsonParser.toJsonEntities(resList);
+                }catch (Exception e){
+                    res = null;
+                }
+        }
+        resp.getWriter().println(res);
+//        if(conn == null){
+//            res = "Nuh uh";
+//        }else{
+//            res = "Bring'em on!";
+//            PlaneDao planeDao = new PlaneDao(conn);
+//            CrewDao crewDao = new CrewDao(conn);
+//            BrigadeDao brigadeDao = new BrigadeDao(conn);
+//            RaceDao raceDao = new RaceDao(conn);
+//            try {
 //                crewDao.create(new Crewmate(UUID.randomUUID(), "NAME", Crewmate.Qualification.PILOT, ""));
 //                System.out.println("BALL");
 //                crewDao.create(new Crewmate(UUID.randomUUID(), "NAME_1", Crewmate.Qualification.PILOT, ""));
@@ -56,10 +94,9 @@ public class RequestServlet extends HttpServlet {
 //                System.out.println("BALL");
 //                raceDao.create(new Race(UUID.randomUUID(), "DEPART_2", "ARRIVE_2", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()), 500, 1500));
 //                System.out.println("BALL");
-            }catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        resp.getWriter().println(res);
+//            }catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
 }

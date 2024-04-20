@@ -69,4 +69,34 @@ public class CrewDao extends EntityDao{
         }
         return entities;
     }
+
+    public List<Entity> readByName(String name) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE name=?");
+        statement.setString(1, name);
+        ResultSet resultSet = statement.executeQuery();
+        List<Entity> entities = new ArrayList<>();
+        while (resultSet.next()){
+            Crewmate entity = new Crewmate(UUID.fromString(resultSet.getString("id")));
+            entity.setName(resultSet.getString("name"));
+            entity.setQualification(Crewmate.Qualification.valueOf(resultSet.getString("qualification")));
+            entity.setBrigadeId(resultSet.getString("brigade"));
+            entities.add(entity);
+        }
+        return entities;
+    }
+
+    public List<Entity> readByQualification(String qualification) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE qualification=?");
+        statement.setString(1, qualification);
+        ResultSet resultSet = statement.executeQuery();
+        List<Entity> entities = new ArrayList<>();
+        while (resultSet.next()){
+            Crewmate entity = new Crewmate(UUID.fromString(resultSet.getString("id")));
+            entity.setName(resultSet.getString("name"));
+            entity.setQualification(Crewmate.Qualification.valueOf(resultSet.getString("qualification")));
+            entity.setBrigadeId(resultSet.getString("brigade"));
+            entities.add(entity);
+        }
+        return entities;
+    }
 }

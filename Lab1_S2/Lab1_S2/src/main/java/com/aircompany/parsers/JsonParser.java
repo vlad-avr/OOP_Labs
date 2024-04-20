@@ -3,6 +3,7 @@ package com.aircompany.parsers;
 import com.aircompany.db.entity.Entity;
 import com.aircompany.db.entity.User;
 import com.aircompany.servlets.AuthServlet;
+import com.aircompany.servlets.util.RequestPack;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,15 @@ public class JsonParser {
     public static String toJsonEntity(Entity entity) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
+    }
+
+    public static RequestPack parseRequest(String json) throws  JsonProcessingException{
+        if(json.isEmpty()){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<RequestPack> reference = new TypeReference<RequestPack>() {};
+        return mapper.readValue(json, reference);
     }
 
     public static User parseUser(String json) throws JsonProcessingException {
