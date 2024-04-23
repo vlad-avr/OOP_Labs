@@ -85,4 +85,10 @@ public class FlightDao extends EntityDao{
         }
         return new ArrayList<>();
     }
+
+    public void cascadeDelete(String field, String id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + field + " = ?");
+        statement.setString(2, id);
+        statement.executeUpdate();
+    }
 }

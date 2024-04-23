@@ -1,5 +1,6 @@
 package com.aircompany.servlets;
 
+import com.aircompany.db.dao.BrigadeDao;
 import com.aircompany.db.dao.CrewDao;
 import com.aircompany.db.dao.DaoManager;
 import com.aircompany.db.entity.Crewmate;
@@ -51,6 +52,7 @@ public class CrewServlet  extends HttpServlet {
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
             resp.getWriter().println("[]");
+            return;
         }
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
@@ -60,6 +62,7 @@ public class CrewServlet  extends HttpServlet {
             dao.create((Crewmate) entity);
         } catch (Exception e) {
             resp.getWriter().println("[]");
+            return;
         }
         try {
             resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
@@ -100,6 +103,10 @@ public class CrewServlet  extends HttpServlet {
                     crewDao.delete(value);
                     entityList = crewDao.readAll();
                     break;
+                case "brigades":
+                    BrigadeDao dao = new BrigadeDao(conn);
+                    resp.getWriter().println(JsonParser.toJsonIds(dao.readIds()));
+                    return;
                 default:
                     resp.getWriter().println("[]");
                     return;

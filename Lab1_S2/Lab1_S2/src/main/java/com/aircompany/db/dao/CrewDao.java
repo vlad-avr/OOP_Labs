@@ -7,6 +7,7 @@ import com.aircompany.db.entity.Plane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -98,5 +99,13 @@ public class CrewDao extends EntityDao{
             entities.add(entity);
         }
         return entities;
+    }
+
+    public void updateBrigade(String brigadeId) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("UPDATE " + table
+                + " SET brigade = ? WHERE brigade = ?");
+        statement.setString(1, "");
+        statement.setString(2, brigadeId);
+        statement.executeUpdate();
     }
 }

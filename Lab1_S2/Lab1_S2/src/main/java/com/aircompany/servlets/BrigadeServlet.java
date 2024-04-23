@@ -52,6 +52,7 @@ public class BrigadeServlet extends HttpServlet {
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
             resp.getWriter().println("[]");
+            return;
         }
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
@@ -61,6 +62,7 @@ public class BrigadeServlet extends HttpServlet {
             dao.create((Brigade) entity);
         } catch (Exception e) {
             resp.getWriter().println("[]");
+            return;
         }
         try {
             resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));

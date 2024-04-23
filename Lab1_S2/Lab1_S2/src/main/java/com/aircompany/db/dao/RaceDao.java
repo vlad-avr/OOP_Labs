@@ -63,6 +63,8 @@ public class RaceDao extends EntityDao{
         PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
         statement.setString(1, id);
         statement.executeUpdate();
+        FlightDao dao = new FlightDao(connection);
+        dao.cascadeDelete("race_id", id);
     }
 
     public List<Entity> readAll() throws Exception{

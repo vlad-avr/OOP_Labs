@@ -51,7 +51,8 @@ public class RaceServlet extends HttpServlet {
         String requestBodyString = RequestPack.processRequest(reader);
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
-            resp.getWriter().println("[1]");
+            resp.getWriter().println("[]");
+            return;
         }
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
@@ -61,6 +62,7 @@ public class RaceServlet extends HttpServlet {
             dao.create((Race) entity);
         } catch (Exception e) {
             resp.getWriter().println("[]");
+            return;
         }
         try {
             resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
