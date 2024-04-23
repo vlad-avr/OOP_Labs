@@ -16,10 +16,4 @@ public class Entity {
     public Entity(UUID id){
         this.id = id.toString();
     }
-//    public Entity(){
-//        this.id = UUID.randomUUID().toString();
-//    }
-//    public String getId(){
-//        return id;
-//    }
 }

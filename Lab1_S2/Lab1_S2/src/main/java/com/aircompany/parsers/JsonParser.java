@@ -1,7 +1,6 @@
 package com.aircompany.parsers;
 
 import com.aircompany.db.entity.*;
-import com.aircompany.servlets.AuthServlet;
 import com.aircompany.servlets.util.RequestPack;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class JsonParser {
 
-    public static String toJsonEntity(Entity entity) throws Exception{
+    public static String toJsonObject(Object entity) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
@@ -39,10 +38,10 @@ public class JsonParser {
         return mapper.readValue(json, reference);
     }
 
-    public static String toJsonEntities(List<Entity> entities) throws Exception{
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(entities);
-    }
+//    public static String toJsonObject(List<Entity> entities) throws Exception{
+//        ObjectMapper mapper = new ObjectMapper();
+//        return mapper.writeValueAsString(entities);
+//    }
 
     public static Crewmate parseCrewmate(String json) throws Exception{
         if(json.isEmpty()){

@@ -12,56 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @WebServlet("/request")
 public class RequestServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        BufferedReader reader = req.getReader();
-        StringBuilder requestBody = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            requestBody.append(line);
-        }
-        String requestBodyString = requestBody.toString();
-        RequestPack requestPack = JsonParser.parseRequest(requestBodyString);
-        DaoManager DBM = new DaoManager();
-        String res = "";
-        Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        List<Entity> resList = new ArrayList<>();
-        switch (requestPack.getTable()){
-            case "planes":
-                PlaneDao planeDao = new PlaneDao(conn);
-                try {
-                    resList = planeDao.readAll();
-                    res = JsonParser.toJsonEntities(resList);
-                }catch (Exception e){
-                    res = null;
-                }
-            case "crew":
-                CrewDao crewDao = new CrewDao(conn);
-                try {
-                    resList = crewDao.readAll();
-                    res = JsonParser.toJsonEntities(resList);
-                }catch (Exception e){
-                    res = null;
-                }
-            case "races":
-                RaceDao raceDao = new RaceDao(conn);
-                try {
-                    resList = raceDao.readAll();
-                    res = JsonParser.toJsonEntities(resList);
-                }catch (Exception e){
-                    res = null;
-                }
-        }
-        resp.getWriter().println(res);
 //        if(conn == null){
 //            res = "Nuh uh";
 //        }else{

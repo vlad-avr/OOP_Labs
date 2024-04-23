@@ -1,9 +1,7 @@
 package com.aircompany.servlets;
 
-import com.aircompany.db.dao.BrigadeDao;
 import com.aircompany.db.dao.DaoManager;
 import com.aircompany.db.dao.PlaneDao;
-import com.aircompany.db.entity.Brigade;
 import com.aircompany.db.entity.Entity;
 import com.aircompany.db.entity.Plane;
 import com.aircompany.parsers.JsonParser;
@@ -34,12 +32,12 @@ public class PlaneServlet extends HttpServlet {
         String requestBodyString = RequestPack.processRequest(reader);
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
-        Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
+        Connection conn = DBM.getConnection();
         PlaneDao dao = new PlaneDao(conn);
         if(entity != null) {
             try {
                 dao.update((Plane) entity);
-                resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
+                resp.getWriter().println(JsonParser.toJsonObject(dao.readAll()));
             } catch (Exception e) {
                 resp.getWriter().println("[]");
             }
@@ -56,7 +54,7 @@ public class PlaneServlet extends HttpServlet {
         }
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
-        Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
+        Connection conn = DBM.getConnection();
         PlaneDao dao = new PlaneDao(conn);
         try {
             dao.create((Plane) entity);
@@ -65,7 +63,7 @@ public class PlaneServlet extends HttpServlet {
             return;
         }
         try {
-            resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
+            resp.getWriter().println(JsonParser.toJsonObject(dao.readAll()));
         } catch (Exception e) {
             resp.getWriter().println("[]");
         }
@@ -78,7 +76,7 @@ public class PlaneServlet extends HttpServlet {
             return;
         }
         DaoManager mgr = new DaoManager();
-        Connection conn = mgr.getConnection("Aircompany", "postgres", "Vlad10092004");
+        Connection conn = mgr.getConnection();
         if(conn == null){
             resp.getWriter().println("[]");
             return;
@@ -109,7 +107,7 @@ public class PlaneServlet extends HttpServlet {
             return;
         }
         try {
-            String res = JsonParser.toJsonEntities(entityList);
+            String res = JsonParser.toJsonObject(entityList);
             resp.getWriter().println(res);
         } catch (Exception e) {
             resp.getWriter().println("[]");

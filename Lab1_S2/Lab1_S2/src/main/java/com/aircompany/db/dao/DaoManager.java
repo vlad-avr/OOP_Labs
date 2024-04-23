@@ -10,11 +10,13 @@ public class DaoManager {
     public static final String CREW_TABLE = "crews";
     public static final String PLANES_TABLE = "planes";
 
-    public Connection getConnection(String dbName, String username, String password) {
+    public static final String USER_TABLE = "users";
+
+    public Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbName, username, password);
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "Aircompany", "postgres", "Vlad10092004");
             if (connection != null) {
                 System.out.println("Connected somewhere");
             } else {

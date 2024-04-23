@@ -2,33 +2,22 @@ package com.aircompany.db.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@AllArgsConstructor
+public class User extends Entity{
     private String login;
-    private String password;
+    private String email;
+    private String role;
 
-//    // Default constructor
-//    public User() {
-//    }
-//
-//    // Getters and setters
-//    public String getLogin() {
-//        return login;
-//    }
-//
-//    public void setLogin(String login) {
-//        this.login = login;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public User(String id, String login, String email, String role){
+        super(id);
+        this.login = login;
+        this.email = email;
+        this.role = role;
+    }
 }
