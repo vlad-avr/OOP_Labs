@@ -74,5 +74,20 @@ public class PlaneDao extends EntityDao{
         return entities;
     }
 
+    public List<Entity> readByModel(String model) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE model=?");
+        statement.setString(1, model);
+        ResultSet resultSet = statement.executeQuery();
+        List<Entity> entities = new ArrayList<>();
+        while (resultSet.next()){
+            Plane entity = new Plane(UUID.fromString(resultSet.getString("id")));
+            entity.setMaxLuggage(resultSet.getDouble("max_luggage_weight"));
+            entity.setModel(resultSet.getString("model"));
+            entity.setMaxFlightInMins(resultSet.getInt("max_flight_in_mins"));
+            entity.setPassengerSeats(resultSet.getInt("passenger_seats"));
+            entities.add(entity);
+        }
+        return entities;
+    }
 
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,8 +14,8 @@ import java.util.UUID;
 public class Race extends Entity{
     private String departurePlace;
     private String arrivalPlace;
-    private Timestamp departureTime;
-    private Timestamp arrivalTime;
+    private String departureTime;
+    private String arrivalTime;
     private int passengers;
     private double luggageWeight;
 

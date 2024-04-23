@@ -1,5 +1,8 @@
 package com.aircompany.servlets.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class RequestPack {
     private String table;
 
@@ -11,4 +14,13 @@ public class RequestPack {
     }
 
     public RequestPack(){}
+
+    public static String processRequest(BufferedReader reader) throws IOException {
+        StringBuilder requestBody = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestBody.append(line);
+        }
+        return requestBody.toString();
+    }
 }

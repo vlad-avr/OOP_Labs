@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Brigade extends Entity{
     private String name;
-    private boolean isStatic;
+    private boolean staticCrew;
 
 //    public Brigade(UUID id, String name, boolean isStatic){
 //        super(id);

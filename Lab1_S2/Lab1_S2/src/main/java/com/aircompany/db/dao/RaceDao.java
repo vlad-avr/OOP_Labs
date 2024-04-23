@@ -7,6 +7,7 @@ import com.aircompany.db.entity.Race;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,8 +22,8 @@ public class RaceDao extends EntityDao{
                 + " (departure_place, arrival_place, departure_time, arrival_time, passengers, luggage_weight, id) VALUES (?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, entity.getDeparturePlace());
         statement.setString(2, entity.getArrivalPlace());
-        statement.setTimestamp(3, entity.getDepartureTime());
-        statement.setTimestamp(4, entity.getArrivalTime());
+        statement.setString(3, entity.getDepartureTime());
+        statement.setString(4, entity.getArrivalTime());
         statement.setInt(5, entity.getPassengers());
         statement.setDouble(6, entity.getLuggageWeight());
         statement.setString(7, entity.getId());
@@ -36,8 +37,8 @@ public class RaceDao extends EntityDao{
             Race entity = new Race(UUID.fromString(resultSet.getString("id")));
             entity.setDeparturePlace(resultSet.getString("departure_place"));
             entity.setArrivalPlace(resultSet.getString("arrival_place"));
-            entity.setDepartureTime(resultSet.getTimestamp("departure_time"));
-            entity.setArrivalTime(resultSet.getTimestamp("arrival_time"));
+            entity.setDepartureTime(resultSet.getString("departure_time"));
+            entity.setArrivalTime(resultSet.getString("arrival_time"));
             entity.setPassengers(resultSet.getInt("passengers"));
             entity.setLuggageWeight(resultSet.getDouble("luggage_weight"));
             return entity;
@@ -50,8 +51,8 @@ public class RaceDao extends EntityDao{
                 + " SET departure_place = ?, arrival_place = ?, departure_time = ?, arrival_time = ?, passengers = ?, luggage_weight = ? WHERE id = ?");
         statement.setString(1, entity.getDeparturePlace());
         statement.setString(2, entity.getArrivalPlace());
-        statement.setTimestamp(3, entity.getDepartureTime());
-        statement.setTimestamp(4, entity.getArrivalTime());
+        statement.setString(3, entity.getDepartureTime());
+        statement.setString(4, entity.getArrivalTime());
         statement.setInt(5, entity.getPassengers());
         statement.setDouble(6, entity.getLuggageWeight());
         statement.setString(7, entity.getId());
@@ -72,12 +73,49 @@ public class RaceDao extends EntityDao{
             Race entity = new Race(UUID.fromString(resultSet.getString("id")));
             entity.setDeparturePlace(resultSet.getString("departure_place"));
             entity.setArrivalPlace(resultSet.getString("arrival_place"));
-            entity.setDepartureTime(resultSet.getTimestamp("departure_time"));
-            entity.setArrivalTime(resultSet.getTimestamp("arrival_time"));
+            entity.setDepartureTime(resultSet.getString("departure_time"));
+            entity.setArrivalTime(resultSet.getString("arrival_time"));
             entity.setPassengers(resultSet.getInt("passengers"));
             entity.setLuggageWeight(resultSet.getDouble("luggage_weight"));
             entities.add(entity);
         }
         return entities;
     }
+
+    public List<Entity> readByDeparture(String departurePlace) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE departure_place=?");
+        statement.setString(1, departurePlace);
+        ResultSet resultSet = statement.executeQuery();
+        List<Entity> entities = new ArrayList<>();
+        while (resultSet.next()){
+            Race entity = new Race(UUID.fromString(resultSet.getString("id")));
+            entity.setDeparturePlace(resultSet.getString("departure_place"));
+            entity.setArrivalPlace(resultSet.getString("arrival_place"));
+            entity.setDepartureTime(resultSet.getString("departure_time"));
+            entity.setArrivalTime(resultSet.getString("arrival_time"));
+            entity.setPassengers(resultSet.getInt("passengers"));
+            entity.setLuggageWeight(resultSet.getDouble("luggage_weight"));
+            entities.add(entity);
+        }
+        return entities;
+    }
+
+    public List<Entity> readByArrival(String arrival) throws Exception{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE arrival_place=?");
+        statement.setString(1, arrival);
+        ResultSet resultSet = statement.executeQuery();
+        List<Entity> entities = new ArrayList<>();
+        while (resultSet.next()){
+            Race entity = new Race(UUID.fromString(resultSet.getString("id")));
+            entity.setDeparturePlace(resultSet.getString("departure_place"));
+            entity.setArrivalPlace(resultSet.getString("arrival_place"));
+            entity.setDepartureTime(resultSet.getString("departure_time"));
+            entity.setArrivalTime(resultSet.getString("arrival_time"));
+            entity.setPassengers(resultSet.getInt("passengers"));
+            entity.setLuggageWeight(resultSet.getDouble("luggage_weight"));
+            entities.add(entity);
+        }
+        return entities;
+    }
+
 }

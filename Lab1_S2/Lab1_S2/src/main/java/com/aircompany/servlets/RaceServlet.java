@@ -1,9 +1,11 @@
 package com.aircompany.servlets;
 
-import com.aircompany.db.dao.CrewDao;
 import com.aircompany.db.dao.DaoManager;
-import com.aircompany.db.entity.Crewmate;
+import com.aircompany.db.dao.PlaneDao;
+import com.aircompany.db.dao.RaceDao;
 import com.aircompany.db.entity.Entity;
+import com.aircompany.db.entity.Plane;
+import com.aircompany.db.entity.Race;
 import com.aircompany.parsers.JsonParser;
 import com.aircompany.servlets.util.RequestPack;
 
@@ -18,12 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet("/crew")
-public class CrewServlet  extends HttpServlet {
-
+@WebServlet("/race")
+public class RaceServlet extends HttpServlet {
     public Entity getEntity(String toParse){
         try {
-            return JsonParser.parseCrewmate(toParse);
+            return JsonParser.parseRace(toParse);
         } catch (Exception e) {
             return null;
         }
@@ -34,10 +35,10 @@ public class CrewServlet  extends HttpServlet {
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        CrewDao dao = new CrewDao(conn);
+        RaceDao dao = new RaceDao(conn);
         if(entity != null) {
             try {
-                dao.update((Crewmate) entity);
+                dao.update((Race) entity);
                 resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
             } catch (Exception e) {
                 resp.getWriter().println("[]");
@@ -50,14 +51,14 @@ public class CrewServlet  extends HttpServlet {
         String requestBodyString = RequestPack.processRequest(reader);
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
-            resp.getWriter().println("[]");
+            resp.getWriter().println("[1]");
         }
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        CrewDao dao = new CrewDao(conn);
+        RaceDao dao = new RaceDao(conn);
         try {
-            dao.create((Crewmate) entity);
+            dao.create((Race) entity);
         } catch (Exception e) {
             resp.getWriter().println("[]");
         }
@@ -80,25 +81,25 @@ public class CrewServlet  extends HttpServlet {
             resp.getWriter().println("[]");
             return;
         }
-        CrewDao crewDao = new CrewDao(conn);
+        RaceDao dao = new RaceDao(conn);
         List<Entity> entityList = new ArrayList<>();
         try {
             switch (field) {
-                case "name":
-                    entityList = crewDao.readByName(value);
+                case "departure":
+                    entityList = dao.readByDeparture(value);
                     break;
-                case "qualification":
-                    entityList = crewDao.readByQualification(value);
+                case "arrival":
+                    entityList = dao.readByArrival(value);
                     break;
                 case "id":
-                    entityList.add(crewDao.read(value));
+                    entityList.add(dao.read(value));
                     break;
                 case "all":
-                    entityList = crewDao.readAll();
+                    entityList = dao.readAll();
                     break;
                 case "delete":
-                    crewDao.delete(value);
-                    entityList = crewDao.readAll();
+                    dao.delete(value);
+                    entityList = dao.readAll();
                     break;
                 default:
                     resp.getWriter().println("[]");

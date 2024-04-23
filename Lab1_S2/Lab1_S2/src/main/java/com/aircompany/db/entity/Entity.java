@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Entity {
-    protected String id;
+    public String id;
 
     public Entity(UUID id){
         this.id = id.toString();

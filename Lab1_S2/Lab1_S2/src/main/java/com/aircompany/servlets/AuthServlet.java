@@ -29,8 +29,6 @@ public class AuthServlet extends HttpServlet {
         if(user != null) {
             responseData = "Hello " + user.getLogin() + " (" + user.getPassword() + ") from Servlet!";
         }
-//        resp.setHeader("Access-Control-Allow-Origin", "*");
-//        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 //        resp.setContentType("text/plain");
 //        resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(responseData);

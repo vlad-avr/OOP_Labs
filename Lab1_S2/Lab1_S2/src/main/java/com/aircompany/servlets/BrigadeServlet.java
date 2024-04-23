@@ -1,7 +1,8 @@
 package com.aircompany.servlets;
-
+import com.aircompany.db.dao.BrigadeDao;
 import com.aircompany.db.dao.CrewDao;
 import com.aircompany.db.dao.DaoManager;
+import com.aircompany.db.entity.Brigade;
 import com.aircompany.db.entity.Crewmate;
 import com.aircompany.db.entity.Entity;
 import com.aircompany.parsers.JsonParser;
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet("/crew")
-public class CrewServlet  extends HttpServlet {
+@WebServlet("/brigade")
+public class BrigadeServlet extends HttpServlet {
 
     public Entity getEntity(String toParse){
         try {
-            return JsonParser.parseCrewmate(toParse);
+            return JsonParser.parseBrigade(toParse);
         } catch (Exception e) {
             return null;
         }
@@ -34,10 +35,10 @@ public class CrewServlet  extends HttpServlet {
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        CrewDao dao = new CrewDao(conn);
+        BrigadeDao dao = new BrigadeDao(conn);
         if(entity != null) {
             try {
-                dao.update((Crewmate) entity);
+                dao.update((Brigade) entity);
                 resp.getWriter().println(JsonParser.toJsonEntities(dao.readAll()));
             } catch (Exception e) {
                 resp.getWriter().println("[]");
@@ -55,9 +56,9 @@ public class CrewServlet  extends HttpServlet {
         entity.setId(UUID.randomUUID().toString());
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection("Aircompany", "postgres", "Vlad10092004");
-        CrewDao dao = new CrewDao(conn);
+        BrigadeDao dao = new BrigadeDao(conn);
         try {
-            dao.create((Crewmate) entity);
+            dao.create((Brigade) entity);
         } catch (Exception e) {
             resp.getWriter().println("[]");
         }
@@ -80,25 +81,22 @@ public class CrewServlet  extends HttpServlet {
             resp.getWriter().println("[]");
             return;
         }
-        CrewDao crewDao = new CrewDao(conn);
+        BrigadeDao brigadeDao = new BrigadeDao(conn);
         List<Entity> entityList = new ArrayList<>();
         try {
             switch (field) {
                 case "name":
-                    entityList = crewDao.readByName(value);
-                    break;
-                case "qualification":
-                    entityList = crewDao.readByQualification(value);
+                    entityList = brigadeDao.readByName(value);
                     break;
                 case "id":
-                    entityList.add(crewDao.read(value));
+                    entityList.add(brigadeDao.read(value));
                     break;
                 case "all":
-                    entityList = crewDao.readAll();
+                    entityList = brigadeDao.readAll();
                     break;
                 case "delete":
-                    crewDao.delete(value);
-                    entityList = crewDao.readAll();
+                    brigadeDao.delete(value);
+                    entityList = brigadeDao.readAll();
                     break;
                 default:
                     resp.getWriter().println("[]");

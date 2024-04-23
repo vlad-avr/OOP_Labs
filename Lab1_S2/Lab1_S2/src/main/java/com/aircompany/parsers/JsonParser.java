@@ -1,7 +1,6 @@
 package com.aircompany.parsers;
 
-import com.aircompany.db.entity.Entity;
-import com.aircompany.db.entity.User;
+import com.aircompany.db.entity.*;
 import com.aircompany.servlets.AuthServlet;
 import com.aircompany.servlets.util.RequestPack;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +14,11 @@ public class JsonParser {
     public static String toJsonEntity(Entity entity) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
+    }
+
+    public static String toJsonIds(List<String> ids) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(ids);
     }
 
     public static RequestPack parseRequest(String json) throws  JsonProcessingException{
@@ -40,14 +44,46 @@ public class JsonParser {
         return mapper.writeValueAsString(entities);
     }
 
-    public static class EntityParser<T>{
-        public T parseJson(String json) throws Exception{
-            if(json.isEmpty()){
-                return null;
-            }
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<T> reference = new TypeReference<T>() {};
-            return mapper.readValue(json, reference);
+    public static Crewmate parseCrewmate(String json) throws Exception{
+        if(json.isEmpty()){
+            return null;
         }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Crewmate> reference = new TypeReference<Crewmate>() {};
+        return mapper.readValue(json, reference);
     }
+
+    public static Race parseRace(String json) throws Exception{
+        if(json.isEmpty()){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Race> reference = new TypeReference<Race>() {};
+        return mapper.readValue(json, reference);
+    }
+    public static Plane parsePlane(String json) throws Exception{
+        if(json.isEmpty()){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Plane> reference = new TypeReference<Plane>() {};
+        return mapper.readValue(json, reference);
+    }
+    public static Brigade parseBrigade(String json) throws Exception{
+        if(json.isEmpty()){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Brigade> reference = new TypeReference<Brigade>() {};
+        return mapper.readValue(json, reference);
+    }
+    public static Flight parseFlight(String json) throws Exception{
+        if(json.isEmpty()){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<Flight> reference = new TypeReference<Flight>() {};
+        return mapper.readValue(json, reference);
+    }
+
 }

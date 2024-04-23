@@ -7,6 +7,7 @@ import com.aircompany.db.entity.Flight;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -68,5 +69,20 @@ public class FlightDao extends EntityDao{
             entities.add(entity);
         }
         return entities;
+    }
+
+    public List<String> getIds(String table) throws SQLException {
+        switch (table){
+            case "race":
+                RaceDao raceDao = new RaceDao(connection);
+                return raceDao.readIds();
+            case "plane":
+                PlaneDao planeDao = new PlaneDao(connection);
+                return planeDao.readIds();
+            case "brigade":
+                BrigadeDao brigadeDao = new BrigadeDao(connection);
+                return brigadeDao.readIds();
+        }
+        return new ArrayList<>();
     }
 }
