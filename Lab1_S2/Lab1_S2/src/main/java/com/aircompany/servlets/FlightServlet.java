@@ -6,6 +6,7 @@ import com.aircompany.db.entity.Entity;
 import com.aircompany.db.entity.Flight;
 import com.aircompany.parsers.JsonParser;
 import com.aircompany.servlets.util.RequestPack;
+import com.aircompany.servlets.util.RoleUtil;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +32,10 @@ public class FlightServlet extends HttpServlet {
     public void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection();
@@ -48,6 +53,10 @@ public class FlightServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
             resp.getWriter().println("[]");
@@ -74,6 +83,10 @@ public class FlightServlet extends HttpServlet {
         String field = req.getParameter("field");
         String value = req.getParameter("value");
         if(field == null || value == null){
+            resp.getWriter().println("[]");
+            return;
+        }
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN}))){
             resp.getWriter().println("[]");
             return;
         }

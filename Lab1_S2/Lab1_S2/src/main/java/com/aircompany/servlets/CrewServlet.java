@@ -7,6 +7,11 @@ import com.aircompany.db.entity.Crewmate;
 import com.aircompany.db.entity.Entity;
 import com.aircompany.parsers.JsonParser;
 import com.aircompany.servlets.util.RequestPack;
+import com.aircompany.servlets.util.RoleUtil;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +27,8 @@ import java.util.UUID;
 @WebServlet("/crew")
 public class CrewServlet  extends HttpServlet {
 
-    public Entity getEntity(String toParse){
+
+    private Entity getEntity(String toParse){
         try {
             return JsonParser.parseCrewmate(toParse);
         } catch (Exception e) {
@@ -32,11 +38,16 @@ public class CrewServlet  extends HttpServlet {
     public void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN, RoleUtil.DISPATCH}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection();
         CrewDao dao = new CrewDao(conn);
         if(entity != null) {
+
             try {
                 dao.update((Crewmate) entity);
                 resp.getWriter().println(JsonParser.toJsonObject(dao.readAll()));
@@ -49,6 +60,10 @@ public class CrewServlet  extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN, RoleUtil.DISPATCH}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
             resp.getWriter().println("[]");
@@ -77,6 +92,7 @@ public class CrewServlet  extends HttpServlet {
             resp.getWriter().println("[]");
             return;
         }
+        String role = RoleUtil.getRole(req);
         DaoManager mgr = new DaoManager();
         Connection conn = mgr.getConnection();
         if(conn == null){
@@ -86,31 +102,43 @@ public class CrewServlet  extends HttpServlet {
         CrewDao crewDao = new CrewDao(conn);
         List<Entity> entityList = new ArrayList<>();
         try {
-            switch (field) {
-                case "name":
-                    entityList = crewDao.readByName(value);
-                    break;
-                case "qualification":
-                    entityList = crewDao.readByQualification(value);
-                    break;
-                case "id":
-                    entityList.add(crewDao.read(value));
-                    break;
-                case "all":
-                    entityList = crewDao.readAll();
-                    break;
-                case "delete":
-                    crewDao.delete(value);
-                    entityList = crewDao.readAll();
-                    break;
-                case "brigades":
-                    BrigadeDao dao = new BrigadeDao(conn);
-                    resp.getWriter().println(JsonParser.toJsonIds(dao.readIds()));
-                    return;
-                default:
-                    resp.getWriter().println("[]");
-                    return;
+            if(RoleUtil.validateAccess(role, RoleUtil.getAllowedRoles(new String[]{RoleUtil.USER, RoleUtil.DISPATCH, RoleUtil.ADMIN}))){
+                switch (field) {
+                    case "name":
+                        entityList = crewDao.readByName(value);
+                        break;
+                    case "qualification":
+                        entityList = crewDao.readByQualification(value);
+                        break;
+                    case "id":
+                        entityList.add(crewDao.read(value));
+                        break;
+                    case "all":
+                        entityList = crewDao.readAll();
+                        break;
+                    default:
+                        if(RoleUtil.validateAccess(role, RoleUtil.getAllowedRoles(new String[]{RoleUtil.DISPATCH, RoleUtil.ADMIN}))) {
+                            switch (field) {
+                                case "delete":
+                                    crewDao.delete(value);
+                                    entityList = crewDao.readAll();
+                                    break;
+                                case "brigades":
+                                    BrigadeDao dao = new BrigadeDao(conn);
+                                    resp.getWriter().println(JsonParser.toJsonIds(dao.readIds()));
+                                    return;
+                                default:
+                                    resp.getWriter().println("[]");
+                                    return;
+                            }
+                        }
+                        else {
+                            resp.getWriter().println("[]");
+                            return;
+                        }
+                }
             }
+
         }catch (Exception e){
             resp.getWriter().println("[]");
             return;

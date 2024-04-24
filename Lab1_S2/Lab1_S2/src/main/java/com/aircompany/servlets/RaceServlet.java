@@ -6,6 +6,7 @@ import com.aircompany.db.entity.Entity;
 import com.aircompany.db.entity.Race;
 import com.aircompany.parsers.JsonParser;
 import com.aircompany.servlets.util.RequestPack;
+import com.aircompany.servlets.util.RoleUtil;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +31,10 @@ public class RaceServlet extends HttpServlet {
     public void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN, RoleUtil.DISPATCH}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         DaoManager DBM = new DaoManager();
         Connection conn = DBM.getConnection();
@@ -47,6 +52,10 @@ public class RaceServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         BufferedReader reader = req.getReader();
         String requestBodyString = RequestPack.processRequest(reader);
+        if(!RoleUtil.validateAccess(RoleUtil.getRole(req), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN, RoleUtil.DISPATCH}))){
+            resp.getWriter().println("[]");
+            return;
+        }
         Entity entity = getEntity(requestBodyString);
         if(entity == null){
             resp.getWriter().println("[]");
@@ -75,6 +84,7 @@ public class RaceServlet extends HttpServlet {
             resp.getWriter().println("[]");
             return;
         }
+        String role = RoleUtil.getRole(req);
         DaoManager mgr = new DaoManager();
         Connection conn = mgr.getConnection();
         if(conn == null){
@@ -84,26 +94,37 @@ public class RaceServlet extends HttpServlet {
         RaceDao dao = new RaceDao(conn);
         List<Entity> entityList = new ArrayList<>();
         try {
-            switch (field) {
-                case "departure":
-                    entityList = dao.readByDeparture(value);
-                    break;
-                case "arrival":
-                    entityList = dao.readByArrival(value);
-                    break;
-                case "id":
-                    entityList.add(dao.read(value));
-                    break;
-                case "all":
-                    entityList = dao.readAll();
-                    break;
-                case "delete":
-                    dao.delete(value);
-                    entityList = dao.readAll();
-                    break;
-                default:
-                    resp.getWriter().println("[]");
-                    return;
+            if(RoleUtil.validateAccess(role, RoleUtil.getAllowedRoles(new String[]{RoleUtil.USER, RoleUtil.DISPATCH, RoleUtil.ADMIN}))) {
+                switch (field) {
+                    case "departure":
+                        entityList = dao.readByDeparture(value);
+                        break;
+                    case "arrival":
+                        entityList = dao.readByArrival(value);
+                        break;
+                    case "id":
+                        entityList.add(dao.read(value));
+                        break;
+                    case "all":
+                        entityList = dao.readAll();
+                        break;
+                    default:
+                        if (RoleUtil.validateAccess(role, RoleUtil.getAllowedRoles(new String[]{RoleUtil.USER, RoleUtil.DISPATCH, RoleUtil.ADMIN}))) {
+                            switch (field) {
+                                case "delete":
+                                    dao.delete(value);
+                                    entityList = dao.readAll();
+                                    break;
+                                default:
+                                    resp.getWriter().println("[]");
+                                    return;
+                            }
+
+                        } else {
+                            resp.getWriter().println("[]");
+                            return;
+                        }
+                }
             }
         }catch (Exception e){
             resp.getWriter().println("[]");
