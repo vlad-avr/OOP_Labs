@@ -4,6 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import uni.vladavr.lab.entity.Plane;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface PlaneRepo extends JpaRepository<Plane, String> {
+    Optional<List<Plane>> readByModel(String model);
 }
