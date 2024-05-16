@@ -11,4 +11,7 @@ import java.util.Optional;
 @Repository
 public interface BrigadeRepo extends JpaRepository<Brigade, String> {
     Optional<List<Brigade>> findByName(String name);
+
+    @Query("UPDATE Crewmate c SET c.brigadeId = '' WHERE c.brigadeId = ?1")
+    void cascadeUpdate(String Id);
 }

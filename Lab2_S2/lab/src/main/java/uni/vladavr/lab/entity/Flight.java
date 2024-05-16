@@ -15,10 +15,10 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String Id;
-    @Column(name = "id")
+    @Column(name = "race_id")
     private String raceId;
-    @Column(name = "id")
+    @Column(name = "brigade_id")
     private String brigadeId;
-    @Column(name = "id")
+    @Column(name = "plane_id")
     private String planeId;
 }
