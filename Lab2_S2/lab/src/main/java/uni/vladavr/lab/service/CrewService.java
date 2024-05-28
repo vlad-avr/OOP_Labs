@@ -77,6 +77,11 @@ public class CrewService {
         return DTOs;
     }
 
+    public List<String> getBrigadeIds(){
+        Optional<List<String>> objs = repository.getBrigadeIds();
+        return objs.orElseGet(ArrayList::new);
+    }
+
     public void create(CrewDTO dto){
         dto.setId(UUID.randomUUID().toString());
         Crewmate o = mapper.fromDTO(dto);

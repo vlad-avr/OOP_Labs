@@ -53,6 +53,9 @@ public class CrewController {
                                 service.delete(value);
                                 dtoList = service.getAll();
                                 break;
+                            case "brigades":
+                                List<String> ids = service.getBrigadeIds();
+                                return JsonParser.toJsonObject(ids);
                             default:
                                 return "[]";
                         }
