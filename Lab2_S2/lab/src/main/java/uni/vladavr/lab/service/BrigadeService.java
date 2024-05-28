@@ -31,8 +31,8 @@ public class BrigadeService {
             return;
         }
         Brigade brigade = brigadeRecord.get();
-        brigade.setName(brigade.getName());
-        brigade.setStaticCrew(brigade.isStaticCrew());
+        brigade.setName(brigadeDTO.getName());
+        brigade.setStaticCrew(brigadeDTO.isStaticCrew());
         repository.save(brigade);
     }
 

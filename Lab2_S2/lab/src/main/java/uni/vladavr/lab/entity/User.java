@@ -25,4 +25,12 @@ public class User {
     private String password;
     @Column(name = "salt")
     private String salt;
+
+
+    public User(String id, String login, String email, String role) {
+        this.Id = id;
+        this.email = email;
+        this.login = login;
+        this.role = role;
+    }
 }

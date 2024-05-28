@@ -6,5 +6,5 @@ import lombok.Data;
 public class BrigadeDTO {
     private String Id;
     private String name;
-    private String staticCrew;
+    private boolean staticCrew;
 }
