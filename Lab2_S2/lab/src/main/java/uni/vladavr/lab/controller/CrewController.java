@@ -26,6 +26,7 @@ public class CrewController {
         return JsonParser.toJsonObject(service.getAll());
     }
 
+    @GetMapping
     private String doGet(@RequestHeader("access-token") String token, @RequestParam("field") String field, @RequestParam("value") String value) throws Exception {
         String role = RoleUtil.getRole(token);
         List<CrewDTO> dtoList = new ArrayList<>();
@@ -62,6 +63,7 @@ public class CrewController {
         return JsonParser.toJsonObject(dtoList);
     }
 
+    @PostMapping
     private String doPost(@RequestHeader("access-token") String token, @RequestBody CrewDTO dto) throws Exception {
         if(!RoleUtil.validateAccess(RoleUtil.getRole(token), RoleUtil.getAllowedRoles(new String[]{RoleUtil.ADMIN, RoleUtil.DISPATCH}))){
             return "[]";
