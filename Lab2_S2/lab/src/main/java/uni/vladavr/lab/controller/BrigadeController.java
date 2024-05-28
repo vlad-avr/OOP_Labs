@@ -17,6 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/brigade")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173/")
 public class BrigadeController {
     private final BrigadeService service;
 

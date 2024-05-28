@@ -16,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/flight")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173/")
 public class FlightController {
     private final FlightService service;
     @PutMapping

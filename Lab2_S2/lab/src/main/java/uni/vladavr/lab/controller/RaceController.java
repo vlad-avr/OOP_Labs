@@ -15,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/race")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173/")
 public class RaceController {
     private final RaceService service;
     @PutMapping
