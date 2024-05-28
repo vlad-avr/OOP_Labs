@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CrewRepo extends JpaRepository<Crewmate, String> {
     Optional<List<Crewmate>> findByName(String name);
-    Optional<List<Crewmate>> findByQualification(Crewmate.Qualification qualification);
+    Optional<List<Crewmate>> findByQualification(String qualification);
 }

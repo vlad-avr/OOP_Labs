@@ -66,7 +66,7 @@ public class CrewService {
     }
 
     public List<CrewDTO> getByQualification(String qual){
-        Optional<List<Crewmate>> objs = repository.findByQualification(Crewmate.Qualification.valueOf(qual));
+        Optional<List<Crewmate>> objs = repository.findByQualification(qual);
         if(objs.isEmpty()){
             return new ArrayList<>();
         }

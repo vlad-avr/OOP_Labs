@@ -23,22 +23,24 @@ public class JWTFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         String token = request.getHeader("access-token");
-        Algorithm algorithm = Algorithm.HMAC256("secretlysecret");
+        Algorithm algorithm = Algorithm.HMAC256("baeldung");
         JWTVerifier verifier = JWT.require(algorithm)
-                .withIssuer("IMBARESTAURANT")
+                .withIssuer("Baeldung")
                 .build();
         DecodedJWT decodedJWT = verifier.verify(token);
-        if (decodedJWT.getExpiresAt().before(new Date())) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+//        if (decodedJWT.getExpiresAt().before(new Date())) {
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            return;
+//        }
         String id = decodedJWT.getClaim("id").asString();
         String email = decodedJWT.getClaim("email").asString();
+        String login = decodedJWT.getClaim("login").asString();
         String role = decodedJWT.getClaim("isAdmin").asString();
         User user = new User();
         user.setId(id);
         user.setEmail(email);
         user.setRole(role);
+        user.setLogin(login);
         request.setAttribute("user", user);
         filterChain.doFilter(request, response);
     }

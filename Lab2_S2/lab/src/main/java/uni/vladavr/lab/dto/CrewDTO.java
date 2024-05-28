@@ -7,6 +7,6 @@ import uni.vladavr.lab.entity.Crewmate;
 public class CrewDTO {
     private String Id;
     private String name;
-    private Crewmate.Qualification qualification;
+    private String qualification;
     private String brigadeId;
 }

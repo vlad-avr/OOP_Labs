@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "crews")
 public class Crewmate {
-    public static enum Qualification{
-        STUART,
-        PILOT,
-        RADIO_OFFICER
-    }
+//    public static enum Qualification{
+//        STUART,
+//        PILOT,
+//        RADIO_OFFICER
+//    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,7 +23,7 @@ public class Crewmate {
     @Column(name = "name")
     private String name;
     @Column(name = "qualification")
-    private Qualification qualification;
+    private String qualification;
     @Column(name = "brigade")
     private String brigadeId;
 }
