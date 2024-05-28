@@ -17,7 +17,6 @@ public class Crewmate {
 //        RADIO_OFFICER
 //    }
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String Id;
     @Column(name = "name")

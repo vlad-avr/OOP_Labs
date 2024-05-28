@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Table(name="users")
 public class User {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String Id;
     @Column(name = "login")
