@@ -40,6 +40,7 @@ public class BrigadeService {
         if(repository.existsById(Id)){
             repository.deleteById(Id);
             repository.cascadeUpdate(Id);
+            repository.cascadeDelete(Id);
         }
     }
 

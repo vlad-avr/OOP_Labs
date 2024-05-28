@@ -2,9 +2,7 @@ package uni.vladavr.lab.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uni.vladavr.lab.dto.CrewDTO;
 import uni.vladavr.lab.dto.PlaneDTO;
-import uni.vladavr.lab.entity.Crewmate;
 import uni.vladavr.lab.entity.Plane;
 import uni.vladavr.lab.mapper.PlaneMapper;
 import uni.vladavr.lab.repository.PlaneRepo;
@@ -35,6 +33,7 @@ public class PlaneService {
     public void delete(String Id){
         if(repository.existsById(Id)){
             repository.deleteById(Id);
+            repository.cascadeDelete(Id);
         }
     }
 
@@ -53,7 +52,7 @@ public class PlaneService {
     }
 
     public List<PlaneDTO> getByModel(String name){
-        Optional<List<Plane>> objs = repository.readByModel(name);
+        Optional<List<Plane>> objs = repository.findByModel(name);
         if(objs.isEmpty()){
             return new ArrayList<>();
         }

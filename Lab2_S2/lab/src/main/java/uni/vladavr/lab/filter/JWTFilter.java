@@ -4,40 +4,48 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
+import org.springframework.web.filter.OncePerRequestFilter;
 import uni.vladavr.lab.entity.User;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 
-@WebFilter(asyncSupported = true, urlPatterns = { "/reserve" })
-public class JWTFilter implements Filter {
+public class JWTFilter extends OncePerRequestFilter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
         String token = request.getHeader("access-token");
-        Algorithm algorithm = Algorithm.HMAC256("baeldung");
+        Algorithm algorithm = Algorithm.HMAC256("secretlysecret");
         JWTVerifier verifier = JWT.require(algorithm)
-                .withIssuer("Baeldung")
+                .withIssuer("IMBARESTAURANT")
                 .build();
         DecodedJWT decodedJWT = verifier.verify(token);
+        if (decodedJWT.getExpiresAt().before(new Date())) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String id = decodedJWT.getClaim("id").asString();
-        String login = decodedJWT.getClaim("login").asString();
         String email = decodedJWT.getClaim("email").asString();
-        String role = decodedJWT.getClaim("role").asString();
-        User user = new User(id, login, email, role);
+        String role = decodedJWT.getClaim("isAdmin").asString();
+        User user = new User();
+        user.setId(id);
+        user.setEmail(email);
+        user.setRole(role);
         request.setAttribute("user", user);
-        filterChain.doFilter(request, servletResponse);
+        filterChain.doFilter(request, response);
     }
 
     @Override
-    public void destroy() {
-
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return "/auth".equals(path);
     }
 }

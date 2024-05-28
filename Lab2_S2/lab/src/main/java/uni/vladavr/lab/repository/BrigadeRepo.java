@@ -14,4 +14,6 @@ public interface BrigadeRepo extends JpaRepository<Brigade, String> {
 
     @Query("UPDATE Crewmate c SET c.brigadeId = '' WHERE c.brigadeId = ?1")
     void cascadeUpdate(String Id);
+    @Query("DELETE Flight f WHERE f.brigadeId = ?1")
+    void cascadeDelete(String Id);
 }

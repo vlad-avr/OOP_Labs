@@ -39,6 +39,7 @@ public class RaceService {
     public void delete(String Id){
         if(repository.existsById(Id)){
             repository.deleteById(Id);
+            repository.cascadeDelete(Id);
         }
     }
 
